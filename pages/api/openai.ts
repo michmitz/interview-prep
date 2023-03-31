@@ -1,4 +1,5 @@
 
+import { appStrings } from '@/constants/appStrings';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Configuration, OpenAIApi } from 'openai'
 
@@ -14,7 +15,7 @@ export default async function handler(
 ) {
   const completion = await openai.createCompletion({
     model: 'text-davinci-003',
-    prompt: req.body.text,
+    prompt: appStrings.prompt1,
     temperature: 0.7,
     top_p: 1,
     frequency_penalty: 0,

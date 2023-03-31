@@ -1,6 +1,7 @@
 import React from 'react'
 import type { NextPage } from 'next'
 import styles from '../styles/Home.module.css'
+import { QuestionCard } from '@/components/question_card/QuestionCard'
 
 const Home: NextPage = () => {
   const [completion, setCompletion] = React.useState<string>('')
@@ -20,7 +21,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.main}>
       <button onClick={handleClick} className={styles.button}>Ask me a question</button>
-      <div>Interview Question: {completion}</div>
+      <QuestionCard response={completion} />
     </div>
   )
 }

@@ -1,0 +1,23 @@
+.glassEffect {
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 3px );
+  -webkit-backdrop-filter: blur( 3px );
+  border-radius: 10px;
+  padding: 1em;
+  max-width: 700px;
+}
+
+.question {
+  margin-top: 10px;
+  background: rgba( 255, 255, 255, 0.25 );
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  color: rgb(95, 95, 95);
+}
+
+.advice {
+  background: rgba(114, 255, 218, 0.25);
+  border: 1px solid rgba(135, 221, 255, 0.18);
+  margin-top: 10px;
+}

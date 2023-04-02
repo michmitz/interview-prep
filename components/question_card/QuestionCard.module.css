@@ -17,7 +17,9 @@
 }
 
 .advice {
-  background: rgba(114, 255, 218, 0.25);
+  background: rgb(25, 119, 97, 0.25);
   border: 1px solid rgba(135, 221, 255, 0.18);
   margin-top: 10px;
+  font-family: 'Raleway', sans-serif;
+  color: rgb(74, 74, 74);
 }

@@ -6,7 +6,7 @@ import { QuestionCard } from '@/components/question_card/QuestionCard'
 const Home: NextPage = () => {
   const [completion, setCompletion] = React.useState<string>('')
 
-  const handleClick = async(e: any) => {
+  const handleClick = async (e: any) => {
     setCompletion('Loading...');
     const response = await fetch('/api/openai', {
       method: 'POST',
@@ -21,7 +21,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.main}>
       <button onClick={handleClick} className={styles.button}>Ask me a question</button>
-      <QuestionCard response={completion} />
+      {completion && <QuestionCard response={completion} />}
     </div>
   )
 }

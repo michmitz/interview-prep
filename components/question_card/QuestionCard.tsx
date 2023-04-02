@@ -6,9 +6,24 @@ interface QuestionCardProps {
 
 
 export const QuestionCard: React.FC<QuestionCardProps> = ({ response }) => {
+  const question = response.split('Advice:')[0]
+  const advice = response.split('Advice:')[1]
+  const [showAdvice, setShowAdvice] = React.useState<boolean>(false)
+
+  const handleClick = () => {
+    setShowAdvice(true)
+  }
+
   return (
-    <div>
-      {response}
-    </div>
+    <>
+      <div>
+        {question}
+        <button onClick={handleClick}>Show Advice?</button>
+      </div>
+      {
+        showAdvice &&
+        <div>{advice}</div>
+      }
+    </>
   )
 }

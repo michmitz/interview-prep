@@ -2,17 +2,19 @@ import React from 'react'
 import type { NextPage } from 'next'
 import styles from '../styles/Home.module.css'
 import { QuestionCard } from '@/components/question_card/QuestionCard'
+import { appStrings } from '@/constants/appStrings'
 
 const Home: NextPage = () => {
   const [completion, setCompletion] = React.useState<string>('')
 
   const handleClick = async (e: any) => {
-    setCompletion('Loading...');
+    setCompletion('Thinking...');
     const response = await fetch('/api/openai', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify(appStrings.prompt1),
     });
     const data = await response.json();
     setCompletion(data.result.choices[0].text);

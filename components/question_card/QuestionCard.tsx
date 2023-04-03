@@ -7,11 +7,12 @@ interface QuestionCardProps {
 
 
 export const QuestionCard: React.FC<QuestionCardProps> = ({ response }) => {
-  const question = response.split('Advice:')[0]
-  const advice = response.split('Advice:')[1]
+  const question = response.split('Answer:')[0]
+  const advice = response.split('Answer:')[1]
   const [showAdvice, setShowAdvice] = React.useState<boolean>(false)
-  const questionStyles = `${styles.glassEffect} ${styles.question}`
-  const adviceStyles = `${styles.glassEffect} ${styles.advice}`
+  const { glassEffect } = styles
+  const questionStyles = `${glassEffect} ${styles.question}`
+  const adviceStyles = `${glassEffect} ${styles.advice}`
 
   const handleClick = () => {
     setShowAdvice(true)

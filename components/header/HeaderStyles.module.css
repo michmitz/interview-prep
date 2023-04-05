@@ -1,0 +1,13 @@
+.container {
+  width: 100vw;
+  height: 50px;
+  background-color: rgb(21, 56, 82, 0.3);
+  display: flex;
+  align-items: center;
+}
+
+.text {
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+  font-weight: 500;
+}

@@ -19,7 +19,7 @@ const Home: NextPage = () => {
       body: JSON.stringify(appStrings.prompt1),
     });
     const data = await response.json()
-    setCompletion(data.result.choices[0].text)
+    setCompletion(data.result.content)
     setLoading(false)
   }
 

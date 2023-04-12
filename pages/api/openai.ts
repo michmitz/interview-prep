@@ -13,17 +13,17 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const completion = await openai.createCompletion({
-      model: 'text-davinci-003',
-      prompt: req.body,
+    const completion = await openai.createChatCompletion({
+      model: 'gpt-3.5-turbo',
+      messages: [{ role: 'user', content: req.body }],
       temperature: 1,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
-      max_tokens: 256,
+      max_tokens: 250,
     })
-    res.status(200).json({ result: completion.data })
+    res.status(200).json({ result: completion?.data?.choices[0].message })
+    console.log('completion', completion.data.choices[0].message)
   } catch (err) {
     console.log("ERROR:", err)
   }
 }
+
+ 

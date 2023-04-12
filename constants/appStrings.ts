@@ -1,4 +1,6 @@
 export const appStrings = {
+  askQuestionButton: 'Ask Me a Question',
+  thinking: 'Thinking',
   prompt1: 'Pretend you are interviewing me for a mid-level frontend software engineer position. Ask me one question, then give me an example answer. Label question and answer.',
   header: 'Welcome! I\'m a virtual interviewer.',
 }

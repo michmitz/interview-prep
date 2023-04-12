@@ -5,6 +5,8 @@ import { QuestionCard } from "@/components/question_card/QuestionCard";
 import { appStrings } from "@/constants/appStrings";
 import { Header } from "@/components/header/Header";
 
+const { askQuestionButton, thinking } = appStrings;
+
 const Home: NextPage = () => {
   const [completion, setCompletion] = React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -16,20 +18,24 @@ const Home: NextPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({role: 'user', content: appStrings.prompt1}),
+      body: JSON.stringify({ role: "user", content: appStrings.prompt1 }),
     });
-    const data = await response.json()
-    setCompletion(data.response.content)
-    setLoading(false)
-  }
+    const data = await response.json();
+    setCompletion(data.response.content);
+    setLoading(false);
+  };
 
   return (
     <div className={styles.main}>
       <Header />
       <button onClick={handleClick} className={styles.button}>
-        Ask me a question
+        {askQuestionButton}
       </button>
-      {loading && <div className={styles.loading}>Thinking</div>}
+      {loading && (
+        <div className={styles.loading}>
+          <p className={styles.loadingText}>{thinking}</p>
+        </div>
+      )}
       {completion && <QuestionCard response={completion} />}
     </div>
   );

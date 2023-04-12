@@ -16,10 +16,10 @@ const Home: NextPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(appStrings.prompt1),
+      body: JSON.stringify({role: 'user', content: appStrings.prompt1}),
     });
     const data = await response.json()
-    setCompletion(data.result.content)
+    setCompletion(data.response.content)
     setLoading(false)
   }
 

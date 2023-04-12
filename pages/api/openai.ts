@@ -1,6 +1,6 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Configuration, OpenAIApi } from 'openai'
+import { ChatCompletionRequestMessageRoleEnum, Configuration, OpenAIApi } from 'openai'
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -8,22 +8,33 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+interface ResponseProps {
+  readonly role: ChatCompletionRequestMessageRoleEnum
+  readonly content: string
+}
+
+const generateResponse = async ({ role, content }: ResponseProps) => {
   try {
     const completion = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
-      messages: [{ role: 'user', content: req.body }],
+      messages: [{ role, content }],
       temperature: 1,
       max_tokens: 250,
     })
-    res.status(200).json({ result: completion?.data?.choices[0].message })
-    console.log('completion', completion.data.choices[0].message)
+    console.log("Completion", completion)
+    return completion?.data?.choices[0].message
   } catch (err) {
     console.log("ERROR:", err)
   }
 }
 
- 
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const { role, content } = req.body
+
+  const response = await generateResponse({role, content})
+
+  res.status(200).json({response})
+}

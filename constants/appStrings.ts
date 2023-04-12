@@ -1,5 +1,6 @@
 export const appStrings = {
   prompt1: 'Pretend you are interviewing me for a mid-level frontend software engineer position. Ask me a question, then give me an example answer.',
+  header: 'Welcome! I\'m a virtual interviewer.',
 }
 
 

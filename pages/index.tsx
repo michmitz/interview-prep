@@ -11,7 +11,7 @@ const { askQuestionButton, thinking } = appStrings;
 const Home: NextPage = () => {
   const [completion, setCompletion] = React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
-  const [answerInput, setAnswerInput] = React.useState<string>('');
+  const [answerInput, setAnswerInput] = React.useState<string>("");
 
   const handleClick = async (e: any) => {
     setLoading(true);
@@ -28,8 +28,8 @@ const Home: NextPage = () => {
   };
 
   const handleSubmit = () => {
-    localStorage.setItem(JSON.stringify(completion), answerInput)
-  }
+    localStorage.setItem(JSON.stringify(completion), answerInput);
+  };
 
   return (
     <div className={styles.main}>
@@ -44,8 +44,15 @@ const Home: NextPage = () => {
             <p className={styles.loadingText}>{thinking}</p>
           </div>
         )}
-        {completion && <QuestionCard response={completion} />}
-        <AnswerField onChange={e => setAnswerInput(e)} onSubmit={handleSubmit} />
+        {completion && (
+          <>
+            <QuestionCard response={completion} />
+            <AnswerField
+              onChange={(e) => setAnswerInput(e)}
+              onSubmit={handleSubmit}
+            />
+          </>
+        )}
       </div>
     </div>
   );

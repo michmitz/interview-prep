@@ -29,16 +29,19 @@ const Home: NextPage = () => {
   return (
     <div className={styles.main}>
       <Header />
-      <button onClick={handleClick} className={styles.button}>
-        {askQuestionButton}
-      </button>
-      {loading && (
-        <div className={styles.loading}>
-          <p className={styles.loadingText}>{thinking}</p>
-        </div>
-      )}
-      {completion && <QuestionCard response={completion} />}
-      <AnswerField onChange={() => {}} onSubmit={() => {}} />
+
+      <div className={styles.container}>
+        <button onClick={handleClick} className={styles.button}>
+          {askQuestionButton}
+        </button>
+        {loading && (
+          <div className={styles.loading}>
+            <p className={styles.loadingText}>{thinking}</p>
+          </div>
+        )}
+        {completion && <QuestionCard response={completion} />}
+        <AnswerField onChange={() => {}} onSubmit={() => {}} />
+      </div>
     </div>
   );
 };

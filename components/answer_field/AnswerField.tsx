@@ -2,7 +2,7 @@ import { appStrings } from "@/constants/appStrings";
 import React from "react";
 import styles from "./AnswerField.module.css";
 interface AnswerFieldProps {
-  readonly onChange: () => void;
+  readonly onChange: (e: string) => void;
   readonly onSubmit: () => void;
 }
 
@@ -16,7 +16,7 @@ export const AnswerField: React.FC<AnswerFieldProps> = ({
     <div className={styles.container}>
       <textarea
         className={styles.input}
-        onChange={onChange}
+        onChange={e => onChange(e.target.value)}
         placeholder={answerField}
       />
       <button onClick={onSubmit} className={styles.button}>{answerSubmitButton}</button>

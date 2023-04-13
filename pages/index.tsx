@@ -4,6 +4,7 @@ import styles from "../styles/Home.module.css";
 import { QuestionCard } from "@/components/question_card/QuestionCard";
 import { appStrings } from "@/constants/appStrings";
 import { Header } from "@/components/header/Header";
+import { AnswerField } from "@/components/answer_field/AnswerField";
 
 const { askQuestionButton, thinking } = appStrings;
 
@@ -37,6 +38,7 @@ const Home: NextPage = () => {
         </div>
       )}
       {completion && <QuestionCard response={completion} />}
+      <AnswerField onChange={() => {}} onSubmit={() => {}} />
     </div>
   );
 };

@@ -5,6 +5,16 @@
 }
 
 .input {
-  border: solid 1px red;
-  height: 150px;
+  height: 130px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background: rgba( 255, 255, 255, 0.25 );
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  font-family: 'Raleway', sans-serif;
+  border-radius: 10px;
+  user-select: none;
+  text-align: top;
+  resize: none;
+  outline: none;
 }

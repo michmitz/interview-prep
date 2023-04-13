@@ -19,7 +19,7 @@ export const AnswerField: React.FC<AnswerFieldProps> = ({
         onChange={onChange}
         placeholder={answerField}
       />
-      <button onClick={onSubmit}>{answerSubmitButton}</button>
+      <button onClick={onSubmit} className={styles.button}>{answerSubmitButton}</button>
     </div>
   );
 };

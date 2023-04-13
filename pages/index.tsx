@@ -4,12 +4,14 @@ import styles from "../styles/Home.module.css";
 import { QuestionCard } from "@/components/question_card/QuestionCard";
 import { appStrings } from "@/constants/appStrings";
 import { Header } from "@/components/header/Header";
+import { AnswerField } from "@/components/answer_field/AnswerField";
 
 const { askQuestionButton, thinking } = appStrings;
 
 const Home: NextPage = () => {
   const [completion, setCompletion] = React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [answerInput, setAnswerInput] = React.useState<string>("");
 
   const handleClick = async (e: any) => {
     setLoading(true);
@@ -25,18 +27,33 @@ const Home: NextPage = () => {
     setLoading(false);
   };
 
+  const handleSubmit = () => {
+    localStorage.setItem(JSON.stringify(completion), answerInput);
+  };
+
   return (
     <div className={styles.main}>
       <Header />
-      <button onClick={handleClick} className={styles.button}>
-        {askQuestionButton}
-      </button>
-      {loading && (
-        <div className={styles.loading}>
-          <p className={styles.loadingText}>{thinking}</p>
-        </div>
-      )}
-      {completion && <QuestionCard response={completion} />}
+
+      <div className={styles.container}>
+        <button onClick={handleClick} className={styles.button}>
+          {askQuestionButton}
+        </button>
+        {loading && (
+          <div className={styles.loading}>
+            <p className={styles.loadingText}>{thinking}</p>
+          </div>
+        )}
+        {completion && (
+          <>
+            <QuestionCard response={completion} />
+            <AnswerField
+              onChange={(e) => setAnswerInput(e)}
+              onSubmit={handleSubmit}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 };

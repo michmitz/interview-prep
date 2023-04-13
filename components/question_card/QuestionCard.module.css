@@ -23,3 +23,8 @@
   font-family: 'Raleway', sans-serif;
   color: rgb(74, 74, 74);
 }
+
+.showAdvice {
+  display: flex;
+  flex-direction: row;
+}

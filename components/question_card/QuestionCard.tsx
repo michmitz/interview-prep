@@ -1,5 +1,5 @@
 import { appStrings } from "@/constants/appStrings";
-import { WechatOutlined } from "@ant-design/icons";
+import { MessageOutlined } from "@ant-design/icons";
 import React from "react";
 import styles from "./QuestionCard.module.css";
 
@@ -7,7 +7,7 @@ interface QuestionCardProps {
   readonly response: string;
 }
 
-const { showAdviceText } = appStrings
+const { showAdviceText } = appStrings;
 
 export const QuestionCard: React.FC<QuestionCardProps> = ({ response }) => {
   const question = response.split("Answer:")[0];
@@ -25,9 +25,9 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ response }) => {
     <>
       <div className={questionStyles}>
         {question}
-        <div className={styles.showAdvice}>
-          <WechatOutlined onClick={handleClick} />
-          <p>{showAdviceText}</p>
+        <div className={styles.showAdviceLabel} onClick={handleClick}>
+          <p className={styles.showAdviceText}>{showAdviceText}</p>
+          <MessageOutlined />
         </div>
       </div>
       {showAdvice && <div className={adviceStyles}>{advice}</div>}

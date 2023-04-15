@@ -9,10 +9,13 @@ import { AnswerField } from "@/components/answer_field/AnswerField";
 const { askQuestionButton, thinking } = appStrings;
 const { askQuestionPrompt } = appStrings.aiPrompts;
 
+export type InterviewMode = 'subject' | 'general'
+
 const Home: NextPage = () => {
   const [completion, setCompletion] = React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
   const [answerInput, setAnswerInput] = React.useState<string>("");
+  const [mode, setMode] = React.useState<InterviewMode>('general');
 
   const handleClick = async (e: any) => {
     setLoading(true);
@@ -32,9 +35,13 @@ const Home: NextPage = () => {
     localStorage.setItem(JSON.stringify(completion), answerInput);
   };
 
+  const handleModeClick = (mode: InterviewMode) => {
+    mode === 'general' ? setMode('subject') : setMode('general')
+  }
+
   return (
     <div className={styles.main}>
-      <Header />
+      <Header mode={mode} onModeClick={handleModeClick} />
 
       <div className={styles.container}>
         <button onClick={handleClick} className={styles.button}>

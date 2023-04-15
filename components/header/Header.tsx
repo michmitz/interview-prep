@@ -1,13 +1,24 @@
-import { appStrings } from '@/constants/appStrings'
-import React from 'react'
-import styles from './HeaderStyles.module.css'
+import { appStrings } from "@/constants/appStrings";
+import React from "react";
+import styles from "./HeaderStyles.module.css";
+import { SelectOutlined } from "@ant-design/icons";
+import { InterviewMode } from "@/pages";
 
-const { header } = appStrings
+export interface HeaderProps {
+  readonly mode: InterviewMode;
+  readonly onModeClick: (mode: InterviewMode) => void;
+}
 
-export const Header: React.FC = () => {
+const { header } = appStrings;
+
+export const Header: React.FC<HeaderProps> = ({ mode, onModeClick }) => {
   return (
     <div className={styles.container}>
-      <p className={styles.text}>{header}</p>
+      <p>{header}</p>
+      <span className={styles.modeLabelContainer} onClick={() => onModeClick(mode)}>
+        <p className={styles.modeLabel}>Mode: {mode.toUpperCase()}</p>
+        <SelectOutlined className={styles.modeIcon} />
+      </span>
     </div>
-  )
-}
+  );
+};

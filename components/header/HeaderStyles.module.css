@@ -4,11 +4,26 @@
   background-color: rgb(21, 56, 82, 0.3);
   display: flex;
   align-items: center;
-  padding-left: 1.5em;
-}
-
-.text {
+  justify-content: space-between;
+  padding: 1.5em;
   color: white;
   font-family: 'Raleway', sans-serif;
   font-weight: 500;
+}
+
+/* .text {
+  color: white;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+} */
+
+.modeLabelContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.modeLabel {
+  margin-right: 10px;
 }

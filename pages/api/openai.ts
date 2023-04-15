@@ -11,15 +11,16 @@ const openai = new OpenAIApi(configuration);
 interface ResponseProps {
   readonly role: ChatCompletionRequestMessageRoleEnum
   readonly content: string
+  readonly maxTokens: number
 }
 
-const generateResponse = async ({ role, content }: ResponseProps) => {
+const generateResponse = async ({ role, content, maxTokens }: ResponseProps) => {
   try {
     const completion = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       messages: [{ role, content }],
       temperature: 1,
-      max_tokens: 250,
+      max_tokens: maxTokens,
     })
     console.log("Completion", completion)
     return completion?.data?.choices[0].message
@@ -32,9 +33,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { role, content } = req.body
+  const { role, content, maxTokens } = req.body
 
-  const response = await generateResponse({role, content})
+  const response = await generateResponse({role, content, maxTokens})
 
   res.status(200).json({response})
 }

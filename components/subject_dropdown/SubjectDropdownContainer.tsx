@@ -2,10 +2,15 @@ import { appStrings } from '@/constants/appStrings'
 import React from 'react'
 import { SubjectDropdown } from './SubjectDropdown'
 
+interface SubjectDropdownContainerProps {
+  readonly onChange: (value: string) => void;
+}
+
 const { getSubjectsPrompt } = appStrings.aiPrompts
 
-export const SubjectDropdownContainer: React.FC = () => {
+export const SubjectDropdownContainer: React.FC<SubjectDropdownContainerProps> = ({ onChange }) => {
   const [subjects, setSubjects] = React.useState<ReadonlyArray<string>>([])
+  const [defaultValue, setDefaultValue] = React.useState<string>('')
 
   const fetchSubjects = async() => {
     const response = await fetch("/api/openai", {
@@ -22,13 +27,13 @@ export const SubjectDropdownContainer: React.FC = () => {
 
   React.useEffect(() => {
     fetchSubjects()
-    console.log('Subjects', subjects)
+    setDefaultValue(subjects[0])
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
   return (
     <>
-    {subjects.length ? <SubjectDropdown dropdownValues={subjects}/> : <>Loading</>}</>
+    {subjects.length ? <SubjectDropdown dropdownValues={subjects} defaultValue={defaultValue} onChange={onChange} /> : <>Loading</>}</>
   )
 }

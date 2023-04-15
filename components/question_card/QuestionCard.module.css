@@ -23,3 +23,19 @@
   font-family: 'Raleway', sans-serif;
   color: rgb(74, 74, 74);
 }
+
+.showAdviceLabel {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  cursor: pointer;
+}
+
+
+.showAdviceText {
+  margin-right: .3em;
+  font-size: 13px;
+  font-weight: 600;
+}

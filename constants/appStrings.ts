@@ -5,6 +5,7 @@ export const appStrings = {
   header: 'Welcome! I\'m a virtual interviewer.',
   answerField: 'Write your notes here...',
   answerSubmitButton: 'Save Answer',
+  showAdviceText: 'Show Advice?',
 }
 
 

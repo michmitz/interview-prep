@@ -2,6 +2,8 @@ import { appStrings } from '@/constants/appStrings'
 import React from 'react'
 import { SubjectDropdown } from './SubjectDropdown'
 
+const { getSubjectsPrompt } = appStrings.aiPrompts
+
 export const SubjectDropdownContainer: React.FC = () => {
   const [subjects, setSubjects] = React.useState<ReadonlyArray<string>>([])
 
@@ -11,7 +13,7 @@ export const SubjectDropdownContainer: React.FC = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ role: "user", content: appStrings.getSubjects, maxTokens: 400 }),
+      body: JSON.stringify({ role: "user", content: getSubjectsPrompt, maxTokens: 400 }),
     });
     const data = await response.json();
     const subjectsArr = data?.response.content.split('\n')

@@ -7,6 +7,7 @@ import { Header } from "@/components/header/Header";
 import { AnswerField } from "@/components/answer_field/AnswerField";
 
 const { askQuestionButton, thinking } = appStrings;
+const { askQuestionPrompt } = appStrings.aiPrompts;
 
 const Home: NextPage = () => {
   const [completion, setCompletion] = React.useState<string>("");
@@ -20,7 +21,7 @@ const Home: NextPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ role: "user", content: appStrings.prompt1, maxTokens: 250 }),
+      body: JSON.stringify({ role: "user", content: askQuestionPrompt, maxTokens: 250 }),
     });
     const data = await response.json();
     setCompletion(data.response.content);

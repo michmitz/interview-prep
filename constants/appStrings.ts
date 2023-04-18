@@ -7,7 +7,7 @@ export const appStrings = {
   thinking: 'Thinking',
   header: 'Welcome! I\'m a virtual interviewer.',
   answerField: 'Write your notes here...',
-  answerSubmitButton: 'Save Answer',
+  answerSubmitButton: 'Save Notes',
   showAdviceText: 'Show Advice?',
   subjectField: 'Enter your own subject:',
   subjectFieldPlaceholder: 'ex. JavaScript',

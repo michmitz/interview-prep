@@ -7,7 +7,7 @@ import { Header } from "@/components/header/Header";
 import { AnswerField } from "@/components/answer_field/AnswerField";
 import { SubjectField } from "@/components/subject_field/SubjectField";
 import { SubjectDropdownContainer } from "@/components/subject_dropdown/SubjectDropdownContainer";
-import { interviewSubjects } from "@/data/interviewSubjects";
+import { AISubjectDropdownContainer } from "@/components/subject_dropdown/AISubjectDropdownContainer";
 
 const { askQuestionButton, thinking } = appStrings;
 const { askQuestionPrompt } = appStrings.aiPrompts;
@@ -19,7 +19,7 @@ const Home: NextPage = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [answerInput, setAnswerInput] = React.useState<string>("");
   const [mode, setMode] = React.useState<InterviewMode>("general");
-  const [subject, setSubject] = React.useState<string>(interviewSubjects[0]);
+  const [subject, setSubject] = React.useState<string>("");
 
   const handleClick = async (e: any) => {
     const content = subject
@@ -58,7 +58,7 @@ const Home: NextPage = () => {
         {mode === "subject" && (
           <div>
             <p>Choose a subject:</p>
-            <SubjectDropdownContainer onChange={onSubjectChange} subjects={interviewSubjects} /> <p>OR</p>
+            <AISubjectDropdownContainer onChange={onSubjectChange} /> <p>OR</p>
             <SubjectField onChange={onSubjectChange} />
           </div>
         )}

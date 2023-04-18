@@ -5,22 +5,26 @@ import { QuestionCard } from "@/components/question_card/QuestionCard";
 import { appStrings } from "@/constants/appStrings";
 import { Header } from "@/components/header/Header";
 import { AnswerField } from "@/components/answer_field/AnswerField";
+import { SubjectField } from "@/components/subject_field/SubjectField";
 import { SubjectDropdownContainer } from "@/components/subject_dropdown/SubjectDropdownContainer";
+import { interviewSubjects } from "@/data/interviewSubjects";
 
 const { askQuestionButton, thinking } = appStrings;
 const { askQuestionPrompt } = appStrings.aiPrompts;
 
-export type InterviewMode = 'subject' | 'general'
+export type InterviewMode = "subject" | "general";
 
 const Home: NextPage = () => {
   const [completion, setCompletion] = React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
   const [answerInput, setAnswerInput] = React.useState<string>("");
-  const [mode, setMode] = React.useState<InterviewMode>('general');
-  const [subject, setSubject] = React.useState<string>('');
+  const [mode, setMode] = React.useState<InterviewMode>("general");
+  const [subject, setSubject] = React.useState<string>(interviewSubjects[0]);
 
   const handleClick = async (e: any) => {
-    const content = subject ? `${askQuestionPrompt} The interview subject is ${subject}.` : askQuestionPrompt;
+    const content = subject
+      ? `${askQuestionPrompt} The interview subject is ${subject}.`
+      : askQuestionPrompt;
     setLoading(true);
     const response = await fetch("/api/openai", {
       method: "POST",
@@ -39,21 +43,25 @@ const Home: NextPage = () => {
   };
 
   const handleModeClick = (mode: InterviewMode) => {
-    mode === 'general' ? setMode('subject') : setMode('general')
-  }
+    mode === "general" ? setMode("subject") : setMode("general");
+  };
 
   const onSubjectChange = (value: string) => {
-    setSubject(value)
-  }
+    setSubject(value);
+  };
 
   return (
     <div className={styles.main}>
       <Header mode={mode} onModeClick={handleModeClick} />
 
       <div className={styles.container}>
-        {
-          mode === 'subject' && <SubjectDropdownContainer onChange={onSubjectChange} />
-        }
+        {mode === "subject" && (
+          <div>
+            <p>Choose a subject:</p>
+            <SubjectDropdownContainer onChange={onSubjectChange} subjects={interviewSubjects} /> <p>OR</p>
+            <SubjectField onChange={onSubjectChange} />
+          </div>
+        )}
         <button onClick={handleClick} className={styles.button}>
           {askQuestionButton}
         </button>

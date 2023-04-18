@@ -34,7 +34,9 @@ const Home: NextPage = () => {
       body: JSON.stringify({ role: "user", content: content, maxTokens: 250 }),
     });
     const data = await response.json();
-    setCompletion(data.response.content);
+    if (data) {
+      setCompletion(data.response.content);
+    }
     setLoading(false);
   };
 
@@ -43,6 +45,7 @@ const Home: NextPage = () => {
   };
 
   const handleModeClick = (mode: InterviewMode) => {
+    setCompletion("");
     mode === "general" ? setMode("subject") : setMode("general");
   };
 

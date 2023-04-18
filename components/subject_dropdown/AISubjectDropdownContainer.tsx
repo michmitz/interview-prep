@@ -21,8 +21,9 @@ export const AISubjectDropdownContainer: React.FC<AISubjectDropdownContainerProp
       body: JSON.stringify({ role: "user", content: getSubjectsPrompt, maxTokens: 400 }),
     });
     const data = await response.json();
-    const subjectsArr = data?.response?.content.split('\n')
-    setSubjects(subjectsArr);
+    if (data) {
+      setSubjects(data.response.content.split('\n'))
+    }
   }
 
   React.useEffect(() => {

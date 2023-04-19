@@ -19,10 +19,10 @@ const Home: NextPage = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [answerInput, setAnswerInput] = React.useState<string>("");
   const [mode, setMode] = React.useState<InterviewMode>("general");
-  const [subject, setSubject] = React.useState<string>("");
+  const [subject, setSubject] = React.useState<string>("JavaScript");
 
   const handleClick = async (e: any) => {
-    const content = subject
+    const content = mode === 'subject'
       ? `${askQuestionPrompt} The interview subject is ${subject}.`
       : askQuestionPrompt;
     setLoading(true);
@@ -60,8 +60,6 @@ const Home: NextPage = () => {
       <div className={styles.container}>
         {mode === "subject" && (
           <div>
-            <p>Choose a subject:</p>
-            <AISubjectDropdownContainer onChange={onSubjectChange} /> <p>OR</p>
             <SubjectField onChange={onSubjectChange} />
           </div>
         )}

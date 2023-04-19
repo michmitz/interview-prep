@@ -1,14 +1,17 @@
 export const appStrings = {
   aiPrompts: {
     askQuestionPrompt: 'Pretend you are interviewing me for a software engineer position. Ask me one question, then give me an example answer. Label question and answer.',
-    getSubjectsPrompt: 'Generate an array of software engineer interview subjects',
+    getSubjectsPrompt: 'Generate an array of software engineer interview subjects, including frontend and backend technologies',
   },
   askQuestionButton: 'Ask Me a Question',
   thinking: 'Thinking',
   header: 'Welcome! I\'m a virtual interviewer.',
   answerField: 'Write your notes here...',
-  answerSubmitButton: 'Save Answer',
+  answerSubmitButton: 'Save Notes',
   showAdviceText: 'Show Advice?',
+  subjectField: 'Enter your own subject:',
+  subjectFieldPlaceholder: 'ex. JavaScript',
+  subjectSubmitButton: 'Submit Subject',
 }
 
 

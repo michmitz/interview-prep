@@ -1,13 +1,11 @@
 import React from "react";
 import type { NextPage } from "next";
 import styles from "../styles/Home.module.css";
-import { QuestionCard } from "@/components/question_card/QuestionCard";
+import { QuestionCard } from "@/components/atoms/question_card/QuestionCard";
 import { appStrings } from "@/constants/appStrings";
-import { Header } from "@/components/header/Header";
-import { AnswerField } from "@/components/answer_field/AnswerField";
-import { SubjectField } from "@/components/subject_field/SubjectField";
-import { SubjectDropdownContainer } from "@/components/subject_dropdown/SubjectDropdownContainer";
-import { AISubjectDropdownContainer } from "@/components/subject_dropdown/AISubjectDropdownContainer";
+import { Header } from "@/components/atoms/header/Header";
+import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
+import { SubjectField } from "@/components/atoms/subject_field/SubjectField";
 
 const { askQuestionButton, thinking } = appStrings;
 const { askQuestionPrompt } = appStrings.aiPrompts;

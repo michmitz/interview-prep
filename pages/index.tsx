@@ -10,6 +10,7 @@ import { QuestionNotesSection } from "@/components/molecules/question_notes_sect
 
 const { askQuestionButton, thinking } = appStrings;
 const { askQuestionPrompt } = appStrings.aiPrompts;
+const { welcome } = appStrings.header;
 
 export type InterviewMode = "subject" | "general";
 
@@ -22,7 +23,6 @@ const Home: NextPage = () => {
   // const addNote = (note: any) => {
   //   setUpdatedNotes([...updatedNotes, note]);
   // };
-
 
   const handleClick = async (e: any) => {
     const content =
@@ -55,7 +55,7 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.main}>
-      <Header mode={mode} onModeClick={handleModeClick} />
+      <Header headerText={welcome} mode={mode} onModeClick={handleModeClick} />
 
       <div className={styles.container}>
         {mode === "subject" && (

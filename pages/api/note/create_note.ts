@@ -11,6 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               note,
             },
         })
+        console.log("Result", result)
         return res.json(result)
     }
 }

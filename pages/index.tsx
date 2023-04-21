@@ -6,8 +6,6 @@ import { appStrings } from "@/constants/appStrings";
 import { Header } from "@/components/header/Header";
 import { AnswerField } from "@/components/answer_field/AnswerField";
 import { SubjectField } from "@/components/subject_field/SubjectField";
-import { SubjectDropdownContainer } from "@/components/subject_dropdown/SubjectDropdownContainer";
-import { AISubjectDropdownContainer } from "@/components/subject_dropdown/AISubjectDropdownContainer";
 
 const { askQuestionButton, thinking } = appStrings;
 const { askQuestionPrompt } = appStrings.aiPrompts;

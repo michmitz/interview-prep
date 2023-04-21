@@ -18,11 +18,19 @@ const Home: NextPage = () => {
   const [answerInput, setAnswerInput] = React.useState<string>("");
   const [mode, setMode] = React.useState<InterviewMode>("general");
   const [subject, setSubject] = React.useState<string>("JavaScript");
+  const [updatedNotes, setUpdatedNotes] = React.useState<any>([]);
+  const [noteMessage, setNoteMessage] = React.useState<string>("");
+
+  // const addNote = (note: any) => {
+  //   setUpdatedNotes([...updatedNotes, note]);
+  // };
+
 
   const handleClick = async (e: any) => {
-    const content = mode === 'subject'
-      ? `${askQuestionPrompt} The interview subject is ${subject}.`
-      : askQuestionPrompt;
+    const content =
+      mode === "subject"
+        ? `${askQuestionPrompt} The interview subject is ${subject}.`
+        : askQuestionPrompt;
     setLoading(true);
     const response = await fetch("/api/openai", {
       method: "POST",
@@ -38,8 +46,29 @@ const Home: NextPage = () => {
     setLoading(false);
   };
 
-  const handleSubmit = () => {
-    localStorage.setItem(JSON.stringify(completion), answerInput);
+  const handleSubmitNote = async () => {
+    const data = {
+      question: completion.split("Answer:")[0],
+      advice: completion.split("Answer")[1],
+      note: answerInput,
+    };
+
+    const response = await fetch("/api/note/create_note", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.status === 200) {
+      console.log("Response", response);
+      console.log("data", data);
+      setNoteMessage("Note successfully created");
+      setUpdatedNotes([...updatedNotes, data]);
+    } else {
+      setNoteMessage("Note failed")
+    }
   };
 
   const handleModeClick = (mode: InterviewMode) => {
@@ -74,9 +103,27 @@ const Home: NextPage = () => {
             <QuestionCard response={completion} />
             <AnswerField
               onChange={(e) => setAnswerInput(e)}
-              onSubmit={handleSubmit}
+              onSubmit={handleSubmitNote}
             />
           </>
+        )}
+        {/* Temporary success note */}
+        {noteMessage && (
+          <div
+            style={{
+              width: 200,
+              height: 50,
+              backgroundColor: "gray",
+              color: "black",
+              marginTop: 10,
+              padding: 10,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <p>{noteMessage}</p>
+          </div>
         )}
       </div>
     </div>

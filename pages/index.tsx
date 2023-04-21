@@ -6,6 +6,7 @@ import { appStrings } from "@/constants/appStrings";
 import { Header } from "@/components/atoms/header/Header";
 import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
 import { SubjectField } from "@/components/atoms/subject_field/SubjectField";
+import { QuestionNotesSection } from "@/components/molecules/question_notes_section/QuestionNotesSection";
 
 const { askQuestionButton, thinking } = appStrings;
 const { askQuestionPrompt } = appStrings.aiPrompts;
@@ -15,11 +16,8 @@ export type InterviewMode = "subject" | "general";
 const Home: NextPage = () => {
   const [completion, setCompletion] = React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
-  const [answerInput, setAnswerInput] = React.useState<string>("");
   const [mode, setMode] = React.useState<InterviewMode>("general");
   const [subject, setSubject] = React.useState<string>("JavaScript");
-  const [updatedNotes, setUpdatedNotes] = React.useState<any>([]);
-  const [noteMessage, setNoteMessage] = React.useState<string>("");
 
   // const addNote = (note: any) => {
   //   setUpdatedNotes([...updatedNotes, note]);
@@ -44,31 +42,6 @@ const Home: NextPage = () => {
       setCompletion(data.response.content);
     }
     setLoading(false);
-  };
-
-  const handleSubmitNote = async () => {
-    const data = {
-      question: completion.split("Answer:")[0],
-      advice: completion.split("Answer")[1],
-      note: answerInput,
-    };
-
-    const response = await fetch("/api/note/create_note", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (response.status === 200) {
-      console.log("Response", response);
-      console.log("data", data);
-      setNoteMessage("Note successfully created");
-      setUpdatedNotes([...updatedNotes, data]);
-    } else {
-      setNoteMessage("Note failed")
-    }
   };
 
   const handleModeClick = (mode: InterviewMode) => {
@@ -100,30 +73,8 @@ const Home: NextPage = () => {
         )}
         {completion && (
           <>
-            <QuestionCard response={completion} />
-            <AnswerField
-              onChange={(e) => setAnswerInput(e)}
-              onSubmit={handleSubmitNote}
-            />
+           <QuestionNotesSection aiResponse={completion} />
           </>
-        )}
-        {/* Temporary success note */}
-        {noteMessage && (
-          <div
-            style={{
-              width: 200,
-              height: 50,
-              backgroundColor: "gray",
-              color: "black",
-              marginTop: 10,
-              padding: 10,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <p>{noteMessage}</p>
-          </div>
         )}
       </div>
     </div>

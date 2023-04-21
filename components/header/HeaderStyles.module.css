@@ -17,13 +17,18 @@
   font-weight: 500;
 } */
 
-.modeLabelContainer {
+.labelContainer {
   display: flex;
   flex-direction: row;
   justify-content: center;
   cursor: pointer;
 }
 
-.modeLabel {
+.label {
+  margin-right: 10px;
+}
+
+.notesLabel {
+  margin-left: 20px;
   margin-right: 10px;
 }

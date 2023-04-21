@@ -10,7 +10,7 @@ export interface HeaderProps {
   readonly onModeClick: (mode: InterviewMode) => void;
 }
 
-const { header } = appStrings;
+const { headerText, modeLabel, subjectMode, generalMode, notes } = appStrings.header;
 
 export const Header: React.FC<HeaderProps> = ({ mode, onModeClick }) => {
   const router = useRouter();
@@ -21,14 +21,14 @@ export const Header: React.FC<HeaderProps> = ({ mode, onModeClick }) => {
 
   return (
     <div className={styles.container}>
-      <p>{header}</p>
+      <p>{headerText}</p>
 
       <div className={styles.labelContainer}>
       <span
         className={styles.labelContainer}
         onClick={() => onModeClick(mode)}
       >
-        <p className={styles.label}>Mode: {mode.toUpperCase()}</p>
+        <p className={styles.label}>{modeLabel}: {mode.toUpperCase()}</p>
         <SelectOutlined />
       </span>
 
@@ -36,7 +36,7 @@ export const Header: React.FC<HeaderProps> = ({ mode, onModeClick }) => {
         className={styles.labelContainer}
         onClick={() => handleNotesClick()}
       >
-        <p className={styles.notesLabel}>View Notes</p>
+        <p className={styles.notesLabel}>{notes}</p>
         <FormOutlined />
       </span>
       </div>

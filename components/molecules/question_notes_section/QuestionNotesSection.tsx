@@ -12,8 +12,11 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
   const [updatedNotes, setUpdatedNotes] = React.useState<any>([]);
   const [noteMessage, setNoteMessage] = React.useState<string>("");
   const [answerInput, setAnswerInput] = React.useState<string>("");
+  const [noteSaving, setNoteSaving] = React.useState<boolean>(false);
+  const [showAnswerField, setShowAnswerField] = React.useState<boolean>(true);
 
   const handleSubmitNote = async () => {
+    setNoteSaving(true);
     const data = {
       question: aiResponse.split("Answer:")[0],
       advice: aiResponse.split("Answer")[1],
@@ -29,22 +32,27 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
     });
 
     if (response.status === 200) {
+      setNoteSaving(false);
       console.log("Response", response);
       console.log("data", data);
       setNoteMessage("Note successfully created");
       setUpdatedNotes([...updatedNotes, data]);
+      setShowAnswerField(false);
     } else {
-      setNoteMessage("Uh oh! Note failed");
+      setNoteMessage("Note failed");
     }
   };
 
   return (
     <div>
       <QuestionCard response={aiResponse} />
-      <AnswerField
-        onChange={(e) => setAnswerInput(e)}
-        onSubmit={handleSubmitNote}
-      />
+      {showAnswerField && (
+        <AnswerField
+          onChange={(e) => setAnswerInput(e)}
+          onSubmit={handleSubmitNote}
+          loading={noteSaving}
+        />
+      )}
       {/* Temporary success note */}
       {noteMessage && (
         <div

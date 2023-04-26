@@ -4,13 +4,16 @@ import React from "react";
 
 export interface QuestionNotesSectionProps {
   readonly aiResponse: string;
+  readonly noteResponse: string;
+  readonly setNoteResponse: (message: string) => void;
 }
 
 export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
   aiResponse,
+  noteResponse,
+  setNoteResponse,
 }) => {
   const [updatedNotes, setUpdatedNotes] = React.useState<any>([]);
-  const [noteMessage, setNoteMessage] = React.useState<string>("");
   const [answerInput, setAnswerInput] = React.useState<string>("");
   const [noteSaving, setNoteSaving] = React.useState<boolean>(false);
   const [showAnswerField, setShowAnswerField] = React.useState<boolean>(true);
@@ -35,11 +38,11 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
       setNoteSaving(false);
       console.log("Response", response);
       console.log("data", data);
-      setNoteMessage("Note successfully created");
+      setNoteResponse("Note successfully created");
       setUpdatedNotes([...updatedNotes, data]);
       setShowAnswerField(false);
     } else {
-      setNoteMessage("Note failed");
+      setNoteResponse("Note failed");
     }
   };
 
@@ -54,7 +57,7 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
         />
       )}
       {/* Temporary success note */}
-      {noteMessage && (
+      {noteResponse && (
         <div
           style={{
             width: 200,
@@ -68,7 +71,7 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
             alignItems: "center",
           }}
         >
-          <p>{noteMessage}</p>
+          <p>{noteResponse}</p>
         </div>
       )}
     </div>

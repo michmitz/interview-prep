@@ -18,12 +18,16 @@ const Home: NextPage = () => {
   const [questionLoading, setQuestionLoading] = React.useState<boolean>(false);
   const [mode, setMode] = React.useState<InterviewMode>("general");
   const [subject, setSubject] = React.useState<string>("JavaScript");
+  const [noteResponse, setNoteResponse] = React.useState<string>("");
+
 
   // const addNote = (note: any) => {
   //   setUpdatedNotes([...updatedNotes, note]);
   // };
 
   const handleClick = async (e: any) => {
+    setCompletion('')
+    setNoteResponse('')
     const content =
       mode === "subject"
         ? `${askQuestionPrompt} The interview subject is ${subject}.`
@@ -76,7 +80,8 @@ const Home: NextPage = () => {
         )}
         {completion && (
           <>
-            <QuestionNotesSection aiResponse={completion} />
+            <QuestionNotesSection aiResponse={completion} noteResponse={noteResponse} setNoteResponse={setNoteResponse}
+             />
           </>
         )}
       </div>

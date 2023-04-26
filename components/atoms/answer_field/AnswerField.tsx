@@ -2,6 +2,7 @@ import { appStrings } from "@/constants/appStrings";
 import React from "react";
 import styles from "./AnswerField.module.css";
 import { LoadingOutlined } from "@ant-design/icons";
+
 interface AnswerFieldProps {
   readonly onChange: (e: string) => void;
   readonly onSubmit: () => void;
@@ -15,6 +16,7 @@ export const AnswerField: React.FC<AnswerFieldProps> = ({
   onSubmit,
   loading,
 }) => {
+  const disabledButtonStyles = `${styles.button} ${styles.disabledButton}`
   return (
     <div className={styles.container}>
       <textarea
@@ -22,7 +24,7 @@ export const AnswerField: React.FC<AnswerFieldProps> = ({
         onChange={(e) => onChange(e.target.value)}
         placeholder={answerField}
       />
-      <button onClick={onSubmit} className={styles.button} disabled={loading}>
+      <button onClick={onSubmit} className={loading ? disabledButtonStyles : styles.button} disabled={loading}>
         {loading ? <LoadingOutlined /> : answerSubmitButton}
       </button>
     </div>

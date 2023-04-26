@@ -31,3 +31,7 @@
   color: white;
   cursor: pointer;
 }
+
+.disabledButton {
+  opacity: .3;
+}

@@ -20,6 +20,7 @@ const Home: NextPage = () => {
   const [subject, setSubject] = React.useState<string>("JavaScript");
   const [noteResponse, setNoteResponse] = React.useState<string>("");
 
+  const disabledButtonStyles = `${styles.button} ${styles.disabledButton}`
 
   // const addNote = (note: any) => {
   //   setUpdatedNotes([...updatedNotes, note]);
@@ -68,7 +69,7 @@ const Home: NextPage = () => {
         )}
         <button
           onClick={handleClick}
-          className={styles.button}
+          className={questionLoading ? disabledButtonStyles : styles.button}
           disabled={questionLoading}
         >
           {questionLoading ? <LoadingOutlined /> : askQuestionButton}

@@ -41,6 +41,13 @@ const { notesPage } = appStrings.header;
 
 const Notes: NextPage<NotesProps> = ({ notes }) => {
   const { data: session } = useSession();
+  const [notesToEdit, setNotesToEdit] = React.useState<ReadonlyArray<string>>([
+    "",
+  ]);
+
+  const handleShowEditNote = (noteId: string) => {
+    setNotesToEdit([...notesToEdit, noteId]);
+  };
 
   console.log("notes", notes);
   if (!session) {
@@ -57,13 +64,44 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
       Notes Page
       {notes.map((note) => {
         return (
-          <div style={{ display: "flex", flexDirection: "column", width: 400, marginBottom: 20 }} key={note.id}>
-            <div style={{ padding: 10, backgroundColor: "pink", color: "white" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              width: 400,
+              marginBottom: 20,
+            }}
+            key={note.id}
+          >
+            <div
+              style={{ padding: 10, backgroundColor: "pink", color: "white" }}
+            >
               {note.question}
             </div>
-            <div style={{ padding: 10, backgroundColor: "gray", color: "white" }}>
+            <div
+              style={{ padding: 10, backgroundColor: "gray", color: "white" }}
+            >
               Your Note: {note.note}
             </div>
+            <div>
+              <button onClick={() => handleShowEditNote(note.id)}>
+                Update Note?
+              </button>
+            </div>
+
+            {notesToEdit.includes(note.id) ? (
+              <div
+                style={{
+                  backgroundColor: "white",
+                  color: "black",
+                  opacity: 0.5,
+                }}
+              >
+                NOTE EDITOR
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         );
       })}

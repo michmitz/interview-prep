@@ -24,10 +24,6 @@ const Home: NextPage = () => {
 
   const disabledButtonStyles = `${styles.button} ${styles.disabledButton}`;
 
-  // const addNote = (note: any) => {
-  //   setUpdatedNotes([...updatedNotes, note]);
-  // };
-
   const handleClick = async (e: any) => {
     setCompletion("");
     setNoteResponse("");

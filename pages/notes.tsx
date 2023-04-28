@@ -4,10 +4,21 @@ import styles from "../styles/Home.module.css";
 import prisma from '@/lib/prisma';
 import { Header } from '@/components/atoms/header/Header';
 import { appStrings } from '@/constants/appStrings';
+import { getSession } from 'next-auth/react';
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getSession({ req })
 
-  const notes = await prisma.note.findMany({});
+  if (!session) {
+    res.statusCode = 403;
+    return { props: { notes: [] } };
+  }
+
+  const notes = await prisma.note.findMany({
+    where: {
+      author: { email: session?.user?.email },
+    }
+  });
 
   return {
       props: { notes },

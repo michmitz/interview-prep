@@ -13,7 +13,6 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
   noteResponse,
   setNoteResponse,
 }) => {
-  const [updatedNotes, setUpdatedNotes] = React.useState<any>([]);
   const [answerInput, setAnswerInput] = React.useState<string>("");
   const [noteSaving, setNoteSaving] = React.useState<boolean>(false);
   const [showAnswerField, setShowAnswerField] = React.useState<boolean>(true);
@@ -36,10 +35,7 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
 
     if (response.status === 200) {
       setNoteSaving(false);
-      console.log("Response", response);
-      console.log("data", data);
       setNoteResponse("Note successfully created");
-      setUpdatedNotes([...updatedNotes, data]);
       setShowAnswerField(false);
     } else {
       setNoteResponse("Note failed");

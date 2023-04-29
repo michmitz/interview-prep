@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import { Header } from "@/components/atoms/header/Header";
 import { appStrings } from "@/constants/appStrings";
 import { getSession, signIn, useSession } from "next-auth/react";
+import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
 
 type Note = {
   readonly id: string;
@@ -12,6 +13,11 @@ type Note = {
   readonly advice: string;
   readonly authorId: string;
   readonly note: string;
+};
+
+type UpdatedNote = {
+  id: string;
+  updatedNote: string;
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
@@ -40,16 +46,60 @@ interface NotesProps {
 const { notesPage } = appStrings.header;
 
 const Notes: NextPage<NotesProps> = ({ notes }) => {
+  // const [noteSaving, setNoteSaving] = React.useState<boolean>(false);
+  // const [showAnswerField, setShowAnswerField] = React.useState<boolean>(true);
   const { data: session } = useSession();
   const [notesToEdit, setNotesToEdit] = React.useState<ReadonlyArray<string>>([
     "",
   ]);
+  const [notesWithUpdatedAnswers, setNotesWithUpdatedAnswers] = React.useState<
+    UpdatedNote[] | []
+  >([]);
+  const [noteResponse, setNoteResponse] = React.useState<string>("");
 
   const handleShowEditNote = (noteId: string) => {
     setNotesToEdit([...notesToEdit, noteId]);
   };
 
-  console.log("notes", notes);
+  const handleSetAnswerInputs = (note: UpdatedNote) => {
+    const updatedNoteIndex = notesWithUpdatedAnswers.findIndex(e => e.id === note.id);
+    const notesCopy = [...notesWithUpdatedAnswers]
+
+    if (notesWithUpdatedAnswers.length === 0) {
+      setNotesWithUpdatedAnswers([note]);
+    }
+
+    if (updatedNoteIndex === -1) {
+      setNotesWithUpdatedAnswers([...notesCopy, note]);
+    } else { 
+      setNotesWithUpdatedAnswers([...notesCopy.splice(updatedNoteIndex, 1, note)]); }
+  };
+
+  const handleSubmitNote = async (id: string) => {
+    const updatedNote = notesWithUpdatedAnswers.find((x) => x.id === id);
+    // console.log('updated note', updatedNote)
+    // setNoteSaving(true);
+
+    const data = {
+      note: updatedNote?.updatedNote,
+    };
+
+    const response = await fetch(`/api/note/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.status === 200) {
+      setNoteResponse("Note successfully updated");
+      // setShowAnswerField(false);
+    } else {
+      setNoteResponse("Note update failed");
+    }
+  };
+
   if (!session) {
     return (
       <div>
@@ -84,27 +134,46 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
               Your Note: {note.note}
             </div>
             <div>
-              <button onClick={() => handleShowEditNote(note.id)}>
+              {/* Hide after click */}
+              <button onClick={() => handleShowEditNote(note.id)} key={note.id}>
                 Update Note?
               </button>
             </div>
 
             {notesToEdit.includes(note.id) ? (
-              <div
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  opacity: 0.5,
-                }}
-              >
-                NOTE EDITOR
-              </div>
+              <AnswerField
+                onChange={(e) => {
+                  handleSetAnswerInputs({
+                    id: note.id,
+                    updatedNote: e,
+                  } as UpdatedNote)}
+                }
+                onSubmit={() => handleSubmitNote(note.id)}
+              />
             ) : (
               <></>
             )}
           </div>
         );
       })}
+      {/* Temporary success note */}
+      {noteResponse && (
+        <div
+          style={{
+            width: 200,
+            height: 50,
+            backgroundColor: "gray",
+            color: "black",
+            marginTop: 10,
+            padding: 10,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <p>{noteResponse}</p>
+        </div>
+      )}
     </div>
   );
 };

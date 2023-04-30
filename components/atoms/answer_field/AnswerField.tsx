@@ -6,7 +6,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 interface AnswerFieldProps {
   readonly onChange: (e: string) => void;
   readonly onSubmit: () => void;
-  readonly loading: boolean;
+  readonly loading?: boolean;
 }
 
 const { answerField, answerSubmitButton } = appStrings;

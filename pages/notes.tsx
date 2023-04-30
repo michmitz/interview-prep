@@ -6,6 +6,7 @@ import { Header } from "@/components/atoms/header/Header";
 import { appStrings } from "@/constants/appStrings";
 import { getSession, signIn, useSession } from "next-auth/react";
 import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
+import { useRouter } from "next/router";
 
 type Note = {
   readonly id: string;
@@ -46,8 +47,12 @@ interface NotesProps {
 const { notesPage } = appStrings.header;
 
 const Notes: NextPage<NotesProps> = ({ notes }) => {
-  // const [noteSaving, setNoteSaving] = React.useState<boolean>(false);
-  // const [showAnswerField, setShowAnswerField] = React.useState<boolean>(true);
+  const router = useRouter()
+
+  const refreshData = () => {
+    router.replace(router.asPath);
+  }
+
   const { data: session } = useSession();
   const [notesToEdit, setNotesToEdit] = React.useState<ReadonlyArray<string>>([
     "",
@@ -72,13 +77,12 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
     if (updatedNoteIndex === -1) {
       setNotesWithUpdatedAnswers([...notesCopy, note]);
     } else { 
-      setNotesWithUpdatedAnswers([...notesCopy.splice(updatedNoteIndex, 1, note)]); }
+      notesCopy.splice(updatedNoteIndex, 1, note)
+      setNotesWithUpdatedAnswers(notesCopy); }
   };
 
   const handleSubmitNote = async (id: string) => {
     const updatedNote = notesWithUpdatedAnswers.find((x) => x.id === id);
-    // console.log('updated note', updatedNote)
-    // setNoteSaving(true);
 
     const data = {
       note: updatedNote?.updatedNote,
@@ -94,7 +98,7 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
 
     if (response.status === 200) {
       setNoteResponse("Note successfully updated");
-      // setShowAnswerField(false);
+      refreshData();
     } else {
       setNoteResponse("Note update failed");
     }
@@ -108,6 +112,7 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
       </div>
     );
   }
+
   return (
     <div className={styles.main}>
       <Header headerText={notesPage} />

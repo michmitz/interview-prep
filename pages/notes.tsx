@@ -131,6 +131,11 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
     );
   }
 
+  const disableButton = (noteId: string) => { 
+    const updatedNote = notesWithUpdatedAnswers.find((x) => x.id === noteId)
+    return updatedNote?.updatedNote === '' ? true : !updatedNote ? true : false
+  }
+
   return (
     <div className={styles.main}>
       <Header headerText={notesPage} />
@@ -173,6 +178,7 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
                   } as UpdatedNote);
                 }}
                 onSubmit={() => handleSubmitNote(note.id)}
+                disableButton={disableButton(note.id)}
               />
             ) : (
               <></>

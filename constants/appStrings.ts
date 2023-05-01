@@ -13,16 +13,9 @@ export const appStrings = {
     returnHome: 'Return to Interview',
   },
   answerField: 'Write your notes here...',
-  answerSubmitButton: 'Save Notes',
+  answerSubmitButton: 'Save Note',
   showAdviceText: 'Show Advice?',
   subjectField: 'Enter your own subject:',
   subjectFieldPlaceholder: 'ex. JavaScript',
   subjectSubmitButton: 'Submit Subject',
 }
-
-
-// Todo: add prompts by experience level, interviewer difficulty, question types:
-// Experience levels: Bootcamp grad (junior dev), Mid-level, senior-level
-// Interviewer difficulty: kind, moderate, I don't want to work there
-// Q types: STAR (anecdotal), code challenges, 
-// Type of company

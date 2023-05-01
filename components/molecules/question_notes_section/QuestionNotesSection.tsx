@@ -50,6 +50,7 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
           onChange={(e) => setAnswerInput(e)}
           onSubmit={handleSubmitNote}
           loading={noteSaving}
+          disableButton={noteSaving || !answerInput}
         />
       )}
       {/* Temporary success note */}

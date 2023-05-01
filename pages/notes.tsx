@@ -47,11 +47,11 @@ interface NotesProps {
 const { notesPage } = appStrings.header;
 
 const Notes: NextPage<NotesProps> = ({ notes }) => {
-  const router = useRouter()
+  const router = useRouter();
 
   const refreshData = () => {
     router.replace(router.asPath);
-  }
+  };
 
   const { data: session } = useSession();
   const [notesToEdit, setNotesToEdit] = React.useState<ReadonlyArray<string>>([
@@ -67,8 +67,10 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
   };
 
   const handleSetAnswerInputs = (note: UpdatedNote) => {
-    const updatedNoteIndex = notesWithUpdatedAnswers.findIndex(e => e.id === note.id);
-    const notesCopy = [...notesWithUpdatedAnswers]
+    const updatedNoteIndex = notesWithUpdatedAnswers.findIndex(
+      (e) => e.id === note.id
+    );
+    const notesCopy = [...notesWithUpdatedAnswers];
 
     if (notesWithUpdatedAnswers.length === 0) {
       setNotesWithUpdatedAnswers([note]);
@@ -76,9 +78,10 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
 
     if (updatedNoteIndex === -1) {
       setNotesWithUpdatedAnswers([...notesCopy, note]);
-    } else { 
-      notesCopy.splice(updatedNoteIndex, 1, note)
-      setNotesWithUpdatedAnswers(notesCopy); }
+    } else {
+      notesCopy.splice(updatedNoteIndex, 1, note);
+      setNotesWithUpdatedAnswers(notesCopy);
+    }
   };
 
   const handleSubmitNote = async (id: string) => {
@@ -101,6 +104,21 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
       refreshData();
     } else {
       setNoteResponse("Note update failed");
+    }
+  };
+
+  const handleDeleteNote = async (id: string) => {
+    const response = await fetch(`/api/note/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.status === 200) {
+      refreshData();
+    } else {
+      setNoteResponse("Delete failed");
     }
   };
 
@@ -143,6 +161,7 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
               <button onClick={() => handleShowEditNote(note.id)} key={note.id}>
                 Update Note?
               </button>
+              <button onClick={() => handleDeleteNote(note.id)}>Delete</button>
             </div>
 
             {notesToEdit.includes(note.id) ? (
@@ -151,8 +170,8 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
                   handleSetAnswerInputs({
                     id: note.id,
                     updatedNote: e,
-                  } as UpdatedNote)}
-                }
+                  } as UpdatedNote);
+                }}
                 onSubmit={() => handleSubmitNote(note.id)}
               />
             ) : (

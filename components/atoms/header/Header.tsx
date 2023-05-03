@@ -33,8 +33,8 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <div className={styles.container}>
-      <p>{headerText}</p>
+    <div className={`${styles.container} glassEffect`}>
+      <p className={styles.headerText}>{headerText}</p>
 
       <div className={styles.labelContainer}>
         {mode && onModeClick ? (

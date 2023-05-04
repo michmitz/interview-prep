@@ -2,6 +2,9 @@
   border-radius: 20px;
   font-weight: 400;
   color: white;
+  padding: 1em;
+  margin-top: 10px;
+  /* background: rgba(146, 184, 255, 0.203); */
 }
 
 .advice {

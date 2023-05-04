@@ -15,7 +15,8 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
 }) => {
   const [answerInput, setAnswerInput] = React.useState<string>("");
   const [noteSaving, setNoteSaving] = React.useState<boolean>(false);
-  const [showAnswerField, setShowAnswerField] = React.useState<boolean>(true);
+  const [showAnswerField, setShowAnswerField] = React.useState<boolean>(false);
+  const [showNotesButton, setShowNotesButton] = React.useState<boolean>(true);
 
   const handleSubmitNote = async () => {
     setNoteSaving(true);
@@ -45,6 +46,16 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
   return (
     <div>
       <QuestionCard response={aiResponse} />
+      {showNotesButton && (
+        <button
+          onClick={() => {
+            setShowAnswerField(true);
+            setShowNotesButton(false);
+          }}
+        >
+          Write a Note?
+        </button>
+      )}
       {showAnswerField && (
         <AnswerField
           onChange={(e) => setAnswerInput(e)}

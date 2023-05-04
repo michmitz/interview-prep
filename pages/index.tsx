@@ -102,11 +102,9 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className={styles.main}>
-      <>
-        Not signed in <br />
-        <button onClick={() => signIn()}>Sign in</button>
-      </>
+    <div>
+      Not signed in <br />
+      <button onClick={() => signIn()}>Sign in</button>
     </div>
   );
 };

@@ -57,7 +57,7 @@ const Home: NextPage = () => {
 
   if (session) {
     return (
-      <div className={styles.main}>
+      <div>
         <Header
           headerText={welcome}
           mode={mode}

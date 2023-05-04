@@ -1,16 +1,4 @@
-.main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-image: url('/background.jpg');
-  height: 100vh;
-  width: 100vw;
-  background-size: cover;
-}
-
 .container {
-  width: 60%;
-  max-width: 700px;
   display: flex;
   flex-direction: column;
   justify-content: center;

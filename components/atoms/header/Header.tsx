@@ -33,7 +33,7 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <div className={`${styles.container} lightGlassEffect`}>
+    <div className={styles.container}>
       <p className={styles.headerText}>{headerText}</p>
 
       <div className={styles.labelContainer}>

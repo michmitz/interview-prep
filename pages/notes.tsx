@@ -129,7 +129,7 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
 
   if (session) {
     return (
-      <div className="container fadeIn">
+      <div className="container">
         <div className="sidebar">
         <Sidebar
           headerText={notesPage}

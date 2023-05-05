@@ -57,9 +57,9 @@ const Home: NextPage = () => {
 
   if (session) {
     return (
-      <div className="container fadeIn">
+      <div className="container">
 
-        <div className="sidebar fadeIn">
+        <div className="sidebar">
         <Sidebar
           headerText={welcome}
           mode={mode}

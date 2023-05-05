@@ -6,7 +6,7 @@ import { Sidebar } from "@/components/atoms/sidebar/Sidebar";
 import { SubjectField } from "@/components/atoms/subject_field/SubjectField";
 import { QuestionNotesSection } from "@/components/molecules/question_notes_section/QuestionNotesSection";
 import { LoadingOutlined } from "@ant-design/icons";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 
 const { askQuestionButton, thinking } = appStrings;
 const { askQuestionPrompt } = appStrings.aiPrompts;
@@ -57,9 +57,9 @@ const Home: NextPage = () => {
 
   if (session) {
     return (
-      <div className="container">
+      <div className="container fadeIn">
 
-        <div className="sidebar">
+        <div className="sidebar fadeIn">
         <Sidebar
           headerText={welcome}
           mode={mode}

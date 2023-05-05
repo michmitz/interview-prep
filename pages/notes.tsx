@@ -2,7 +2,7 @@ import React from "react";
 import { GetServerSideProps, NextPage } from "next";
 import styles from "../styles/Home.module.css";
 import prisma from "@/lib/prisma";
-import { Header } from "@/components/atoms/header/Header";
+import { Sidebar } from "@/components/atoms/sidebar/Sidebar";
 import { appStrings } from "@/constants/appStrings";
 import { getSession, signIn, useSession } from "next-auth/react";
 import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
@@ -129,8 +129,16 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
 
   if (session) {
     return (
-      <div className={styles.main}>
-        <Header headerText={notesPage} />
+      <div className="container">
+        <div className="sidebar">
+        <Sidebar
+          headerText={notesPage}
+          isLoggedIn={true}
+          user={session?.user?.email}
+        />
+        </div>
+
+        <div className="rightContainer">
         Notes Page
         {notes.map((note) => {
           return (
@@ -201,6 +209,7 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
             <p>{noteResponse}</p>
           </div>
         )}
+        </div>
       </div>
     );
   }

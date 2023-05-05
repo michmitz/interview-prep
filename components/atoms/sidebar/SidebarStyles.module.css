@@ -1,9 +1,11 @@
 .container {
-  height: 45px;
+  height: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
-  color: white;
+  color: gray;
+  border-radius: 15px;
+  padding: 1.3em;
 }
 
 .headerText {
@@ -13,17 +15,12 @@
 .labelContainer {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 .label {
-  margin-right: 10px;
-}
-
-.notesLabel {
-  margin-left: 20px;
   margin-right: 10px;
 }
 

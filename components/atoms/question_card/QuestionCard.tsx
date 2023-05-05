@@ -13,9 +13,8 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ response }) => {
   const question = response.split("Answer:")[0];
   const advice = response.split("Answer:")[1];
   const [showAdvice, setShowAdvice] = React.useState<boolean>(false);
-  const { glassEffect } = styles;
-  const questionStyles = `${glassEffect} ${styles.question}`;
-  const adviceStyles = `${glassEffect} ${styles.advice}`;
+  const questionStyles = `${styles.question} lightGlassEffect`;
+  const adviceStyles = `${styles.advice}`;
 
   const handleClick = () => {
     setShowAdvice(true);

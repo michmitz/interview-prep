@@ -2,7 +2,7 @@ import React from "react";
 import { GetServerSideProps, NextPage } from "next";
 import styles from "../styles/Home.module.css";
 import prisma from "@/lib/prisma";
-import { Header } from "@/components/atoms/header/Header";
+import { Sidebar } from "@/components/atoms/sidebar/Sidebar";
 import { appStrings } from "@/constants/appStrings";
 import { getSession, signIn, useSession } from "next-auth/react";
 import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
@@ -122,88 +122,102 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
     }
   };
 
-  if (!session) {
+  const disableButton = (noteId: string) => {
+    const updatedNote = notesWithUpdatedAnswers.find((x) => x.id === noteId);
+    return updatedNote?.updatedNote === "" ? true : !updatedNote ? true : false;
+  };
+
+  if (session) {
     return (
-      <div>
-        Not authorized to view this page
-        <button onClick={() => signIn()}>Sign In</button>
+      <div className="container">
+        <div className="sidebar">
+        <Sidebar
+          headerText={notesPage}
+          isLoggedIn={true}
+          user={session?.user?.email}
+        />
+        </div>
+
+        <div className="rightContainer">
+        Notes Page
+        {notes.map((note) => {
+          return (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: 400,
+                marginBottom: 20,
+              }}
+              key={note.id}
+            >
+              <div
+                style={{ padding: 10, backgroundColor: "pink", color: "white" }}
+              >
+                {note.question}
+              </div>
+              <div
+                style={{ padding: 10, backgroundColor: "gray", color: "white" }}
+              >
+                Your Note: {note.note}
+              </div>
+              <div>
+                {/* Hide after click */}
+                <button
+                  onClick={() => handleShowEditNote(note.id)}
+                  key={note.id}
+                >
+                  Update Note?
+                </button>
+                <button onClick={() => handleDeleteNote(note.id)}>
+                  Delete
+                </button>
+              </div>
+
+              {notesToEdit.includes(note.id) ? (
+                <AnswerField
+                  onChange={(e) => {
+                    handleSetAnswerInputs({
+                      id: note.id,
+                      updatedNote: e,
+                    } as UpdatedNote);
+                  }}
+                  onSubmit={() => handleSubmitNote(note.id)}
+                  disableButton={disableButton(note.id)}
+                />
+              ) : (
+                <></>
+              )}
+            </div>
+          );
+        })}
+        {/* Temporary success note */}
+        {noteResponse && (
+          <div
+            style={{
+              width: 200,
+              height: 50,
+              backgroundColor: "gray",
+              color: "black",
+              marginTop: 10,
+              padding: 10,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <p>{noteResponse}</p>
+          </div>
+        )}
+        </div>
       </div>
     );
   }
 
-  const disableButton = (noteId: string) => { 
-    const updatedNote = notesWithUpdatedAnswers.find((x) => x.id === noteId)
-    return updatedNote?.updatedNote === '' ? true : !updatedNote ? true : false
-  }
-
   return (
-    <div className={styles.main}>
-      <Header headerText={notesPage} />
-      Notes Page
-      {notes.map((note) => {
-        return (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: 400,
-              marginBottom: 20,
-            }}
-            key={note.id}
-          >
-            <div
-              style={{ padding: 10, backgroundColor: "pink", color: "white" }}
-            >
-              {note.question}
-            </div>
-            <div
-              style={{ padding: 10, backgroundColor: "gray", color: "white" }}
-            >
-              Your Note: {note.note}
-            </div>
-            <div>
-              {/* Hide after click */}
-              <button onClick={() => handleShowEditNote(note.id)} key={note.id}>
-                Update Note?
-              </button>
-              <button onClick={() => handleDeleteNote(note.id)}>Delete</button>
-            </div>
-
-            {notesToEdit.includes(note.id) ? (
-              <AnswerField
-                onChange={(e) => {
-                  handleSetAnswerInputs({
-                    id: note.id,
-                    updatedNote: e,
-                  } as UpdatedNote);
-                }}
-                onSubmit={() => handleSubmitNote(note.id)}
-                disableButton={disableButton(note.id)}
-              />
-            ) : (
-              <></>
-            )}
-          </div>
-        );
-      })}
-      {/* Temporary success note */}
-      {noteResponse && (
-        <div
-          style={{
-            width: 200,
-            height: 50,
-            backgroundColor: "gray",
-            color: "black",
-            marginTop: 10,
-            padding: 10,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <p>{noteResponse}</p>
-        </div>
-      )}
+    <div>
+      Not authorized to view this page
+      <button onClick={() => signIn()}>Sign In</button>
     </div>
   );
 };

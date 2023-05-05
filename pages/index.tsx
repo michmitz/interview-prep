@@ -2,11 +2,11 @@ import React from "react";
 import type { NextPage } from "next";
 import styles from "../styles/Home.module.css";
 import { appStrings } from "@/constants/appStrings";
-import { Header } from "@/components/atoms/header/Header";
+import { Sidebar } from "@/components/atoms/sidebar/Sidebar";
 import { SubjectField } from "@/components/atoms/subject_field/SubjectField";
 import { QuestionNotesSection } from "@/components/molecules/question_notes_section/QuestionNotesSection";
 import { LoadingOutlined } from "@ant-design/icons";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 
 const { askQuestionButton, thinking } = appStrings;
 const { askQuestionPrompt } = appStrings.aiPrompts;
@@ -57,19 +57,19 @@ const Home: NextPage = () => {
 
   if (session) {
     return (
-      <div className={styles.main}>
-        <Header
+      <div className="container">
+
+        <div className="sidebar">
+        <Sidebar
           headerText={welcome}
           mode={mode}
           onModeClick={handleModeClick}
+          isLoggedIn={true}
+          user={session?.user?.email}
         />
+        </div>
 
-        <>
-          Signed in as {session?.user?.email} <br />
-          <button onClick={() => signOut()}>Sign out</button>
-        </>
-
-        <div className={styles.container}>
+        <div className="rightContainer">
           {mode === "subject" && (
             <div>
               <SubjectField onChange={onSubjectChange} />
@@ -102,11 +102,9 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className={styles.main}>
-      <>
-        Not signed in <br />
-        <button onClick={() => signIn()}>Sign in</button>
-      </>
+    <div>
+      Not signed in <br />
+      <button onClick={() => signIn()}>Sign in</button>
     </div>
   );
 };

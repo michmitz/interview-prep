@@ -3,9 +3,17 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: gray;
+  color: rgb(106, 103, 169);
   border-radius: 15px;
   padding: 1.3em;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0.281),
+    70%,
+    rgba(255, 255, 255, 0.25)
+  );
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
 .headerText {
@@ -22,6 +30,7 @@
 
 .label {
   margin-right: 10px;
+  letter-spacing: 2px;
 }
 
 .returnLabel {

@@ -38,7 +38,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   };
 
   return (
-    <div className={`${styles.container} lightGlassEffect`}>
+    <div className={styles.container}>
 
       <div>
       <p className={styles.headerText}>{headerText}</p>

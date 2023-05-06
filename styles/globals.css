@@ -89,7 +89,7 @@ a {
   background: linear-gradient(
     120deg,
     rgba(255, 255, 255, 0.25),
-    rgba(255, 255, 255, 0.495),
+    rgba(255, 255, 255, 0.477),
     70%,
     rgba(255, 255, 255, 0.25)
   );
@@ -115,3 +115,7 @@ a {
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+/* .backdropRemove {
+  -webkit-mask-image: radial-gradient(circle 20px 100px at calc(60%) calc(100% - 30px), transparent 30px, rgb(255, 255, 255) 0);
+} */

@@ -1,7 +1,7 @@
 import { appStrings } from "@/constants/appStrings";
 import React from "react";
 import styles from "./AnswerField.module.css";
-import { LoadingOutlined } from "@ant-design/icons";
+import { NeumorphicButton } from "../button/NeumorphicButton";
 
 interface AnswerFieldProps {
   readonly onChange: (e: string) => void;
@@ -18,7 +18,6 @@ export const AnswerField: React.FC<AnswerFieldProps> = ({
   loading,
   disableButton,
 }) => {
-  const disabledButtonStyles = `${styles.button} ${styles.disabledButton}`
   return (
     <div className={styles.container}>
       <textarea
@@ -26,9 +25,14 @@ export const AnswerField: React.FC<AnswerFieldProps> = ({
         onChange={(e) => onChange(e.target.value)}
         placeholder={answerField}
       />
-      <button onClick={onSubmit} className={disableButton ? disabledButtonStyles : styles.button} disabled={disableButton}>
-        {loading ? <LoadingOutlined /> : answerSubmitButton}
-      </button>
+      <NeumorphicButton
+        onClick={onSubmit}
+        height="25px"
+        width="120px"
+        text={answerSubmitButton}
+        disabled={disableButton || loading}
+        loading={loading}
+      />
     </div>
   );
 };

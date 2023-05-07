@@ -1,0 +1,45 @@
+.defaultGradient {
+  background: linear-gradient(
+    120deg,
+    rgba(68, 83, 250, 0.25),
+    rgba(6, 99, 237, 0.495),
+    70%,
+    rgba(255, 255, 255, 0.25)
+  );
+}
+
+.background {
+  border-radius: 12px;
+  cursor: pointer;
+  border: none;
+  outline-offset: 6px;
+}
+
+.front {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: rgba(67, 40, 67, 0.814);
+  transform: translateX(-5px) translateY(-4px);
+  letter-spacing: 2px;
+}
+
+.background:active .front {
+  transform: translateY(-2px);
+}
+
+.front {
+  will-change: transform;
+  transition: transform 250ms;
+}
+
+.background:hover .front {
+  transform: translateY(-6px) translateX(-5px);
+}
+
+.background:active .front {
+  transform: translateY(-2px);
+}

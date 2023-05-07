@@ -7,6 +7,7 @@ import { SubjectField } from "@/components/atoms/subject_field/SubjectField";
 import { QuestionNotesSection } from "@/components/molecules/question_notes_section/QuestionNotesSection";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useSession, signIn } from "next-auth/react";
+import { RaisedButton } from "@/components/atoms/button/RaisedButton";
 
 const { askQuestionButton, thinking } = appStrings;
 const { askQuestionPrompt } = appStrings.aiPrompts;
@@ -58,15 +59,14 @@ const Home: NextPage = () => {
   if (session) {
     return (
       <div className="container">
-
         <div className="sidebar">
-        <Sidebar
-          headerText={welcome}
-          mode={mode}
-          onModeClick={handleModeClick}
-          isLoggedIn={true}
-          user={session?.user?.email}
-        />
+          <Sidebar
+            headerText={welcome}
+            mode={mode}
+            onModeClick={handleModeClick}
+            isLoggedIn={true}
+            user={session?.user?.email}
+          />
         </div>
 
         <div className="rightContainer">
@@ -75,13 +75,14 @@ const Home: NextPage = () => {
               <SubjectField onChange={onSubjectChange} />
             </div>
           )}
-          <button
+          <RaisedButton
             onClick={handleClick}
-            className={questionLoading ? disabledButtonStyles : styles.button}
+            text="Ask me a question"
+            height="35px"
+            width="200px"
             disabled={questionLoading}
-          >
-            {questionLoading ? <LoadingOutlined /> : askQuestionButton}
-          </button>
+          />
+
           {questionLoading && (
             <div className={styles.loading}>
               <p className={styles.loadingText}>{thinking}</p>

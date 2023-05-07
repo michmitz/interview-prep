@@ -131,84 +131,91 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
     return (
       <div className="container">
         <div className="sidebar">
-        <Sidebar
-          headerText={notesPage}
-          isLoggedIn={true}
-          user={session?.user?.email}
-        />
+          <Sidebar
+            headerText={notesPage}
+            isLoggedIn={true}
+            user={session?.user?.email}
+          />
         </div>
 
         <div className="rightContainer">
-        Notes Page
-        {notes.map((note) => {
-          return (
+          {notes.map((note) => {
+            return (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: 400,
+                  marginBottom: 20,
+                }}
+                key={note.id}
+              >
+                <div
+                  style={{
+                    padding: 10,
+                    backgroundColor: "pink",
+                    color: "white",
+                  }}
+                >
+                  {note.question}
+                </div>
+                <div
+                  style={{
+                    padding: 10,
+                    backgroundColor: "gray",
+                    color: "white",
+                  }}
+                >
+                  Your Note: {note.note}
+                </div>
+                <div>
+                  {/* Hide after click */}
+                  <button
+                    onClick={() => handleShowEditNote(note.id)}
+                    key={note.id}
+                  >
+                    Update Note?
+                  </button>
+                  <button onClick={() => handleDeleteNote(note.id)}>
+                    Delete
+                  </button>
+                </div>
+
+                {notesToEdit.includes(note.id) ? (
+                  <AnswerField
+                    onChange={(e) => {
+                      handleSetAnswerInputs({
+                        id: note.id,
+                        updatedNote: e,
+                      } as UpdatedNote);
+                    }}
+                    onSubmit={() => handleSubmitNote(note.id)}
+                    disableButton={disableButton(note.id)}
+                  />
+                ) : (
+                  <></>
+                )}
+              </div>
+            );
+          })}
+          {/* Temporary success note */}
+          {noteResponse && (
             <div
               style={{
+                width: 200,
+                height: 50,
+                backgroundColor: "gray",
+                color: "black",
+                marginTop: 10,
+                padding: 10,
                 display: "flex",
-                flexDirection: "column",
-                width: 400,
-                marginBottom: 20,
+                justifyContent: "center",
+                alignItems: "center",
               }}
-              key={note.id}
             >
-              <div
-                style={{ padding: 10, backgroundColor: "pink", color: "white" }}
-              >
-                {note.question}
-              </div>
-              <div
-                style={{ padding: 10, backgroundColor: "gray", color: "white" }}
-              >
-                Your Note: {note.note}
-              </div>
-              <div>
-                {/* Hide after click */}
-                <button
-                  onClick={() => handleShowEditNote(note.id)}
-                  key={note.id}
-                >
-                  Update Note?
-                </button>
-                <button onClick={() => handleDeleteNote(note.id)}>
-                  Delete
-                </button>
-              </div>
-
-              {notesToEdit.includes(note.id) ? (
-                <AnswerField
-                  onChange={(e) => {
-                    handleSetAnswerInputs({
-                      id: note.id,
-                      updatedNote: e,
-                    } as UpdatedNote);
-                  }}
-                  onSubmit={() => handleSubmitNote(note.id)}
-                  disableButton={disableButton(note.id)}
-                />
-              ) : (
-                <></>
-              )}
+              <p>{noteResponse}</p>
             </div>
-          );
-        })}
-        {/* Temporary success note */}
-        {noteResponse && (
-          <div
-            style={{
-              width: 200,
-              height: 50,
-              backgroundColor: "gray",
-              color: "black",
-              marginTop: 10,
-              padding: 10,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <p>{noteResponse}</p>
-          </div>
-        )}
+          )}
         </div>
       </div>
     );

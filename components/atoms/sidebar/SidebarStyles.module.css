@@ -36,3 +36,12 @@
 .returnLabel {
   margin-left: 10px;
 }
+
+.signedInLabel {
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.signOutButton {
+  margin-top: 10px;
+}

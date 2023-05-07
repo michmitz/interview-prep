@@ -1,4 +1,5 @@
 import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
+import { RaisedButton } from "@/components/atoms/button/RaisedButton";
 import { QuestionCard } from "@/components/atoms/question_card/QuestionCard";
 import React from "react";
 
@@ -44,17 +45,19 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: "column"}}>
       <QuestionCard response={aiResponse} />
       {showNotesButton && (
-        <button
-          onClick={() => {
-            setShowAnswerField(true);
-            setShowNotesButton(false);
-          }}
-        >
-          Write a Note?
-        </button>
+          <RaisedButton
+            onClick={() => {
+              setShowAnswerField(true);
+              setShowNotesButton(false);
+            }}
+            text="Write Note"
+            height="40px"
+            width="60px"
+            customBackground="purpleGradient"
+          />
       )}
       {showAnswerField && (
         <AnswerField

@@ -9,6 +9,7 @@ import {
 import { InterviewMode } from "@/pages";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
+import { RaisedButton } from "../button/RaisedButton";
 
 export interface SidebarProps {
   readonly headerText: string;
@@ -39,45 +40,52 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <div className={styles.container}>
-
       <div>
-      <p className={styles.headerText}>{headerText}</p>
+        <p className={styles.headerText}>{headerText}</p>
 
-      {mode && onModeClick ? (
-        <div>
+        {mode && onModeClick ? (
+          <div>
+            <span
+              className={styles.labelContainer}
+              onClick={() => onModeClick(mode)}
+            >
+              <p className={styles.label}>
+                {modeLabel}: {mode.toUpperCase()}
+              </p>
+              <SelectOutlined />
+            </span>
+
+            <span
+              className={styles.labelContainer}
+              onClick={() => handleNotesClick()}
+            >
+              <p className={styles.label}>{notesLink}</p>
+              <FormOutlined />
+            </span>
+          </div>
+        ) : (
           <span
             className={styles.labelContainer}
-            onClick={() => onModeClick(mode)}
+            onClick={() => handleReturnHome()}
           >
-            <p className={styles.label}>
-              {modeLabel}: {mode.toUpperCase()}
-            </p>
-            <SelectOutlined />
+            <ArrowLeftOutlined />
+            <p className={styles.returnLabel}>Return to Interview</p>
           </span>
-
-          <span
-            className={styles.labelContainer}
-            onClick={() => handleNotesClick()}
-          >
-            <p className={styles.label}>{notesLink}</p>
-            <FormOutlined />
-          </span>
-        </div>
-      ) : (
-        <span
-          className={styles.labelContainer}
-          onClick={() => handleReturnHome()}
-        >
-          <ArrowLeftOutlined />
-          <p className={styles.returnLabel}>Return to Interview</p>
-        </span>
-      )}
+        )}
       </div>
 
-      {isLoggedIn && <div className={styles.signOut}>
-          Signed in as {user} <br />
-          <button onClick={() => signOut()}>Sign out</button>
-        </div>}
+      {isLoggedIn && (
+        <div>
+          <p className={styles.signedInLabel}> Signed in as {user}</p>
+          <RaisedButton
+            onClick={() => signOut()}
+            text="Sign Out"
+            height="25px"
+            width="110px"
+            customBackground="greenGradient"
+          />
+        </div>
+      )}
     </div>
   );
 };

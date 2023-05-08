@@ -32,19 +32,17 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ response }) => {
       />
       <div className={styles.arrow} />
 
-      <div className={styles.question}>
-        {question}
+      <div className={`${styles.contentContainer} lightGlassEffect`}>
+        <p className={styles.question}>{question}</p>
 
         {showAdviceButton && (
           <div className={styles.showAdviceLabel} onClick={handleClick}>
-            <>
               <p className={styles.showAdviceText}>{showAdviceText}</p>
               <MessageOutlined />
-            </>
           </div>
         )}
-        
-        {showAdvice && <div>My example answer: {advice}</div>}
+
+        {showAdvice && <div className={styles.advice}>Example answer: {advice}</div>}
       </div>
     </div>
   );

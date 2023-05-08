@@ -2,6 +2,7 @@ import { appStrings } from "@/constants/appStrings";
 import { MessageOutlined } from "@ant-design/icons";
 import React from "react";
 import styles from "./QuestionCard.module.css";
+import Image from "next/image";
 
 interface QuestionCardProps {
   readonly response: string;
@@ -13,23 +14,38 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ response }) => {
   const question = response.split("Answer:")[0];
   const advice = response.split("Answer:")[1];
   const [showAdvice, setShowAdvice] = React.useState<boolean>(false);
-  const questionStyles = `${styles.question} lightGlassEffect`;
-  const adviceStyles = `${styles.advice}`;
+  const [showAdviceButton, setShowAdviceButton] = React.useState<boolean>(true);
 
   const handleClick = () => {
     setShowAdvice(true);
+    setShowAdviceButton(false);
   };
 
   return (
-    <>
-      <div className={questionStyles}>
+    <div className={styles.outerContainer}>
+      <Image
+        src={"/robot.png"}
+        width={45}
+        height={45}
+        alt="robot"
+        className={styles.icon}
+      />
+      <div className={styles.arrow} />
+
+      <div className={styles.question}>
         {question}
-        <div className={styles.showAdviceLabel} onClick={handleClick}>
-          <p className={styles.showAdviceText}>{showAdviceText}</p>
-          <MessageOutlined />
-        </div>
+
+        {showAdviceButton && (
+          <div className={styles.showAdviceLabel} onClick={handleClick}>
+            <>
+              <p className={styles.showAdviceText}>{showAdviceText}</p>
+              <MessageOutlined />
+            </>
+          </div>
+        )}
+        
+        {showAdvice && <div>My example answer: {advice}</div>}
       </div>
-      {showAdvice && <div className={adviceStyles}>{advice}</div>}
-    </>
+    </div>
   );
 };

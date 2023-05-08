@@ -5,11 +5,11 @@ import { appStrings } from "@/constants/appStrings";
 import { Sidebar } from "@/components/atoms/sidebar/Sidebar";
 import { SubjectField } from "@/components/atoms/subject_field/SubjectField";
 import { QuestionNotesSection } from "@/components/molecules/question_notes_section/QuestionNotesSection";
-import { LoadingOutlined } from "@ant-design/icons";
 import { useSession, signIn } from "next-auth/react";
 import { RaisedButton } from "@/components/atoms/button/RaisedButton";
+import { SpeechBubblePrompt } from "@/components/molecules/speech_bubble_prompt/SpeechBubblePrompt";
 
-const { askQuestionButton, thinking } = appStrings;
+const { thinking } = appStrings;
 const { askQuestionPrompt } = appStrings.aiPrompts;
 const { welcome } = appStrings.header;
 
@@ -22,8 +22,6 @@ const Home: NextPage = () => {
   const [mode, setMode] = React.useState<InterviewMode>("general");
   const [subject, setSubject] = React.useState<string>("JavaScript");
   const [noteResponse, setNoteResponse] = React.useState<string>("");
-
-  const disabledButtonStyles = `${styles.button} ${styles.disabledButton}`;
 
   const handleClick = async (e: any) => {
     setCompletion("");
@@ -75,13 +73,9 @@ const Home: NextPage = () => {
               <SubjectField onChange={onSubjectChange} />
             </div>
           )}
-          <RaisedButton
-            onClick={handleClick}
-            text="Ask me a question"
-            height="35px"
-            width="200px"
-            disabled={questionLoading}
-          />
+
+          {!completion && !questionLoading &&
+          <SpeechBubblePrompt onClick={handleClick} disableButton={questionLoading} />}
 
           {questionLoading && (
             <div className={styles.loading}>
@@ -94,6 +88,13 @@ const Home: NextPage = () => {
                 aiResponse={completion}
                 noteResponse={noteResponse}
                 setNoteResponse={setNoteResponse}
+              />
+              <RaisedButton
+                onClick={handleClick}
+                text="Fetch Question"
+                height="35px"
+                width="200px"
+                disabled={questionLoading}
               />
             </>
           )}

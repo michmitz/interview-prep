@@ -1,24 +1,39 @@
-.question {
-  border-radius: 20px;
-  font-weight: 400;
-  color: white;
-  padding: 1em;
-  margin-top: 10px;
-  /* background: rgba(146, 184, 255, 0.203); */
+.outerContainer {
+  margin-top: 1.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
-.advice {
-  background: rgb(25, 119, 97, 0.25);
-  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-  border: 1px solid rgba(135, 221, 255, 0.18);
-  backdrop-filter: blur( 4px );
-  -webkit-backdrop-filter: blur( 4px );
-  margin-top: 10px;
+.icon {
+  border-radius: 50%;
+  margin-bottom: 5px;
+}
+
+.contentContainer {
+	font-size: 0.9em;
+  color: rgb(90, 78, 130);
+  letter-spacing: 0.5px;
+	border-radius: 1rem;
+  box-shadow:	0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2);
   padding: 1em;
-  color: rgb(96, 20, 119);
-  border: 1px solid rgba( 255, 255, 255, 0.18 );
-  border-radius: 20px;
-  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+.arrow {
+  content: "";
+  width: 0px;
+  height: 0px;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid #5d617c78;
+}
+
+.question {
+  margin-bottom: 20px;
 }
 
 .showAdviceLabel {
@@ -36,4 +51,26 @@
   margin-right: .3em;
   font-size: 13px;
   font-weight: 600;
+}
+
+.adviceContainer {
+  border-radius: 12px;
+  box-shadow:	0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2);
+}
+
+.adviceLabel {
+  background: white;
+  padding: 0.7em;
+  border-radius: 12px 12px 0px 0px;
+  font-weight: 600;
+}
+
+.advice {
+  font-style: italic;
+  color: rgb(72, 60, 100);
+  padding: 1em;
+  background: rgba(24, 120, 126, 0.199);
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  border-radius: 0px 0px 12px 12px;
 }

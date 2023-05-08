@@ -37,12 +37,17 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ response }) => {
 
         {showAdviceButton && (
           <div className={styles.showAdviceLabel} onClick={handleClick}>
-              <p className={styles.showAdviceText}>{showAdviceText}</p>
-              <MessageOutlined />
+            <p className={styles.showAdviceText}>{showAdviceText}</p>
+            <MessageOutlined />
           </div>
         )}
 
-        {showAdvice && <div className={styles.advice}>Example answer: {advice}</div>}
+        {showAdvice && (
+          <div className={styles.adviceContainer}>
+            <p className={styles.adviceLabel}>Example answer:</p>
+            <p className={styles.advice}>{advice}</p>
+          </div>
+        )}
       </div>
     </div>
   );

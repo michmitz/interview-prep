@@ -53,6 +53,20 @@
   font-weight: 600;
 }
 
+.adviceContainer {
+  border-radius: 12px;
+  box-shadow:	0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2);
+}
+
+.adviceLabel {
+  background: white;
+  padding: 0.7em;
+  border-radius: 12px 12px 0px 0px;
+  font-weight: 600;
+}
+
 .advice {
   font-style: italic;
+  color: rgb(92, 13, 132);
+  padding: 1em;
 }

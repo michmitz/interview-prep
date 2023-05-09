@@ -8,6 +8,7 @@ import { QuestionNotesSection } from "@/components/molecules/question_notes_sect
 import { useSession, signIn } from "next-auth/react";
 import { RaisedButton } from "@/components/atoms/button/RaisedButton";
 import { SpeechBubblePrompt } from "@/components/molecules/speech_bubble_prompt/SpeechBubblePrompt";
+import { ThinkingRobot } from "@/components/molecules/thinking_robot/ThinkingRobot";
 
 const { thinking } = appStrings;
 const { askQuestionPrompt } = appStrings.aiPrompts;
@@ -68,20 +69,29 @@ const Home: NextPage = () => {
         </div>
 
         <div className="rightContainer">
-          {mode === "subject" && (
+          {mode === "subject" ? (
             <div>
               <SubjectField onChange={onSubjectChange} />
+              <RaisedButton
+                onClick={handleClick}
+                text="Fetch Question"
+                height="35px"
+                width="200px"
+                disabled={questionLoading}
+              />
             </div>
+          ) : (
+            !completion &&
+            !questionLoading && (
+              <SpeechBubblePrompt
+                onClick={handleClick}
+                disableButton={questionLoading}
+              />
+            )
           )}
 
-          {!completion && !questionLoading &&
-          <SpeechBubblePrompt onClick={handleClick} disableButton={questionLoading} />}
+          {questionLoading && <ThinkingRobot />}
 
-          {questionLoading && (
-            <div className={styles.loading}>
-              <p className={styles.loadingText}>{thinking}</p>
-            </div>
-          )}
           {completion && (
             <>
               <QuestionNotesSection

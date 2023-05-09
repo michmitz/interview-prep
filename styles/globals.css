@@ -69,7 +69,7 @@ a {
 
 @media screen and (max-width: 850px) {
   main {
-    width: 85%;
+    min-width: 370px;
     height: 100%;
   }
   .container {

@@ -41,7 +41,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <div className={styles.container}>
       <div>
-        <p className={styles.headerText}>{headerText}</p>
+        {/* <p className={styles.headerText}>{headerText}</p> */}
 
         {mode && onModeClick ? (
           <div>

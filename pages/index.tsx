@@ -1,6 +1,5 @@
 import React from "react";
 import type { NextPage } from "next";
-import styles from "../styles/Home.module.css";
 import { appStrings } from "@/constants/appStrings";
 import { Sidebar } from "@/components/atoms/sidebar/Sidebar";
 import { SubjectField } from "@/components/atoms/subject_field/SubjectField";

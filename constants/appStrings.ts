@@ -4,8 +4,10 @@ export const appStrings = {
     getSubjectsPrompt: 'Generate an array of software engineer interview subjects, including frontend and backend technologies',
   },
   speechBubble: {
-    questionPromptText: 'Welcome! I\m a virtual interviewer. Click the button below to get started!',
-    notSignedIn: 'Click here to sign in!',
+    questionPromptText: 'Welcome! I\'m a virtual interviewer. Click the button below to get started!',
+    questionPromptButtonText: 'Ask Me a Question',
+    notSignedInText: 'Click here to sign in!',
+    signInButtonText: 'Sign In',
   },
   askQuestionButton: 'Ask Me a Question',
   thinking: 'Thinking',

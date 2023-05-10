@@ -23,7 +23,7 @@ export type UpdatedNote = {
   updatedNote: string;
 };
 
-const { notSignedIn } = appStrings.speechBubble;
+const { notSignedInText, signInButtonText } = appStrings.speechBubble;
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -173,9 +173,9 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
   return (
     <div className='signedOut'>
       <SpeechBubblePrompt
-        text={notSignedIn}
+        text={notSignedInText}
         onClick={() => signIn()}
-        buttonText="Sign In"
+        buttonText={signInButtonText}
       />
     </div>
   );

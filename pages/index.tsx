@@ -11,7 +11,7 @@ import { ThinkingRobot } from "@/components/molecules/thinking_robot/ThinkingRob
 
 const { askQuestionPrompt } = appStrings.aiPrompts;
 const { welcome } = appStrings.header;
-const { questionPromptText, notSignedIn } = appStrings.speechBubble;
+const { questionPromptText, questionPromptButtonText, notSignedInText, signInButtonText } = appStrings.speechBubble;
 
 export type InterviewMode = "subject" | "general";
 
@@ -86,7 +86,7 @@ const Home: NextPage = () => {
                 text={questionPromptText}
                 onClick={handleClick}
                 disableButton={questionLoading}
-                buttonText="Ask Me a Question"
+                buttonText={questionPromptButtonText}
               />
             )
           )}
@@ -102,7 +102,7 @@ const Home: NextPage = () => {
               />
               <RaisedButton
                 onClick={handleClick}
-                text="Fetch Question"
+                text={questionPromptButtonText}
                 height="35px"
                 width="200px"
                 disabled={questionLoading}
@@ -117,9 +117,9 @@ const Home: NextPage = () => {
   return (
     <div className='signedOut'>
       <SpeechBubblePrompt
-        text={notSignedIn}
+        text={notSignedInText}
         onClick={() => signIn()}
-        buttonText="Sign In"
+        buttonText={signInButtonText}
       />
     </div>
   );

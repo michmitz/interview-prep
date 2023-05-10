@@ -36,7 +36,7 @@ const Home: NextPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ role: "user", content: content, maxTokens: 250 }),
+      body: JSON.stringify({ role: "user", content: content, maxTokens: 200 }),
     });
     const data = await response.json();
     if (data) {

@@ -9,9 +9,9 @@ import { RaisedButton } from "@/components/atoms/button/RaisedButton";
 import { SpeechBubblePrompt } from "@/components/molecules/speech_bubble_prompt/SpeechBubblePrompt";
 import { ThinkingRobot } from "@/components/molecules/thinking_robot/ThinkingRobot";
 
-const { thinking } = appStrings;
 const { askQuestionPrompt } = appStrings.aiPrompts;
 const { welcome } = appStrings.header;
+const { questionPromptText, questionPromptButtonText, notSignedInText, signInButtonText } = appStrings.speechBubble;
 
 export type InterviewMode = "subject" | "general";
 
@@ -36,7 +36,7 @@ const Home: NextPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ role: "user", content: content, maxTokens: 250 }),
+      body: JSON.stringify({ role: "user", content: content, maxTokens: 200 }),
     });
     const data = await response.json();
     if (data) {
@@ -83,8 +83,10 @@ const Home: NextPage = () => {
             !completion &&
             !questionLoading && (
               <SpeechBubblePrompt
+                text={questionPromptText}
                 onClick={handleClick}
                 disableButton={questionLoading}
+                buttonText={questionPromptButtonText}
               />
             )
           )}
@@ -100,7 +102,7 @@ const Home: NextPage = () => {
               />
               <RaisedButton
                 onClick={handleClick}
-                text="Fetch Question"
+                text={questionPromptButtonText}
                 height="35px"
                 width="200px"
                 disabled={questionLoading}
@@ -113,9 +115,12 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+    <div className='signedOut'>
+      <SpeechBubblePrompt
+        text={notSignedInText}
+        onClick={() => signIn()}
+        buttonText={signInButtonText}
+      />
     </div>
   );
 };

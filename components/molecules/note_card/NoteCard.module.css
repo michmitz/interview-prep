@@ -57,6 +57,7 @@
   letter-spacing: 0.8px;
   border-radius: 0px 0px 12px 12px;
   font-size: 0.8em;
+  word-break: break-all;
 }
 
 .button {

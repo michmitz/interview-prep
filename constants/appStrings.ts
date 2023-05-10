@@ -3,6 +3,12 @@ export const appStrings = {
     askQuestionPrompt: 'Pretend you are interviewing me for a software engineer position. Ask me one question, then give me an example answer. Label question and answer.',
     getSubjectsPrompt: 'Generate an array of software engineer interview subjects, including frontend and backend technologies',
   },
+  speechBubble: {
+    questionPromptText: 'Welcome! I\'m a virtual interviewer. Click the button below to get started!',
+    questionPromptButtonText: 'Ask Me a Question',
+    notSignedInText: 'Click here to sign in!',
+    signInButtonText: 'Sign In',
+  },
   askQuestionButton: 'Ask Me a Question',
   thinking: 'Thinking',
   header: { 

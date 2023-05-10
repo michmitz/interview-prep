@@ -8,6 +8,7 @@ import { getSession, signIn, useSession } from "next-auth/react";
 import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
 import { useRouter } from "next/router";
 import { NoteCard } from "@/components/molecules/note_card/NoteCard";
+import { SpeechBubblePrompt } from "@/components/molecules/speech_bubble_prompt/SpeechBubblePrompt";
 
 export type Note = {
   readonly id: string;
@@ -21,6 +22,8 @@ export type UpdatedNote = {
   id: string;
   updatedNote: string;
 };
+
+const { notSignedInText, signInButtonText } = appStrings.speechBubble;
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -168,9 +171,12 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
   }
 
   return (
-    <div>
-      Not authorized to view this page
-      <button onClick={() => signIn()}>Sign In</button>
+    <div className='signedOut'>
+      <SpeechBubblePrompt
+        text={notSignedInText}
+        onClick={() => signIn()}
+        buttonText={signInButtonText}
+      />
     </div>
   );
 };

@@ -4,13 +4,17 @@ import Image from "next/image";
 import { NeumorphicButton } from "@/components/atoms/button/NeumorphicButton";
 
 export interface SpeechBubblePromptProps {
+  readonly text: string;
   readonly onClick: (val: any | null) => void;
-  readonly disableButton: boolean;
+  readonly disableButton?: boolean;
+  readonly buttonText: string;
 }
 
 export const SpeechBubblePrompt: React.FC<SpeechBubblePromptProps> = ({
+  text,
   onClick,
   disableButton,
+  buttonText,
 }) => {
   return (
     <div className={styles.container}>
@@ -22,11 +26,11 @@ export const SpeechBubblePrompt: React.FC<SpeechBubblePromptProps> = ({
         className={styles.icon}
       />
       <div className={`${styles.speechBubble} lightGlassEffect`}>
-        Welcome! I&apos;m a virtual interviewer. Click the button below to get started!
+        {text}
         <div className={styles.button}>
           <NeumorphicButton
           onClick={onClick}
-          text="Get Question"
+          text={buttonText}
           height="35px"
           width="150px"
           disabled={disableButton}

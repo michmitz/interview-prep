@@ -9,9 +9,9 @@ import { RaisedButton } from "@/components/atoms/button/RaisedButton";
 import { SpeechBubblePrompt } from "@/components/molecules/speech_bubble_prompt/SpeechBubblePrompt";
 import { ThinkingRobot } from "@/components/molecules/thinking_robot/ThinkingRobot";
 
-const { thinking } = appStrings;
 const { askQuestionPrompt } = appStrings.aiPrompts;
 const { welcome } = appStrings.header;
+const { questionPromptText, notSignedIn } = appStrings.speechBubble;
 
 export type InterviewMode = "subject" | "general";
 
@@ -83,8 +83,10 @@ const Home: NextPage = () => {
             !completion &&
             !questionLoading && (
               <SpeechBubblePrompt
+                text={questionPromptText}
                 onClick={handleClick}
                 disableButton={questionLoading}
+                buttonText="Ask Me a Question"
               />
             )
           )}
@@ -113,9 +115,12 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+    <div className='signedOut'>
+      <SpeechBubblePrompt
+        text={notSignedIn}
+        onClick={() => signIn()}
+        buttonText="Sign In"
+      />
     </div>
   );
 };

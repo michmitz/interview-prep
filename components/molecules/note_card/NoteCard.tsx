@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./NoteCard.module.css";
 import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
 import { UpdatedNote } from "@/pages/notes";
+import { appStrings } from "@/constants/appStrings";
 
 interface NoteCardProps {
   readonly question: string;
@@ -16,6 +17,8 @@ interface NoteCardProps {
   readonly showEditField: boolean;
 }
 
+const { noteHeader, updateButton, deleteButton } = appStrings.notesPage
+
 export const NoteCard: React.FC<NoteCardProps> = ({
   question,
   note,
@@ -29,40 +32,45 @@ export const NoteCard: React.FC<NoteCardProps> = ({
   showEditField,
 }) => {
   return (
-      <div className={`${styles.container} lightGlassEffect`}>
-        <p className={styles.question}>{question}</p>
-        <div className={styles.noteContainer}>
-          <div className={styles.noteLabel}>
-            Note:
-            <div>
-              <button
-                onClick={() => {
-                  editCallback(noteId);
-                }}
-                key={noteId}
-              >
-                Update Note?
-              </button>
-              <button onClick={() => deleteCallback(noteId)}>Delete</button>
-            </div>
-          </div>
-          <p className={styles.note}>{note}</p>
-        </div>
-        {showEditField && (
-          <div className={styles.answerField}>
-            <AnswerField
-              onChange={(e) => {
-                answerInputsCallback({
-                  id: noteId,
-                  updatedNote: e,
-                } as UpdatedNote);
+    <div className={`${styles.container} lightGlassEffect`}>
+      <p className={styles.question}>{question}</p>
+      <div className={styles.noteContainer}>
+        <div className={styles.noteLabel}>
+          {noteHeader}
+          <div>
+            <button
+              onClick={() => {
+                editCallback(noteId);
               }}
-              onSubmit={() => submitNoteCallback(noteId)}
-              disableButton={disableButtonCallback(noteId)}
-            />
+              className={`${styles.button} ${styles.updateButton} purpleGradient`}
+              key={noteId}
+            >
+              {updateButton}
+            </button>
+            <button
+              onClick={() => deleteCallback(noteId)}
+              className={`${styles.button} blueGradient`}
+            >
+              {deleteButton}
+            </button>
           </div>
-        )}
+        </div>
+        <p className={styles.note}>{note}</p>
       </div>
-     
+      {showEditField && (
+        <div className={styles.answerField}>
+          <AnswerField
+            onChange={(e) => {
+              answerInputsCallback({
+                id: noteId,
+                updatedNote: e,
+              } as UpdatedNote);
+            }}
+            onSubmit={() => submitNoteCallback(noteId)}
+            disableButton={disableButtonCallback(noteId)}
+          />
+        </div>
+      )}
+    </div>
   );
 };

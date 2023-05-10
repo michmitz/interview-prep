@@ -12,6 +12,11 @@ export const appStrings = {
     notesPage: 'Notes',
     returnHome: 'Return to Interview',
   },
+  notesPage: {
+    noteHeader: 'Note:',
+    updateButton: 'Update',
+    deleteButton: 'Delete',
+  },
   answerField: 'Write your notes here...',
   answerSubmitButton: 'Save Note',
   showAdviceText: 'Show Advice?',

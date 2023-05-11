@@ -33,7 +33,7 @@ export const SpeechBubblePrompt: React.FC<SpeechBubblePromptProps> = ({
               onClick={onClick}
               text={buttonText}
               height="35px"
-              width="150px"
+              width="170px"
               disabled={disableButton}
             />
           </div>

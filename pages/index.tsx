@@ -17,6 +17,7 @@ const {
   notSignedInText,
   signInButtonText,
 } = appStrings.speechBubble;
+const { getNewQuestion } = appStrings;
 
 export type InterviewMode = "subject" | "general";
 
@@ -80,7 +81,7 @@ const Home: NextPage = () => {
                 <div className="questionButton">
                   <RaisedButton
                     onClick={handleClick}
-                    text="Get a question"
+                    text={questionPromptButtonText}
                     height="35px"
                     width="200px"
                     disabled={questionLoading}
@@ -112,7 +113,7 @@ const Home: NextPage = () => {
               <div className="questionButton">
                 <RaisedButton
                   onClick={handleClick}
-                  text={questionPromptButtonText}
+                  text={getNewQuestion}
                   height="35px"
                   width="200px"
                   disabled={questionLoading}

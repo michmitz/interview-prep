@@ -1,7 +1,8 @@
-import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
-import { RaisedButton } from "@/components/atoms/button/RaisedButton";
-import { QuestionCard } from "@/components/atoms/question_card/QuestionCard";
 import React from "react";
+import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
+import { NeumorphicButton } from "@/components/atoms/button/NeumorphicButton";
+import { QuestionCard } from "@/components/atoms/question_card/QuestionCard";
+import styles from './QuestionNotesSection.module.css'
 
 export interface QuestionNotesSectionProps {
   readonly aiResponse: string;
@@ -48,16 +49,17 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
     <div style={{ display: 'flex', flexDirection: "column"}}>
       <QuestionCard response={aiResponse} />
       {showNotesButton && (
-          <RaisedButton
+        <div className={styles.writeNoteButton}>
+          <NeumorphicButton
             onClick={() => {
               setShowAnswerField(true);
               setShowNotesButton(false);
             }}
             text="Write Note"
-            height="40px"
-            width="60px"
-            customBackground="purpleGradient"
+            height="32px"
+            width="100px"
           />
+          </div>
       )}
       {showAnswerField && (
         <AnswerField
@@ -66,24 +68,6 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
           loading={noteSaving}
           disableButton={noteSaving || !answerInput}
         />
-      )}
-      {/* Temporary success note */}
-      {noteResponse && (
-        <div
-          style={{
-            width: 200,
-            height: 50,
-            backgroundColor: "gray",
-            color: "black",
-            marginTop: 10,
-            padding: 10,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <p>{noteResponse}</p>
-        </div>
       )}
     </div>
   );

@@ -5,7 +5,7 @@ export const appStrings = {
   },
   speechBubble: {
     questionPromptText: 'Welcome! I\'m a virtual interviewer. Click the button below to get started!',
-    questionPromptButtonText: 'Ask Me a Question',
+    questionPromptButtonText: 'Get New Question',
     notSignedInText: 'Click here to sign in!',
     signInButtonText: 'Sign In',
   },

@@ -153,3 +153,26 @@ a {
   align-items: center;
   justify-content: center;
 }
+
+@keyframes slide-in {
+  0% {
+    transform: translateX(200%);
+  }
+  50% {
+    transform: translateX(20%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+.speechBubbleSlide {
+  animation: slide-in 8s;
+  animation-fill-mode: forwards;
+  position: absolute;
+  bottom: 5%;
+}
+
+.questionButton {
+  margin-top: 5%;
+}

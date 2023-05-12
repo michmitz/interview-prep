@@ -9,7 +9,7 @@ export const appStrings = {
     notSignedInText: 'Click here to sign in!',
     signInButtonText: 'Sign In',
   },
-  askQuestionButton: 'Ask Me a Question',
+  getNewQuestion: 'Ask Me Another Question!',
   thinking: 'Thinking',
   header: { 
     welcome: 'Welcome! I\'m a virtual interviewer.',

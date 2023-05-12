@@ -11,7 +11,13 @@ import { ThinkingRobot } from "@/components/molecules/thinking_robot/ThinkingRob
 
 const { askQuestionPrompt } = appStrings.aiPrompts;
 const { welcome } = appStrings.header;
-const { questionPromptText, questionPromptButtonText, notSignedInText, signInButtonText } = appStrings.speechBubble;
+const {
+  questionPromptText,
+  questionPromptButtonText,
+  notSignedInText,
+  signInButtonText,
+} = appStrings.speechBubble;
+const { getNewQuestion } = appStrings;
 
 export type InterviewMode = "subject" | "general";
 
@@ -69,16 +75,20 @@ const Home: NextPage = () => {
 
         <div className="rightContainer">
           {mode === "subject" ? (
-            <div>
+            <>
               <SubjectField onChange={onSubjectChange} />
-              <RaisedButton
-                onClick={handleClick}
-                text="Fetch Question"
-                height="35px"
-                width="200px"
-                disabled={questionLoading}
-              />
-            </div>
+              {!completion && (
+                <div className="questionButton">
+                  <RaisedButton
+                    onClick={handleClick}
+                    text={questionPromptButtonText}
+                    height="35px"
+                    width="200px"
+                    disabled={questionLoading}
+                  />
+                </div>
+              )}
+            </>
           ) : (
             !completion &&
             !questionLoading && (
@@ -100,14 +110,22 @@ const Home: NextPage = () => {
                 noteResponse={noteResponse}
                 setNoteResponse={setNoteResponse}
               />
-              <RaisedButton
-                onClick={handleClick}
-                text={questionPromptButtonText}
-                height="35px"
-                width="200px"
-                disabled={questionLoading}
-              />
+              <div className="questionButton">
+                <RaisedButton
+                  onClick={handleClick}
+                  text={getNewQuestion}
+                  height="35px"
+                  width="200px"
+                  disabled={questionLoading}
+                />
+              </div>
             </>
+          )}
+
+          {noteResponse && (
+            <div className="speechBubbleSlide">
+              <SpeechBubblePrompt text={noteResponse} />
+            </div>
           )}
         </div>
       </div>
@@ -115,7 +133,7 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className='signedOut'>
+    <div className="signedOut">
       <SpeechBubblePrompt
         text={notSignedInText}
         onClick={() => signIn()}

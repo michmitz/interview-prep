@@ -39,25 +39,23 @@
 }
 
 .speechBubble:after {
-  transform: translatey(0px);
   animation: float2 10s ease-in-out infinite;
-  content: ".";
+  content: "o";
   font-weight: 600;
-  -webkit-text-fill-color: beige;
-  text-shadow: 16px 16px rgba(54, 54, 160, 0.402);
+  text-shadow: 12px 10px rgba(54, 54, 160, 0.402);
   text-align: left;
-  font-size: 55px;
-  width: 55px;
-  height: 11px;
-  line-height: 30px;
-  border-radius: 15px;
-  background-color: beige;
+  font-size: 20px;
+  width: 27px;
+  height: 13px;
+  border-radius: 11px;
   position: absolute;
   display: block;
   bottom: -35px;
   left: 0;
-  box-shadow: 18px 18px rgba(54, 54, 160, 0.402);
+  box-shadow: 16px 16px rgba(54, 54, 160, 0.402);
   z-index: -2;
+  background: rgba(255, 255, 255, 0.655);
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.655);
 }
 
 @keyframes float {
@@ -74,17 +72,17 @@
 
 @keyframes float2 {
   0% {
-    line-height: 30px;
+    line-height: 55px;
     transform: translatey(0px);
   }
   55% {
-    transform: translatey(-18px);
+    transform: translatey(-15px);
   }
   60% {
-    line-height: 10px;
+    line-height: 50px;
   }
   100% {
-    line-height: 30px;
+    line-height: 55px;
     transform: translatey(0px);
   }
 }

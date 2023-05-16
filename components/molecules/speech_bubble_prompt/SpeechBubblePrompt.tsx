@@ -25,7 +25,7 @@ export const SpeechBubblePrompt: React.FC<SpeechBubblePromptProps> = ({
         alt="robot"
         className={styles.icon}
       />
-      <div className={`${styles.speechBubble} lightGlassEffect`}>
+      <div className={`${styles.speechBubble} lightGlassEffect purpleGradient`}>
         {text}
         {onClick && (
           <div className={styles.button}>

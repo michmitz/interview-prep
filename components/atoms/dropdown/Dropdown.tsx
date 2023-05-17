@@ -6,7 +6,7 @@ import { appStrings } from "@/constants/appStrings";
 export interface DropdownProps {
   readonly defaultValue: any;
   readonly dropdownValues: ReadonlyArray<any>;
-  readonly onChange: (value: any) => void;
+  readonly onChange?: (value: any) => void;
   readonly variant: 'mode' | 'software-question-types'
 }
 
@@ -56,7 +56,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
                 key={value}
                 className={styles.li}
                 onClick={() => {
-                  onChange(value);
+                  onChange && onChange(value);
                   setShowMenu(false);
                 }}
               >

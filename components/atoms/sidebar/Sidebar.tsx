@@ -10,7 +10,7 @@ import { signOut } from "next-auth/react";
 import { RaisedButton } from "../button/RaisedButton";
 import { ModeDropdown } from "../mode_dropdown/ModeDropdown";
 
-export type InterviewMode = 'general' | 'subject' | 'software'
+export type InterviewMode = 'job-title' | 'software'
 
 export interface SidebarProps {
   readonly headerText: string;
@@ -39,7 +39,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     router.push("/");
   };
 
-  const modeValues = ['general', 'subject', 'software'] as ReadonlyArray<InterviewMode>
+  const modeValues = ['job-title', 'software'] as ReadonlyArray<InterviewMode>
 
   return (
     <div className={styles.container}>

@@ -24,15 +24,15 @@ const Home: NextPage = () => {
   const [completion, setCompletion] = React.useState<string>("");
   const [questionLoading, setQuestionLoading] = React.useState<boolean>(false);
   const [mode, setMode] = React.useState<InterviewMode>("software");
-  const [subject, setSubject] = React.useState<string>("JavaScript");
+  const [jobTitle, setJobTitle] = React.useState<string>("");
   const [noteResponse, setNoteResponse] = React.useState<string>("");
 
   const handleClick = async (e: any) => {
     setCompletion("");
     setNoteResponse("");
     const content =
-      mode === "subject"
-        ? `${askQuestionPrompt} The interview subject is ${subject}.`
+      mode === "job-title"
+        ? `Pretend you are interviewing me for a ${jobTitle} position. Ask me one question, then give me an example answer. Label the question and answer.`
         : askQuestionPrompt;
     setQuestionLoading(true);
     const response = await fetch("/api/openai", {
@@ -54,8 +54,8 @@ const Home: NextPage = () => {
     setMode(mode)
   };
 
-  const onSubjectChange = (value: string) => {
-    setSubject(value);
+  const onJobTitleChange = (value: string) => {
+    setJobTitle(value);
   };
 
   if (session) {
@@ -72,9 +72,9 @@ const Home: NextPage = () => {
         </div>
 
         <div className="rightContainer">
-          {mode === "subject" ? (
+          {mode === 'job-title' ? (
             <>
-              <SubjectField onChange={onSubjectChange} />
+              <SubjectField onChange={onJobTitleChange} />
               {!completion && (
                 <div className="questionButton">
                   <RaisedButton

@@ -14,6 +14,7 @@ const Home: NextPage = () => {
   const [mode, setMode] = React.useState<InterviewMode>("software");
   const [completion, setCompletion] = React.useState<string>("");
   const [noteResponse, setNoteResponse] = React.useState<string>("");
+  const [softwareQuestionType, setSoftwareQuestionType] = React.useState<string>("any");
 
   const handleModeClick = (mode: InterviewMode) => {
     setCompletion("");
@@ -30,6 +31,8 @@ const Home: NextPage = () => {
             onModeClick={handleModeClick}
             isLoggedIn={true}
             user={session?.user?.email}
+            softwareQuestionType={softwareQuestionType}
+            setSoftwareQuestionType={setSoftwareQuestionType}
           />
         </div>
 

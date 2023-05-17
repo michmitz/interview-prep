@@ -22,6 +22,7 @@ export const appStrings = {
     welcome: 'Welcome! I\'m a virtual interviewer.',
     notesLink: 'View Notes',
     modeLabel: 'Mode',
+    softwareQuestionTypeLabel: 'Question Type',
     notesPage: 'Notes',
     returnHome: 'Return to Interview',
   },

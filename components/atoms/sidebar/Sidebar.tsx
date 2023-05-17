@@ -1,16 +1,13 @@
 import { appStrings } from "@/constants/appStrings";
 import React from "react";
 import styles from "./SidebarStyles.module.css";
-import {
-  ArrowLeftOutlined,
-  FormOutlined,
-} from "@ant-design/icons";
+import { ArrowLeftOutlined, FormOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 import { RaisedButton } from "../button/RaisedButton";
-import { ModeDropdown } from "../mode_dropdown/ModeDropdown";
+import { Dropdown } from "../dropdown/Dropdown";
 
-export type InterviewMode = 'job-title' | 'software'
+export type InterviewMode = "job-title" | "software";
 
 export interface SidebarProps {
   readonly headerText: string;
@@ -18,6 +15,8 @@ export interface SidebarProps {
   readonly onModeClick?: (mode: InterviewMode) => void;
   readonly user?: any;
   readonly isLoggedIn?: boolean;
+  readonly softwareQuestionType?: string;
+  readonly setSoftwareQuestionType?: (v: string) => void;
 }
 
 const { notesLink } = appStrings.header;
@@ -28,6 +27,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onModeClick,
   user,
   isLoggedIn,
+  softwareQuestionType,
+  setSoftwareQuestionType,
 }) => {
   const router = useRouter();
 
@@ -39,7 +40,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
     router.push("/");
   };
 
-  const modeValues = ['job-title', 'software'] as ReadonlyArray<InterviewMode>
+  const modeValues = ["job-title", "software"] as ReadonlyArray<InterviewMode>;
+  const softwareQuestionTypes = [
+    "any",
+    "technical",
+    "soft skills",
+  ] as ReadonlyArray<string>;
 
   return (
     <div className={styles.container}>
@@ -48,10 +54,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         {mode && onModeClick ? (
           <div>
-            <ModeDropdown
+            <Dropdown
               defaultValue={mode}
               dropdownValues={modeValues}
               onChange={onModeClick}
+              variant="mode"
             />
 
             <span
@@ -61,6 +68,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <p className={styles.label}>{notesLink}</p>
               <FormOutlined />
             </span>
+
+            {mode === "software" && (
+              <Dropdown
+                defaultValue={softwareQuestionType}
+                dropdownValues={softwareQuestionTypes}
+                onChange={setSoftwareQuestionType}
+                variant="software-question-types"
+              />
+            )}
           </div>
         ) : (
           <span

@@ -1,22 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "./ModeDropdown.module.css";
-import { InterviewMode } from "../sidebar/Sidebar";
+import styles from "./Dropdown.module.css";
 import { CaretDownOutlined } from "@ant-design/icons";
 import { appStrings } from "@/constants/appStrings";
 
-export interface ModeDropdownProps {
-  readonly defaultValue: InterviewMode;
-  readonly dropdownValues: ReadonlyArray<InterviewMode>;
-  readonly onChange: (value: InterviewMode) => void;
+export interface DropdownProps {
+  readonly defaultValue: any;
+  readonly dropdownValues: ReadonlyArray<any>;
+  readonly onChange: (value: any) => void;
+  readonly variant: 'mode' | 'software-question-types'
 }
 
-const { modeLabel } = appStrings.header
+const { modeLabel, softwareQuestionTypeLabel } = appStrings.header
 
-export const ModeDropdown: React.FC<ModeDropdownProps> = ({
+export const Dropdown: React.FC<DropdownProps> = ({
   defaultValue,
   dropdownValues,
   onChange,
+  variant,
 }) => {
+  const softwareMode = variant === 'software-question-types'
   const ref = useRef<any>()
   const [showMenu, setShowMenu] = useState<boolean>(false)
 
@@ -36,10 +38,10 @@ export const ModeDropdown: React.FC<ModeDropdownProps> = ({
 
   return (
     <div className={styles.container}>
-      <span className={styles.label}>{modeLabel}:</span>
+      <span className={styles.label}>{softwareMode ? softwareQuestionTypeLabel : modeLabel}:</span>
       <div className={styles.dropdownContainer}>
       <div
-        className={`${styles.dropdownHeader} blueGradient`}
+        className={`${styles.dropdownHeader} ${variant === 'mode' ? 'blueGradient' : 'greenGradient'}`}
         onClick={() => setShowMenu(true)}
       >
         {defaultValue}

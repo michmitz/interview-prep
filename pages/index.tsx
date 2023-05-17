@@ -23,7 +23,7 @@ const Home: NextPage = () => {
   const { data: session } = useSession();
   const [completion, setCompletion] = React.useState<string>("");
   const [questionLoading, setQuestionLoading] = React.useState<boolean>(false);
-  const [mode, setMode] = React.useState<InterviewMode>("general");
+  const [mode, setMode] = React.useState<InterviewMode>("software");
   const [subject, setSubject] = React.useState<string>("JavaScript");
   const [noteResponse, setNoteResponse] = React.useState<string>("");
 

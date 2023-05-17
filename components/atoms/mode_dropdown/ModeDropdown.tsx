@@ -2,12 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./ModeDropdown.module.css";
 import { InterviewMode } from "../sidebar/Sidebar";
 import { CaretDownOutlined } from "@ant-design/icons";
+import { appStrings } from "@/constants/appStrings";
 
 export interface ModeDropdownProps {
   readonly defaultValue: InterviewMode;
   readonly dropdownValues: ReadonlyArray<InterviewMode>;
   readonly onChange: (value: InterviewMode) => void;
 }
+
+const { modeLabel } = appStrings.header
 
 export const ModeDropdown: React.FC<ModeDropdownProps> = ({
   defaultValue,
@@ -33,6 +36,8 @@ export const ModeDropdown: React.FC<ModeDropdownProps> = ({
 
   return (
     <div className={styles.container}>
+      <span className={styles.label}>{modeLabel}:</span>
+      <div className={styles.dropdownContainer}>
       <div
         className={`${styles.dropdownHeader} blueGradient`}
         onClick={() => setShowMenu(true)}
@@ -58,6 +63,7 @@ export const ModeDropdown: React.FC<ModeDropdownProps> = ({
             );
           })}
         </ul>}
+        </div>
     </div>
   );
 };

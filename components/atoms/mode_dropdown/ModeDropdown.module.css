@@ -1,10 +1,21 @@
 .container {
-  width: 70%;
   user-select: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.label {
+  margin-right: 5px;
+}
+
+
+.dropdownContainer {
+  width: 250px;
 }
 
 @media screen and (max-width: 850px) {
-  .container {
+  .dropdownContainer {
     width: 200px;
   }
 }

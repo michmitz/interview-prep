@@ -1,7 +1,7 @@
 import React from "react";
 import type { NextPage } from "next";
 import { appStrings } from "@/constants/appStrings";
-import { Sidebar } from "@/components/atoms/sidebar/Sidebar";
+import { InterviewMode, Sidebar } from "@/components/atoms/sidebar/Sidebar";
 import { SubjectField } from "@/components/atoms/subject_field/SubjectField";
 import { QuestionNotesSection } from "@/components/molecules/question_notes_section/QuestionNotesSection";
 import { useSession, signIn } from "next-auth/react";
@@ -18,8 +18,6 @@ const {
   signInButtonText,
 } = appStrings.speechBubble;
 const { getNewQuestion } = appStrings;
-
-export type InterviewMode = "subject" | "general";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
@@ -53,7 +51,7 @@ const Home: NextPage = () => {
 
   const handleModeClick = (mode: InterviewMode) => {
     setCompletion("");
-    mode === "general" ? setMode("subject") : setMode("general");
+    setMode(mode)
   };
 
   const onSubjectChange = (value: string) => {

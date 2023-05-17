@@ -4,12 +4,13 @@ import styles from "./SidebarStyles.module.css";
 import {
   ArrowLeftOutlined,
   FormOutlined,
-  SelectOutlined,
 } from "@ant-design/icons";
-import { InterviewMode } from "@/pages";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 import { RaisedButton } from "../button/RaisedButton";
+import { ModeDropdown } from "../mode_dropdown/ModeDropdown";
+
+export type InterviewMode = 'general' | 'subject'
 
 export interface SidebarProps {
   readonly headerText: string;
@@ -19,7 +20,7 @@ export interface SidebarProps {
   readonly isLoggedIn?: boolean;
 }
 
-const { modeLabel, notesLink } = appStrings.header;
+const { notesLink } = appStrings.header;
 
 export const Sidebar: React.FC<SidebarProps> = ({
   headerText,
@@ -38,6 +39,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
     router.push("/");
   };
 
+  const modeValues = ['general', 'subject'] as ReadonlyArray<InterviewMode>
+
   return (
     <div className={styles.container}>
       <div>
@@ -45,15 +48,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         {mode && onModeClick ? (
           <div>
-            <span
-              className={styles.labelContainer}
-              onClick={() => onModeClick(mode)}
-            >
-              <p className={styles.label}>
-                {modeLabel}: {mode.toUpperCase()}
-              </p>
-              <SelectOutlined />
-            </span>
+            <ModeDropdown
+              defaultValue={mode}
+              dropdownValues={modeValues}
+              onChange={onModeClick}
+            />
 
             <span
               className={styles.labelContainer}

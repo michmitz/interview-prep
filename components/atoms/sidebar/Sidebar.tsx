@@ -70,12 +70,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </span>
 
             {mode === "software" && (
+              <div className={styles.softwareQuestionType}>
               <Dropdown
                 defaultValue={softwareQuestionType}
                 dropdownValues={softwareQuestionTypes}
                 onChange={setSoftwareQuestionType}
                 variant="software-question-types"
               />
+              </div>
             )}
           </div>
         ) : (

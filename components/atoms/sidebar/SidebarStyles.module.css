@@ -25,7 +25,11 @@
   flex-direction: row;
   align-items: center;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 12px;
+}
+
+.softwareQuestionType {
+  margin-top: 12px;
 }
 
 .label {
@@ -38,6 +42,7 @@
 }
 
 .signedInLabel {
+  margin-top: 12px;
   margin-bottom: 12px;
   font-style: italic;
 }

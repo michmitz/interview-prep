@@ -9,14 +9,22 @@
   margin-right: 5px;
 }
 
+.softwareQuestionLabel {
+  margin-right: 4px;
+  font-size: 13px;
+  font-style: italic;
+}
 
 .dropdownContainer {
   width: 250px;
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (min-width: 850px) and (max-width: 950px) {
   .dropdownContainer {
     width: 200px;
+  }
+  .dropdownHeader {
+    font-size: 13px;
   }
 }
 

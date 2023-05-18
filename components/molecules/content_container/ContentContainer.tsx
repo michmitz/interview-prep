@@ -96,15 +96,15 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
 
   return (
     <div>
-      <div className="flexCenter">
-        {mode === "job-title" ? (
-          <>
-            <SubjectField
-              onChange={onJobTitleChange}
-              label={jobTitleFieldLabel}
-              placeholder={jobTitleFieldPlaceholder}
-            />
-            {!completion && (
+      {!completion ? (
+        <div className="flexCenter">
+          {mode === "job-title" ? (
+            <>
+              <SubjectField
+                onChange={onJobTitleChange}
+                label={jobTitleFieldLabel}
+                placeholder={jobTitleFieldPlaceholder}
+              />
               <div className="questionButton">
                 <RaisedButton
                   onClick={handleClick}
@@ -114,16 +114,14 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
                   disabled={questionLoading}
                 />
               </div>
-            )}
-          </>
-        ) : techSubjectQuestions ? (
-          <>
-            <SubjectField
-              onChange={onTechQuestionSubjectChange}
-              label="Enter a technology"
-              placeholder="ex. JavaScript"
-            />
-            {!completion && (
+            </>
+          ) : techSubjectQuestions ? (
+            <>
+              <SubjectField
+                onChange={onTechQuestionSubjectChange}
+                label="Enter a technology"
+                placeholder="ex. JavaScript"
+              />
               <div className="questionButton">
                 <RaisedButton
                   onClick={handleClick}
@@ -133,25 +131,25 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
                   disabled={questionLoading}
                 />
               </div>
-            )}
-          </>
-        ) : (
-          <SpeechBubblePrompt
-            text={
-              softSkillsQuestions
-                ? "Ready to be asked about your soft skills?"
-                : generalTechQuestions
-                ? "Ready for some technical questions?"
-                : "Let's do some software interview questions!"
-            }
-            onClick={handleClick}
-            disableButton={questionLoading}
-            buttonText={questionPromptButtonText}
-          />
-        )}
-      </div>
-      {questionLoading && <ThinkingRobot />}
-      {completion && (
+            </>
+          ) : !questionLoading ? (
+            <SpeechBubblePrompt
+              text={
+                softSkillsQuestions
+                  ? "Ready to be asked about your soft skills?"
+                  : generalTechQuestions
+                  ? "Ready for some technical questions?"
+                  : "Let's do some software interview questions!"
+              }
+              onClick={handleClick}
+              disableButton={questionLoading}
+              buttonText={questionPromptButtonText}
+            />
+          ) : (
+            <ThinkingRobot />
+          )}
+        </div>
+      ) : (
         <div className="flexCenter">
           <QuestionNotesSection
             aiResponse={completion}

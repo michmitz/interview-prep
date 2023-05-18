@@ -15,11 +15,25 @@ const Home: NextPage = () => {
   const [completion, setCompletion] = React.useState<string>("");
   const [noteResponse, setNoteResponse] = React.useState<string>("");
   const [softwareQuestionType, setSoftwareQuestionType] = React.useState<string>("any");
+  const [techQuestionSubject, setTechQuestionSubject] =
+  React.useState<string>("");
 
   const handleModeClick = (mode: InterviewMode) => {
     setCompletion("");
+    if (mode !== 'software') {
+      setTechQuestionSubject("");
+      setSoftwareQuestionType("any");
+    }
     setMode(mode);
   };
+
+  const handleChangeSoftwareQuestionType = (questionType: string) => {
+    setCompletion("");
+    if (questionType !== 'technical (subject)') {
+      setTechQuestionSubject("");
+    }
+    setSoftwareQuestionType(questionType);
+  }
 
   if (session) {
     return (
@@ -32,7 +46,7 @@ const Home: NextPage = () => {
             isLoggedIn={true}
             user={session?.user?.email}
             softwareQuestionType={softwareQuestionType}
-            setSoftwareQuestionType={setSoftwareQuestionType}
+            setSoftwareQuestionType={handleChangeSoftwareQuestionType}
           />
         </div>
 
@@ -44,6 +58,8 @@ const Home: NextPage = () => {
             noteResponse={noteResponse}
             setNoteResponse={setNoteResponse}
             softwareQuestionType={softwareQuestionType}
+            techQuestionSubject={techQuestionSubject}
+            onTechQuestionSubjectChange={setTechQuestionSubject}
           />
           {noteResponse && (
             <div className="speechBubbleSlide">

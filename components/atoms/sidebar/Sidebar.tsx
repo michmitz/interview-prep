@@ -43,14 +43,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const modeValues = ["job-title", "software"] as ReadonlyArray<InterviewMode>;
   const softwareQuestionTypes = [
     "any",
-    "technical",
+    "technical (general)",
+    "technical (subject)",
     "soft skills",
   ] as ReadonlyArray<string>;
 
   return (
     <div className={styles.container}>
       <div>
-        {/* <p className={styles.headerText}>{headerText}</p> */}
+        <p className={styles.headerText}>{headerText}</p>
 
         {mode && onModeClick ? (
           <div>
@@ -61,6 +62,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
               variant="mode"
             />
 
+            {mode === "software" && (
+              <div className={styles.softwareQuestionType}>
+                <Dropdown
+                  defaultValue={softwareQuestionType}
+                  dropdownValues={softwareQuestionTypes}
+                  onChange={setSoftwareQuestionType}
+                  variant="software-question-types"
+                />
+              </div>
+            )}
+
             <span
               className={styles.labelContainer}
               onClick={() => handleNotesClick()}
@@ -68,17 +80,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <p className={styles.label}>{notesLink}</p>
               <FormOutlined />
             </span>
-
-            {mode === "software" && (
-              <div className={styles.softwareQuestionType}>
-              <Dropdown
-                defaultValue={softwareQuestionType}
-                dropdownValues={softwareQuestionTypes}
-                onChange={setSoftwareQuestionType}
-                variant="software-question-types"
-              />
-              </div>
-            )}
           </div>
         ) : (
           <span

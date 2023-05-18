@@ -15,6 +15,10 @@ export const appStrings = {
       jobTitleFieldPlaceholder: 'ex. Retail',
       subjectSubmitButton: 'Submit',
     },
+    software: {
+      technicalQuestionFieldLabel: 'Enter a technology',
+      technicalQuestionFieldPlaceholder: 'ex. JavaScript',
+    }
   },
   getNewQuestion: 'Ask Me Another Question!',
   thinking: 'Thinking',

@@ -43,6 +43,7 @@ const Home: NextPage = () => {
             setCompletion={setCompletion}
             noteResponse={noteResponse}
             setNoteResponse={setNoteResponse}
+            softwareQuestionType={softwareQuestionType}
           />
           {noteResponse && (
             <div className="speechBubbleSlide">

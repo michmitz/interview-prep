@@ -13,6 +13,7 @@ interface ContentContainerProps {
   readonly setNoteResponse: (v: string) => void;
   readonly completion: string;
   readonly setCompletion: (v: string) => void;
+  readonly softwareQuestionType?: string;
 }
 
 const { questionPromptText, questionPromptButtonText } =
@@ -25,25 +26,40 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   noteResponse,
   setNoteResponse,
   completion,
-  setCompletion
+  setCompletion,
+  softwareQuestionType
 }) => {
   const [questionLoading, setQuestionLoading] = React.useState<boolean>(false);
   const [jobTitle, setJobTitle] = React.useState<string>("");
 
+  const generatePrompt = (mode: InterviewMode, softwareQuestionType: string | undefined): string => {
+    const softwareMode = mode === 'software'
+
+    if (softwareMode) {
+      if (softwareQuestionType === 'technical') {
+        return 'Pretend you are interviewing me for a software engineer position. Ask me one question, then give me an example answer. Label the question and answer. Ask me only technical questions.'
+      } else if (softwareQuestionType === 'soft skills') {
+        return 'Pretend you are interviewing me for a software engineer position. Ask me one question, then give me an example answer. Label the question and answer. Ask me only soft skills questions.'
+      } else {
+        return askQuestionPrompt
+      }
+    } else {
+      return `Pretend you are interviewing me for a ${jobTitle} position. Ask me one question, then give me an example answer. Label the question and answer.`
+    }
+  }
+
   const handleClick = async (e: any) => {
+    const prompt = generatePrompt(mode, softwareQuestionType);
+    console.log("prompt", prompt)
     setCompletion("");
     setNoteResponse("");
-    const content =
-      mode === "job-title"
-        ? `Pretend you are interviewing me for a ${jobTitle} position. Ask me one question, then give me an example answer. Label the question and answer.`
-        : askQuestionPrompt;
     setQuestionLoading(true);
     const response = await fetch("/api/openai", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ role: "user", content: content, maxTokens: 200 }),
+      body: JSON.stringify({ role: "user", content: prompt, maxTokens: 200 }),
     });
     const data = await response.json();
     if (data) {

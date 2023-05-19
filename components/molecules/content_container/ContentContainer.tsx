@@ -99,39 +99,23 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
       {!completion ? (
         <div className="flexCenter">
           {mode === "job-title" ? (
-            <>
-              <SubjectField
-                onChange={onJobTitleChange}
-                label={jobTitleFieldLabel}
-                placeholder={jobTitleFieldPlaceholder}
-              />
-              <div className="questionButton">
-                <RaisedButton
-                  onClick={handleClick}
-                  text={questionPromptButtonText}
-                  height="35px"
-                  width="200px"
-                  disabled={questionLoading}
-                />
-              </div>
-            </>
+            <SubjectField
+              onChange={onJobTitleChange}
+              label={jobTitleFieldLabel}
+              placeholder={jobTitleFieldPlaceholder}
+              onClick={handleClick}
+              buttonText={questionPromptButtonText}
+              buttonDisabled={questionLoading}
+            />
           ) : techSubjectQuestions ? (
-            <>
-              <SubjectField
-                onChange={onTechQuestionSubjectChange}
-                label="Enter a technology"
-                placeholder="ex. JavaScript"
-              />
-              <div className="questionButton">
-                <RaisedButton
-                  onClick={handleClick}
-                  text={questionPromptButtonText}
-                  height="35px"
-                  width="200px"
-                  disabled={questionLoading}
-                />
-              </div>
-            </>
+            <SubjectField
+              onChange={onTechQuestionSubjectChange}
+              label="Enter a technology"
+              placeholder="ex. JavaScript"
+              onClick={handleClick}
+              buttonText={questionPromptButtonText}
+              buttonDisabled={questionLoading}
+            />
           ) : !questionLoading ? (
             <SpeechBubblePrompt
               text={

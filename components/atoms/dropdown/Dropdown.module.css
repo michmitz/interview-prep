@@ -1,0 +1,74 @@
+.container {
+  user-select: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.label {
+  margin-right: 5px;
+}
+
+.softwareQuestionLabel {
+  margin-right: 4px;
+  font-size: 13px;
+  font-style: italic;
+}
+
+.dropdownContainer {
+  width: 250px;
+}
+
+.softwareDropdownHeader {
+  font-size: 14px;
+  height: 45px;
+}
+
+@media screen and (min-width: 850px) and (max-width: 950px) {
+  .dropdownContainer {
+    width: 200px;
+  }
+  .dropdownHeader {
+    font-size: 13px;
+  }
+  .softwareDropdownHeader {
+    font-size: 13px;
+  }
+}
+
+.dropdownHeader {
+  box-shadow: 5px 5px 5px 0 rgba(31, 38, 135, 0.209);
+  width: 100%;
+  padding: 0.7em;
+  color: purple;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+  user-select: none;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.listContainer {
+  border-radius: 20px;
+  width: 160px;
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  margin-top: 10px;
+  z-index: 10;
+}
+
+.li {
+  list-style-type: none;
+  padding: 0.6em;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.li:hover {
+  border-radius: 30px;
+  background: rgb(241, 232, 250);
+}

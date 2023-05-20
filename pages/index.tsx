@@ -1,64 +1,39 @@
 import React from "react";
 import type { NextPage } from "next";
 import { appStrings } from "@/constants/appStrings";
-import { Sidebar } from "@/components/atoms/sidebar/Sidebar";
-import { SubjectField } from "@/components/atoms/subject_field/SubjectField";
-import { QuestionNotesSection } from "@/components/molecules/question_notes_section/QuestionNotesSection";
+import { InterviewMode, Sidebar } from "@/components/atoms/sidebar/Sidebar";
 import { useSession, signIn } from "next-auth/react";
-import { RaisedButton } from "@/components/atoms/button/RaisedButton";
 import { SpeechBubblePrompt } from "@/components/molecules/speech_bubble_prompt/SpeechBubblePrompt";
-import { ThinkingRobot } from "@/components/molecules/thinking_robot/ThinkingRobot";
+import { ContentContainer } from "@/components/molecules/content_container/ContentContainer";
 
-const { askQuestionPrompt } = appStrings.aiPrompts;
 const { welcome } = appStrings.header;
-const {
-  questionPromptText,
-  questionPromptButtonText,
-  notSignedInText,
-  signInButtonText,
-} = appStrings.speechBubble;
-const { getNewQuestion } = appStrings;
-
-export type InterviewMode = "subject" | "general";
+const { notSignedInText, signInButtonText } = appStrings.speechBubble;
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
+  const [mode, setMode] = React.useState<InterviewMode>("software");
   const [completion, setCompletion] = React.useState<string>("");
-  const [questionLoading, setQuestionLoading] = React.useState<boolean>(false);
-  const [mode, setMode] = React.useState<InterviewMode>("general");
-  const [subject, setSubject] = React.useState<string>("JavaScript");
   const [noteResponse, setNoteResponse] = React.useState<string>("");
-
-  const handleClick = async (e: any) => {
-    setCompletion("");
-    setNoteResponse("");
-    const content =
-      mode === "subject"
-        ? `${askQuestionPrompt} The interview subject is ${subject}.`
-        : askQuestionPrompt;
-    setQuestionLoading(true);
-    const response = await fetch("/api/openai", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ role: "user", content: content, maxTokens: 200 }),
-    });
-    const data = await response.json();
-    if (data) {
-      setCompletion(data.response.content);
-    }
-    setQuestionLoading(false);
-  };
+  const [softwareQuestionType, setSoftwareQuestionType] = React.useState<string>("any");
+  const [techQuestionSubject, setTechQuestionSubject] =
+  React.useState<string>("");
 
   const handleModeClick = (mode: InterviewMode) => {
     setCompletion("");
-    mode === "general" ? setMode("subject") : setMode("general");
+    if (mode !== 'software') {
+      setTechQuestionSubject("");
+      setSoftwareQuestionType("any");
+    }
+    setMode(mode);
   };
 
-  const onSubjectChange = (value: string) => {
-    setSubject(value);
-  };
+  const handleChangeSoftwareQuestionType = (questionType: string) => {
+    setCompletion("");
+    if (questionType !== 'technical (subject)') {
+      setTechQuestionSubject("");
+    }
+    setSoftwareQuestionType(questionType);
+  }
 
   if (session) {
     return (
@@ -70,58 +45,22 @@ const Home: NextPage = () => {
             onModeClick={handleModeClick}
             isLoggedIn={true}
             user={session?.user?.email}
+            softwareQuestionType={softwareQuestionType}
+            setSoftwareQuestionType={handleChangeSoftwareQuestionType}
           />
         </div>
 
         <div className="rightContainer">
-          {mode === "subject" ? (
-            <>
-              <SubjectField onChange={onSubjectChange} />
-              {!completion && (
-                <div className="questionButton">
-                  <RaisedButton
-                    onClick={handleClick}
-                    text={questionPromptButtonText}
-                    height="35px"
-                    width="200px"
-                    disabled={questionLoading}
-                  />
-                </div>
-              )}
-            </>
-          ) : (
-            !completion &&
-            !questionLoading && (
-              <SpeechBubblePrompt
-                text={questionPromptText}
-                onClick={handleClick}
-                disableButton={questionLoading}
-                buttonText={questionPromptButtonText}
-              />
-            )
-          )}
-
-          {questionLoading && <ThinkingRobot />}
-
-          {completion && (
-            <>
-              <QuestionNotesSection
-                aiResponse={completion}
-                noteResponse={noteResponse}
-                setNoteResponse={setNoteResponse}
-              />
-              <div className="questionButton">
-                <RaisedButton
-                  onClick={handleClick}
-                  text={getNewQuestion}
-                  height="35px"
-                  width="200px"
-                  disabled={questionLoading}
-                />
-              </div>
-            </>
-          )}
-
+          <ContentContainer
+            mode={mode}
+            completion={completion}
+            setCompletion={setCompletion}
+            noteResponse={noteResponse}
+            setNoteResponse={setNoteResponse}
+            softwareQuestionType={softwareQuestionType}
+            techQuestionSubject={techQuestionSubject}
+            onTechQuestionSubjectChange={setTechQuestionSubject}
+          />
           {noteResponse && (
             <div className="speechBubbleSlide">
               <SpeechBubblePrompt text={noteResponse} />

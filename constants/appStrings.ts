@@ -9,12 +9,25 @@ export const appStrings = {
     notSignedInText: 'Click here to sign in!',
     signInButtonText: 'Sign In',
   },
+  mode: {
+    jobTitle: {
+      jobTitleFieldLabel: 'Enter your own job field or title:',
+      jobTitleFieldPlaceholder: 'ex. Retail',
+      subjectSubmitButton: 'Submit',
+    },
+    software: {
+      technicalQuestionFieldLabel: 'Enter a technology',
+      technicalQuestionFieldPlaceholder: 'ex. JavaScript',
+    },
+    changeSubjectText: 'Change Subject',
+  },
   getNewQuestion: 'Ask Me Another Question!',
   thinking: 'Thinking',
   header: { 
     welcome: 'Welcome! I\'m a virtual interviewer.',
     notesLink: 'View Notes',
     modeLabel: 'Mode',
+    softwareQuestionTypeLabel: 'Question Type',
     notesPage: 'Notes',
     returnHome: 'Return to Interview',
   },
@@ -26,7 +39,4 @@ export const appStrings = {
   answerField: 'Write your notes here...',
   answerSubmitButton: 'Save Note',
   showAdviceText: 'Show Advice?',
-  subjectField: 'Enter your own subject:',
-  subjectFieldPlaceholder: 'ex. JavaScript',
-  subjectSubmitButton: 'Submit Subject',
 }

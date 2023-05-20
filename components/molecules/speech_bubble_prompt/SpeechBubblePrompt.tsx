@@ -20,8 +20,8 @@ export const SpeechBubblePrompt: React.FC<SpeechBubblePromptProps> = ({
     <div className={styles.container}>
       <Image
         src={"/robot.png"}
-        width={60}
-        height={60}
+        width={65}
+        height={65}
         alt="robot"
         className={styles.icon}
       />

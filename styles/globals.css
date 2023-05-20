@@ -78,7 +78,7 @@ a {
   }
   .sidebar {
     width: 100%;
-    height: 200px;
+    height: 250px;
   }
   .rightContainer {
     width: 100%;
@@ -179,4 +179,11 @@ a {
 
 .questionButton {
   margin-top: 5%;
+}
+
+.flexCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

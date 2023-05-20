@@ -18,9 +18,8 @@ interface ContentContainerProps {
   readonly onTechQuestionSubjectChange: (v: string) => void;
 }
 
-const { questionPromptText, questionPromptButtonText } =
+const { questionPromptButtonText } =
   appStrings.speechBubble;
-const { getNewQuestion } = appStrings;
 const { askQuestionPrompt } = appStrings.aiPrompts;
 const { jobTitleFieldLabel, jobTitleFieldPlaceholder } =
   appStrings.mode.jobTitle;
@@ -137,18 +136,10 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
         <div className="flexCenter">
           <QuestionNotesSection
             aiResponse={completion}
-            noteResponse={noteResponse}
             setNoteResponse={setNoteResponse}
+            onSubmit={handleClick}
+            questionLoading={questionLoading}
           />
-          <div className="questionButton">
-            <RaisedButton
-              onClick={handleClick}
-              text={getNewQuestion}
-              height="35px"
-              width="200px"
-              disabled={questionLoading}
-            />
-          </div>
         </div>
       )}
     </div>

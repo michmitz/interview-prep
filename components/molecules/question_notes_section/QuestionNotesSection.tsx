@@ -3,17 +3,23 @@ import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
 import { NeumorphicButton } from "@/components/atoms/button/NeumorphicButton";
 import { QuestionCard } from "@/components/atoms/question_card/QuestionCard";
 import styles from './QuestionNotesSection.module.css'
+import { RaisedButton } from "@/components/atoms/button/RaisedButton";
+import { appStrings } from "@/constants/appStrings";
 
 export interface QuestionNotesSectionProps {
   readonly aiResponse: string;
-  readonly noteResponse: string;
   readonly setNoteResponse: (message: string) => void;
+  readonly onSubmit: (e: any) => void;
+  readonly questionLoading: boolean;
 }
+
+const { getNewQuestion } = appStrings;
 
 export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
   aiResponse,
-  noteResponse,
   setNoteResponse,
+  onSubmit,
+  questionLoading
 }) => {
   const [answerInput, setAnswerInput] = React.useState<string>("");
   const [noteSaving, setNoteSaving] = React.useState<boolean>(false);
@@ -69,6 +75,15 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
           disableButton={noteSaving || !answerInput}
         />
       )}
+      <div className="questionButton">
+            <RaisedButton
+              onClick={onSubmit}
+              text={getNewQuestion}
+              height="35px"
+              width="200px"
+              disabled={questionLoading}
+            />
+          </div>
     </div>
   );
 };

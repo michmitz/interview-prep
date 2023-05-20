@@ -2,9 +2,10 @@ import React from "react";
 import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
 import { NeumorphicButton } from "@/components/atoms/button/NeumorphicButton";
 import { QuestionCard } from "@/components/atoms/question_card/QuestionCard";
-import styles from './QuestionNotesSection.module.css'
+import styles from "./QuestionNotesSection.module.css";
 import { RaisedButton } from "@/components/atoms/button/RaisedButton";
 import { appStrings } from "@/constants/appStrings";
+import { DoubleLeftOutlined } from "@ant-design/icons";
 
 export interface QuestionNotesSectionProps {
   readonly aiResponse: string;
@@ -16,6 +17,7 @@ export interface QuestionNotesSectionProps {
 }
 
 const { getNewQuestion } = appStrings;
+const { changeSubjectText } = appStrings.mode;
 
 export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
   aiResponse,
@@ -23,7 +25,7 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
   onSubmit,
   questionLoading,
   allowSubjectField,
-  setToggleSubjectField
+  setToggleSubjectField,
 }) => {
   const [answerInput, setAnswerInput] = React.useState<string>("");
   const [noteSaving, setNoteSaving] = React.useState<boolean>(false);
@@ -57,7 +59,17 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
 
   return (
     <div className="flexCenter">
-      {allowSubjectField && <div style={{ position: 'absolute', right: 0, top: 0 }} onClick={() => setToggleSubjectField(true)}>CHANGE SUBJECT</div>}
+      {allowSubjectField && (
+        <div className={styles.changeSubjectButtonContainer}>
+          <DoubleLeftOutlined className={styles.changeSubjectIcon} />
+          <button
+            className={styles.changeSubjectButton}
+            onClick={() => setToggleSubjectField(true)}
+          >
+            {changeSubjectText}
+          </button>
+        </div>
+      )}
       <QuestionCard response={aiResponse} />
       {showNotesButton && (
         <div className={styles.writeNoteButton}>
@@ -70,7 +82,7 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
             height="32px"
             width="100px"
           />
-          </div>
+        </div>
       )}
       {showAnswerField && (
         <AnswerField
@@ -81,14 +93,14 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
         />
       )}
       <div className="questionButton">
-            <RaisedButton
-              onClick={onSubmit}
-              text={getNewQuestion}
-              height="35px"
-              width="200px"
-              disabled={questionLoading}
-            />
-        </div>
+        <RaisedButton
+          onClick={onSubmit}
+          text={getNewQuestion}
+          height="35px"
+          width="200px"
+          disabled={questionLoading}
+        />
+      </div>
     </div>
   );
 };

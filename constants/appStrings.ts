@@ -18,7 +18,8 @@ export const appStrings = {
     software: {
       technicalQuestionFieldLabel: 'Enter a technology',
       technicalQuestionFieldPlaceholder: 'ex. JavaScript',
-    }
+    },
+    changeSubjectText: 'Change Subject',
   },
   getNewQuestion: 'Ask Me Another Question!',
   thinking: 'Thinking',

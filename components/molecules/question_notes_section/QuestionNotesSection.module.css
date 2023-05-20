@@ -3,3 +3,39 @@
   margin-bottom: 1em;
   align-self: center;
 }
+
+.changeSubjectButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 5%;
+  top: 5%;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.changeSubjectIcon {
+  margin-right: 5px;
+  color: purple;
+  animation: bounce 1s;
+}
+
+.changeSubjectButton {
+  cursor: pointer;
+  border: none;
+  color: purple;
+  font-weight: bold;
+  letter-spacing: 1px;
+  background: none;
+}
+
+@keyframes bounce {
+  50% {transform: translateX(-10px)}
+}
+
+.changeSubjectIcon:hover, .changeSubjectButton:hover {
+  font-size: 15px;
+}
+

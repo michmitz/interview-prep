@@ -18,15 +18,13 @@ interface ContentContainerProps {
   readonly onTechQuestionSubjectChange: (v: string) => void;
 }
 
-const { questionPromptButtonText } =
-  appStrings.speechBubble;
+const { questionPromptButtonText } = appStrings.speechBubble;
 const { askQuestionPrompt } = appStrings.aiPrompts;
 const { jobTitleFieldLabel, jobTitleFieldPlaceholder } =
   appStrings.mode.jobTitle;
 
 export const ContentContainer: React.FC<ContentContainerProps> = ({
   mode,
-  noteResponse,
   setNoteResponse,
   completion,
   setCompletion,
@@ -34,6 +32,7 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   techQuestionSubject,
   onTechQuestionSubjectChange,
 }) => {
+  const jobMode = mode === "job-title";
   const techSubjectQuestions =
     mode === "software" && softwareQuestionType === "technical (subject)";
   const generalTechQuestions =
@@ -42,6 +41,14 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
     mode === "software" && softwareQuestionType === "soft skills";
   const [questionLoading, setQuestionLoading] = React.useState<boolean>(false);
   const [jobTitle, setJobTitle] = React.useState<string>("");
+  const [toggleSubjectField, setToggleSubjectField] =
+    React.useState<boolean>(jobMode);
+
+  React.useEffect(() => {
+    if (jobMode || techSubjectQuestions) {
+      setToggleSubjectField(true);
+    }
+  }, [jobMode, techSubjectQuestions]);
 
   const generatePrompt = (
     mode: InterviewMode,
@@ -68,6 +75,7 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   };
 
   const handleClick = async (e: any) => {
+    setToggleSubjectField(false);
     const prompt = generatePrompt(mode, softwareQuestionType);
     setCompletion("");
     setNoteResponse("");
@@ -95,53 +103,55 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
 
   return (
     <div>
-      {!completion ? (
-        <div className="flexCenter">
-          {mode === "job-title" ? (
-            <SubjectField
-              onChange={onJobTitleChange}
-              label={jobTitleFieldLabel}
-              placeholder={jobTitleFieldPlaceholder}
-              onClick={handleClick}
-              buttonText={questionPromptButtonText}
-              buttonDisabled={questionLoading}
-            />
-          ) : techSubjectQuestions ? (
-            <SubjectField
-              onChange={onTechQuestionSubjectChange}
-              label="Enter a technology"
-              placeholder="ex. JavaScript"
-              onClick={handleClick}
-              buttonText={questionPromptButtonText}
-              buttonDisabled={questionLoading}
-            />
-          ) : !questionLoading ? (
-            <SpeechBubblePrompt
-              text={
-                softSkillsQuestions
-                  ? "Ready to be asked about your soft skills?"
-                  : generalTechQuestions
-                  ? "Ready for some technical questions?"
-                  : "Let's do some software interview questions!"
-              }
-              onClick={handleClick}
-              disableButton={questionLoading}
-              buttonText={questionPromptButtonText}
-            />
-          ) : (
-            <ThinkingRobot />
-          )}
-        </div>
-      ) : (
-        <div className="flexCenter">
-          <QuestionNotesSection
-            aiResponse={completion}
-            setNoteResponse={setNoteResponse}
-            onSubmit={handleClick}
-            questionLoading={questionLoading}
-          />
-        </div>
-      )}
+      <div className="flexCenter">
+        {!questionLoading ? (
+          <>
+            {completion && !toggleSubjectField ? (
+              <QuestionNotesSection
+                aiResponse={completion}
+                setNoteResponse={setNoteResponse}
+                onSubmit={handleClick}
+                questionLoading={questionLoading}
+                setToggleSubjectField={setToggleSubjectField}
+                allowSubjectField={jobMode || techSubjectQuestions}
+              />
+            ) : jobMode ? (
+              <SubjectField
+                onChange={onJobTitleChange}
+                label={jobTitleFieldLabel}
+                placeholder={jobTitleFieldPlaceholder}
+                onClick={handleClick}
+                buttonText={questionPromptButtonText}
+                buttonDisabled={questionLoading}
+              />
+            ) : techSubjectQuestions ? (
+              <SubjectField
+                onChange={onTechQuestionSubjectChange}
+                label="Enter a technology"
+                placeholder="ex. JavaScript"
+                onClick={handleClick}
+                buttonText={questionPromptButtonText}
+                buttonDisabled={questionLoading}
+              />
+            ) : (
+              <SpeechBubblePrompt
+                text={
+                  softSkillsQuestions
+                    ? "Ready to be asked about your soft skills?"
+                    : generalTechQuestions
+                    ? "Ready for some technical questions?"
+                    : "Let's do some software interview questions!"
+                }
+                onClick={handleClick}
+                disableButton={questionLoading}
+                buttonText={questionPromptButtonText}
+              />
+            )}
+          </>
+        ) : (
+          <ThinkingRobot />
+        )}
+      </div>
     </div>
   );
 };

@@ -11,6 +11,8 @@ export interface QuestionNotesSectionProps {
   readonly setNoteResponse: (message: string) => void;
   readonly onSubmit: (e: any) => void;
   readonly questionLoading: boolean;
+  readonly allowSubjectField: boolean;
+  readonly setToggleSubjectField: (v: boolean) => void;
 }
 
 const { getNewQuestion } = appStrings;
@@ -19,7 +21,9 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
   aiResponse,
   setNoteResponse,
   onSubmit,
-  questionLoading
+  questionLoading,
+  allowSubjectField,
+  setToggleSubjectField
 }) => {
   const [answerInput, setAnswerInput] = React.useState<string>("");
   const [noteSaving, setNoteSaving] = React.useState<boolean>(false);
@@ -52,7 +56,8 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: "column"}}>
+    <div className="flexCenter">
+      {allowSubjectField && <div style={{ position: 'absolute', right: 0, top: 0 }} onClick={() => setToggleSubjectField(true)}>CHANGE SUBJECT</div>}
       <QuestionCard response={aiResponse} />
       {showNotesButton && (
         <div className={styles.writeNoteButton}>
@@ -83,7 +88,7 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
               width="200px"
               disabled={questionLoading}
             />
-          </div>
+        </div>
     </div>
   );
 };

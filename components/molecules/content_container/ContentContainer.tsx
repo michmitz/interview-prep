@@ -6,6 +6,7 @@ import { QuestionNotesSection } from "../question_notes_section/QuestionNotesSec
 import { ThinkingRobot } from "../thinking_robot/ThinkingRobot";
 import { SpeechBubblePrompt } from "../speech_bubble_prompt/SpeechBubblePrompt";
 import { appStrings } from "@/constants/appStrings";
+import styles from "./ContentContainer.module.css";
 
 interface ContentContainerProps {
   readonly mode: InterviewMode;
@@ -107,14 +108,16 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
         {!questionLoading ? (
           <>
             {completion && !toggleSubjectField ? (
-              <QuestionNotesSection
-                aiResponse={completion}
-                setNoteResponse={setNoteResponse}
-                onSubmit={handleClick}
-                questionLoading={questionLoading}
-                setToggleSubjectField={setToggleSubjectField}
-                allowSubjectField={jobMode || techSubjectQuestions}
-              />
+              <div className={styles.questionNotesSection}>
+                <QuestionNotesSection
+                  aiResponse={completion}
+                  setNoteResponse={setNoteResponse}
+                  onSubmit={handleClick}
+                  questionLoading={questionLoading}
+                  setToggleSubjectField={setToggleSubjectField}
+                  allowSubjectField={jobMode || techSubjectQuestions}
+                />
+              </div>
             ) : jobMode ? (
               <SubjectField
                 onChange={onJobTitleChange}

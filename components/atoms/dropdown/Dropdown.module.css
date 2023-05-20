@@ -19,6 +19,11 @@
   width: 250px;
 }
 
+.softwareDropdownHeader {
+  font-size: 14px;
+  height: 45px;
+}
+
 @media screen and (min-width: 850px) and (max-width: 950px) {
   .dropdownContainer {
     width: 200px;
@@ -26,12 +31,15 @@
   .dropdownHeader {
     font-size: 13px;
   }
+  .softwareDropdownHeader {
+    font-size: 13px;
+  }
 }
 
 .dropdownHeader {
   box-shadow: 5px 5px 5px 0 rgba(31, 38, 135, 0.209);
   width: 100%;
-  padding: 0.6em;
+  padding: 0.7em;
   color: purple;
   font-weight: bold;
   letter-spacing: 0.1rem;

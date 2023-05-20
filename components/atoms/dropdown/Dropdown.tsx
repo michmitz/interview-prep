@@ -46,7 +46,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
       <div className={styles.dropdownContainer}>
         <div
           className={`${styles.dropdownHeader} ${
-            variant === "mode" ? "blueGradient" : "greenGradient"
+            variant === "mode" ? "blueGradient" : `${styles.softwareDropdownHeader} greenGradient`
           }`}
           onClick={() => setShowMenu(true)}
         >

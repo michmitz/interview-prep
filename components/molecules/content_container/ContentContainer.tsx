@@ -103,58 +103,56 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   };
 
   return (
-    <div>
-      <div className="flexCenter">
-        {!questionLoading ? (
-          <>
-            {completion && !toggleSubjectField ? (
-              <div className={styles.questionNotesSection}>
-                <QuestionNotesSection
-                  aiResponse={completion}
-                  setNoteResponse={setNoteResponse}
-                  onSubmit={handleClick}
-                  questionLoading={questionLoading}
-                  setToggleSubjectField={setToggleSubjectField}
-                  allowSubjectField={jobMode || techSubjectQuestions}
-                />
-              </div>
-            ) : jobMode ? (
-              <SubjectField
-                onChange={onJobTitleChange}
-                label={jobTitleFieldLabel}
-                placeholder={jobTitleFieldPlaceholder}
-                onClick={handleClick}
-                buttonText={questionPromptButtonText}
-                buttonDisabled={questionLoading}
+    <div style={{ width: "100%" }} className="flexCenter">
+      {!questionLoading ? (
+        <div style={{ width: "100%" }} className="flexCenter">
+          {completion && !toggleSubjectField ? (
+            <div className={styles.questionNotesSection}>
+              <QuestionNotesSection
+                aiResponse={completion}
+                setNoteResponse={setNoteResponse}
+                onSubmit={handleClick}
+                questionLoading={questionLoading}
+                setToggleSubjectField={setToggleSubjectField}
+                allowSubjectField={jobMode || techSubjectQuestions}
               />
-            ) : techSubjectQuestions ? (
-              <SubjectField
-                onChange={onTechQuestionSubjectChange}
-                label="Enter a technology"
-                placeholder="ex. JavaScript"
-                onClick={handleClick}
-                buttonText={questionPromptButtonText}
-                buttonDisabled={questionLoading}
-              />
-            ) : (
-              <SpeechBubblePrompt
-                text={
-                  softSkillsQuestions
-                    ? "Ready to be asked about your soft skills?"
-                    : generalTechQuestions
-                    ? "Ready for some technical questions?"
-                    : "Let's do some software interview questions!"
-                }
-                onClick={handleClick}
-                disableButton={questionLoading}
-                buttonText={questionPromptButtonText}
-              />
-            )}
-          </>
-        ) : (
-          <ThinkingRobot />
-        )}
-      </div>
+            </div>
+          ) : jobMode ? (
+            <SubjectField
+              onChange={onJobTitleChange}
+              label={jobTitleFieldLabel}
+              placeholder={jobTitleFieldPlaceholder}
+              onClick={handleClick}
+              buttonText={questionPromptButtonText}
+              buttonDisabled={questionLoading}
+            />
+          ) : techSubjectQuestions ? (
+            <SubjectField
+              onChange={onTechQuestionSubjectChange}
+              label="Enter a technology"
+              placeholder="ex. JavaScript"
+              onClick={handleClick}
+              buttonText={questionPromptButtonText}
+              buttonDisabled={questionLoading}
+            />
+          ) : (
+            <SpeechBubblePrompt
+              text={
+                softSkillsQuestions
+                  ? "Ready to be asked about your soft skills?"
+                  : generalTechQuestions
+                  ? "Ready for some technical questions?"
+                  : "Let's do some software interview questions!"
+              }
+              onClick={handleClick}
+              disableButton={questionLoading}
+              buttonText={questionPromptButtonText}
+            />
+          )}
+        </div>
+      ) : (
+        <ThinkingRobot />
+      )}
     </div>
   );
 };

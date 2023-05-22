@@ -53,7 +53,8 @@ const { notesPage } = appStrings.header;
 
 const Notes: NextPage<NotesProps> = ({ notes }) => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const pageLoading = status === "loading";
   const [noteResponse, setNoteResponse] = React.useState<string>("");
   const [notesToEdit, setNotesToEdit] = React.useState<ReadonlyArray<string>>([
     "",
@@ -141,48 +142,54 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
 
   if (session) {
     return (
-      <div className="container">
-        <div className="sidebar">
-          <Sidebar
-            headerText={notesPage}
-            isLoggedIn={true}
-            user={session?.user?.email}
-          />
-        </div>
+      <main className="lightGlassEffect fadeIn">
+        <div className="container">
+          <div className="sidebar">
+            <Sidebar
+              headerText={notesPage}
+              isLoggedIn={true}
+              user={session?.user?.email}
+            />
+          </div>
 
-        <div className="rightContainer">
-          {sortedNotes.map((noteArr, i) => {
-            return (
-              <div key={`${noteArr}-${i}`} className="flexCenter">
-                <div className={`${styles.notesSubject} blueGradient`}>
-                  {noteArr[0] === "null" ? "Unsorted" : noteArr[0]}
+          <div className="rightContainer">
+            {sortedNotes.map((noteArr, i) => {
+              return (
+                <div key={`${noteArr}-${i}`} className="flexCenter">
+                  <div className={`${styles.notesSubject} blueGradient`}>
+                    {noteArr[0] === "null" ? "Unsorted" : noteArr[0]}
+                  </div>
+                  {noteArr[1].map((note: Note) => {
+                    const { id } = note;
+
+                    return (
+                      <div className={styles.noteContainer} key={id}>
+                        <NoteCard
+                          question={note.question}
+                          note={note.note}
+                          noteId={id}
+                          editCallback={handleShowEditNote}
+                          deleteCallback={handleDeleteNote}
+                          responseMessage={noteResponse}
+                          showEditField={notesToEdit.includes(id)}
+                          disableButtonCallback={disableButton}
+                          answerInputsCallback={handleSetAnswerInputs}
+                          submitNoteCallback={handleSubmitNote}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
-                {noteArr[1].map((note: Note) => {
-                  const { id } = note;
-
-                  return (
-                    <div className={styles.noteContainer} key={id}>
-                      <NoteCard
-                        question={note.question}
-                        note={note.note}
-                        noteId={id}
-                        editCallback={handleShowEditNote}
-                        deleteCallback={handleDeleteNote}
-                        responseMessage={noteResponse}
-                        showEditField={notesToEdit.includes(id)}
-                        disableButtonCallback={disableButton}
-                        answerInputsCallback={handleSetAnswerInputs}
-                        submitNoteCallback={handleSubmitNote}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </div>
+      </main>
     );
+  }
+
+  if (!session && pageLoading) {
+    return <></>;
   }
 
   return (

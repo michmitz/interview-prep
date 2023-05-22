@@ -10,17 +10,19 @@ const { welcome } = appStrings.header;
 const { notSignedInText, signInButtonText } = appStrings.speechBubble;
 
 const Home: NextPage = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const pageLoading = status === "loading";
   const [mode, setMode] = React.useState<InterviewMode>("software");
   const [completion, setCompletion] = React.useState<string>("");
   const [noteResponse, setNoteResponse] = React.useState<string>("");
-  const [softwareQuestionType, setSoftwareQuestionType] = React.useState<string>("any");
+  const [softwareQuestionType, setSoftwareQuestionType] =
+    React.useState<string>("any");
   const [techQuestionSubject, setTechQuestionSubject] =
-  React.useState<string>("");
+    React.useState<string>("");
 
   const handleModeClick = (mode: InterviewMode) => {
     setCompletion("");
-    if (mode !== 'software') {
+    if (mode !== "software") {
       setTechQuestionSubject("");
       setSoftwareQuestionType("any");
     }
@@ -29,46 +31,52 @@ const Home: NextPage = () => {
 
   const handleChangeSoftwareQuestionType = (questionType: string) => {
     setCompletion("");
-    if (questionType !== 'technical (subject)') {
+    if (questionType !== "technical (subject)") {
       setTechQuestionSubject("");
     }
     setSoftwareQuestionType(questionType);
-  }
+  };
 
   if (session) {
     return (
-      <div className="container">
-        <div className="sidebar">
-          <Sidebar
-            headerText={welcome}
-            mode={mode}
-            onModeClick={handleModeClick}
-            isLoggedIn={true}
-            user={session?.user?.email}
-            softwareQuestionType={softwareQuestionType}
-            setSoftwareQuestionType={handleChangeSoftwareQuestionType}
-          />
-        </div>
+      <main className="lightGlassEffect fadeIn">
+        <div className="container">
+          <div className="sidebar">
+            <Sidebar
+              headerText={welcome}
+              mode={mode}
+              onModeClick={handleModeClick}
+              isLoggedIn={true}
+              user={session?.user?.email}
+              softwareQuestionType={softwareQuestionType}
+              setSoftwareQuestionType={handleChangeSoftwareQuestionType}
+            />
+          </div>
 
-        <div className="rightContainer">
-          <ContentContainer
-            mode={mode}
-            completion={completion}
-            setCompletion={setCompletion}
-            noteResponse={noteResponse}
-            setNoteResponse={setNoteResponse}
-            softwareQuestionType={softwareQuestionType}
-            techQuestionSubject={techQuestionSubject}
-            onTechQuestionSubjectChange={setTechQuestionSubject}
-          />
-          {noteResponse && (
-            <div className="speechBubbleSlide">
-              <SpeechBubblePrompt text={noteResponse} />
-            </div>
-          )}
+          <div className="rightContainer">
+            <ContentContainer
+              mode={mode}
+              completion={completion}
+              setCompletion={setCompletion}
+              noteResponse={noteResponse}
+              setNoteResponse={setNoteResponse}
+              softwareQuestionType={softwareQuestionType}
+              techQuestionSubject={techQuestionSubject}
+              onTechQuestionSubjectChange={setTechQuestionSubject}
+            />
+            {noteResponse && (
+              <div className="speechBubbleSlide">
+                <SpeechBubblePrompt text={noteResponse} />
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </main>
     );
+  }
+
+  if (!session && pageLoading) {
+    return <></>;
   }
 
   return (

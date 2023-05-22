@@ -16,6 +16,7 @@ export type Note = {
   readonly advice: string;
   readonly authorId: string;
   readonly note: string;
+  readonly subject: string;
 };
 
 export type UpdatedNote = {
@@ -134,6 +135,19 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
     return updatedNote?.updatedNote === "" ? true : !updatedNote ? true : false;
   };
 
+  const groupArrBy = (items: any, key: string) =>
+    items.reduce(
+      (next: any, item: any) => ({
+        ...next,
+        [item[key]]: [...(next[item[key]] || []), item],
+      }),
+      []
+    );
+
+  const sortedNotes = Object.entries(groupArrBy(notes, 'subject'));
+
+  console.log("Sorted notes", sortedNotes);
+
   if (session) {
     return (
       <div className="container">
@@ -146,32 +160,40 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
         </div>
 
         <div className="rightContainer">
-          {notes.map((note) => {
-            const { id } = note;
+          {sortedNotes.map((arr, i) => {
             return (
-              <div className={styles.noteContainer} key={id}>
-                <NoteCard
-                  question={note.question}
-                  note={note.note}
-                  noteId={id}
-                  editCallback={handleShowEditNote}
-                  deleteCallback={handleDeleteNote}
-                  responseMessage={noteResponse}
-                  showEditField={notesToEdit.includes(id)}
-                  disableButtonCallback={disableButton}
-                  answerInputsCallback={handleSetAnswerInputs}
-                  submitNoteCallback={handleSubmitNote}
-                />
+              <div key={`${arr}-${i}`}>
+                <div>Subject: {JSON.stringify(arr[0] === "null" ? 'Unsorted' : arr[0])}</div>
+                {arr[1].map(note => {
+                const { id, subject } = note;
+    
+                return (
+                  <div className={styles.noteContainer} key={id}>
+                    <NoteCard
+                      question={note.question}
+                      note={note.note}
+                      noteId={id}
+                      editCallback={handleShowEditNote}
+                      deleteCallback={handleDeleteNote}
+                      responseMessage={noteResponse}
+                      showEditField={notesToEdit.includes(id)}
+                      disableButtonCallback={disableButton}
+                      answerInputsCallback={handleSetAnswerInputs}
+                      submitNoteCallback={handleSubmitNote}
+                    />
+                  </div>
+                )
+              })}
               </div>
-            );
-          })}
+            )
+        })}
         </div>
       </div>
     );
   }
 
   return (
-    <div className='signedOut'>
+    <div className="signedOut">
       <SpeechBubblePrompt
         text={notSignedInText}
         onClick={() => signIn()}

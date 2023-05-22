@@ -9,6 +9,7 @@ import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
 import { useRouter } from "next/router";
 import { NoteCard } from "@/components/molecules/note_card/NoteCard";
 import { SpeechBubblePrompt } from "@/components/molecules/speech_bubble_prompt/SpeechBubblePrompt";
+import { sortArrByKey } from '@/utils/utils';
 
 export type Note = {
   readonly id: string;
@@ -135,16 +136,7 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
     return updatedNote?.updatedNote === "" ? true : !updatedNote ? true : false;
   };
 
-  const groupArrBy = (items: any, key: string) =>
-    items.reduce(
-      (next: any, item: any) => ({
-        ...next,
-        [item[key]]: [...(next[item[key]] || []), item],
-      }),
-      []
-    );
-
-  const sortedNotes = Object.entries(groupArrBy(notes, 'subject'));
+  const sortedNotes = sortArrByKey([...notes], 'subject');
 
   console.log("Sorted notes", sortedNotes);
 
@@ -160,12 +152,12 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
         </div>
 
         <div className="rightContainer">
-          {sortedNotes.map((arr, i) => {
+          {sortedNotes.map((noteArr, i) => {
             return (
-              <div key={`${arr}-${i}`}>
-                <div>Subject: {JSON.stringify(arr[0] === "null" ? 'Unsorted' : arr[0])}</div>
-                {arr[1].map(note => {
-                const { id, subject } = note;
+              <div key={`${noteArr}-${i}`}>
+                <div>Subject: {JSON.stringify(noteArr[0] === "null" ? 'Unsorted' : noteArr[0])}</div>
+                {noteArr[1].map((note: Note) => {
+                const { id } = note;
     
                 return (
                   <div className={styles.noteContainer} key={id}>

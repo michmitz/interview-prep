@@ -1,7 +1,11 @@
 import { appStrings } from "@/constants/appStrings";
 import React from "react";
 import styles from "./SidebarStyles.module.css";
-import { ArrowLeftOutlined, FormOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  FormOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 import { RaisedButton } from "../button/RaisedButton";
@@ -30,10 +34,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
   softwareQuestionType,
   setSoftwareQuestionType,
 }) => {
+  const [notesLoading, setNotesLoading] = React.useState<boolean>(false);
   const router = useRouter();
 
   const handleNotesClick = () => {
+    setNotesLoading(true);
     router.push("/notes");
+    setNotesLoading(false);
   };
 
   const handleReturnHome = () => {
@@ -78,7 +85,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               onClick={() => handleNotesClick()}
             >
               <p className={styles.label}>{notesLink}</p>
-              <FormOutlined />
+              {notesLoading ? <LoadingOutlined /> : <FormOutlined />}
             </span>
           </div>
         ) : (

@@ -26,3 +26,13 @@
   width: 100%;
   max-width: 700px;
 }
+
+.notesSubject {
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  padding: 0.7em;
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}

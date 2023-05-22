@@ -42,6 +42,7 @@ model Note {
   noteHash  String? /// @encryption:hash(note)
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  String?
+  subject   String?
 }
 
 model User {

@@ -40,7 +40,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const handleNotesClick = () => {
     setNotesLoading(true);
     router.push("/notes");
-    setNotesLoading(false);
+    if (router.pathname === "/notes" && router.isReady) {
+      setNotesLoading(false);
+    }
   };
 
   const handleReturnHome = () => {
@@ -84,7 +86,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
               className={styles.labelContainer}
               onClick={() => handleNotesClick()}
             >
-              <p className={styles.label}>{notesLink}</p>
+              <p
+                className={
+                  notesLoading
+                    ? `${styles.loadingLabel} ${styles.label}`
+                    : styles.label
+                }
+              >
+                {notesLink}
+              </p>
               {notesLoading ? <LoadingOutlined /> : <FormOutlined />}
             </span>
           </div>

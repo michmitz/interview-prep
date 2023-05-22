@@ -38,6 +38,10 @@
   letter-spacing: 2px;
 }
 
+.loadingLabel {
+  opacity: .5;
+}
+
 .returnLabel {
   margin-left: 10px;
 }

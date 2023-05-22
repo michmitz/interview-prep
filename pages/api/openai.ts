@@ -22,7 +22,7 @@ const generateResponse = async ({ role, content, maxTokens }: ResponseProps) => 
       temperature: 1,
       max_tokens: maxTokens,
     })
-    console.log("Completion", completion)
+    // console.log("Completion", completion)
     return completion?.data?.choices[0].message
   } catch (err) {
     console.log("ERROR:", err)

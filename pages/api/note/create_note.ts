@@ -10,13 +10,14 @@ export default async function handler(
   const session = await getServerSession(req, res, authOptions);
 
   if (req.method === "POST" && session) {
-    const { question, advice, note } = req.body;
+    const { question, advice, note, subject } = req.body;
 
     const result = await prisma.note.create({
       data: {
         question,
         advice,
         note,
+        subject,
         author: { connect: { email: session?.user?.email as string } },
       },
     });

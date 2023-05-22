@@ -15,7 +15,7 @@ interface ContentContainerProps {
   readonly completion: string;
   readonly setCompletion: (v: string) => void;
   readonly softwareQuestionType?: string;
-  readonly techQuestionSubject?: string;
+  readonly techQuestionSubject: string;
   readonly onTechQuestionSubjectChange: (v: string) => void;
 }
 
@@ -115,6 +115,7 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
                 questionLoading={questionLoading}
                 setToggleSubjectField={setToggleSubjectField}
                 allowSubjectField={jobMode || techSubjectQuestions}
+                noteSubject={jobMode ? jobTitle : techSubjectQuestions ? techQuestionSubject : softSkillsQuestions ? 'Soft Skills' : 'General Tech Questions'}
               />
             </div>
           ) : jobMode ? (

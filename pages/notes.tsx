@@ -53,7 +53,8 @@ const { notesPage } = appStrings.header;
 
 const Notes: NextPage<NotesProps> = ({ notes }) => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const pageLoading = status === 'loading'
   const [noteResponse, setNoteResponse] = React.useState<string>("");
   const [notesToEdit, setNotesToEdit] = React.useState<ReadonlyArray<string>>([
     "",
@@ -183,6 +184,12 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
         </div>
       </div>
     );
+  }
+
+  if (!session && pageLoading) {
+    return (
+      <></>
+    )
   }
 
   return (

@@ -10,7 +10,8 @@ const { welcome } = appStrings.header;
 const { notSignedInText, signInButtonText } = appStrings.speechBubble;
 
 const Home: NextPage = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const pageLoading = status === 'loading'
   const [mode, setMode] = React.useState<InterviewMode>("software");
   const [completion, setCompletion] = React.useState<string>("");
   const [noteResponse, setNoteResponse] = React.useState<string>("");
@@ -69,6 +70,12 @@ const Home: NextPage = () => {
         </div>
       </div>
     );
+  }
+
+  if (!session && pageLoading) {
+    return (
+      <></>
+    )
   }
 
   return (

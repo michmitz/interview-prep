@@ -14,6 +14,7 @@ export interface QuestionNotesSectionProps {
   readonly questionLoading: boolean;
   readonly allowSubjectField: boolean;
   readonly setToggleSubjectField: (v: boolean) => void;
+  readonly noteSubject: string;
 }
 
 const { getNewQuestion } = appStrings;
@@ -26,6 +27,7 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
   questionLoading,
   allowSubjectField,
   setToggleSubjectField,
+  noteSubject,
 }) => {
   const [answerInput, setAnswerInput] = React.useState<string>("");
   const [noteSaving, setNoteSaving] = React.useState<boolean>(false);
@@ -38,6 +40,7 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
       question: aiResponse.split("Answer:")[0],
       advice: aiResponse.split("Answer")[1],
       note: answerInput,
+      subject: noteSubject,
     };
 
     const response = await fetch("/api/note/create_note", {

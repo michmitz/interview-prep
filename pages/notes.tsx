@@ -5,10 +5,10 @@ import prisma from "@/lib/prisma";
 import { Sidebar } from "@/components/atoms/sidebar/Sidebar";
 import { appStrings } from "@/constants/appStrings";
 import { getSession, signIn, useSession } from "next-auth/react";
-import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
 import { useRouter } from "next/router";
 import { NoteCard } from "@/components/molecules/note_card/NoteCard";
 import { SpeechBubblePrompt } from "@/components/molecules/speech_bubble_prompt/SpeechBubblePrompt";
+import { sortArrByKey } from "@/utils/utils";
 
 export type Note = {
   readonly id: string;
@@ -16,6 +16,7 @@ export type Note = {
   readonly advice: string;
   readonly authorId: string;
   readonly note: string;
+  readonly subject: string;
 };
 
 export type UpdatedNote = {
@@ -134,6 +135,10 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
     return updatedNote?.updatedNote === "" ? true : !updatedNote ? true : false;
   };
 
+  const sortedNotes = sortArrByKey([...notes], "subject");
+
+  console.log("Sorted notes", sortedNotes);
+
   if (session) {
     return (
       <div className="container">
@@ -146,22 +151,32 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
         </div>
 
         <div className="rightContainer">
-          {notes.map((note) => {
-            const { id } = note;
+          {sortedNotes.map((noteArr, i) => {
             return (
-              <div className={styles.noteContainer} key={id}>
-                <NoteCard
-                  question={note.question}
-                  note={note.note}
-                  noteId={id}
-                  editCallback={handleShowEditNote}
-                  deleteCallback={handleDeleteNote}
-                  responseMessage={noteResponse}
-                  showEditField={notesToEdit.includes(id)}
-                  disableButtonCallback={disableButton}
-                  answerInputsCallback={handleSetAnswerInputs}
-                  submitNoteCallback={handleSubmitNote}
-                />
+              <div key={`${noteArr}-${i}`} className="flexCenter">
+                <div className={`${styles.notesSubject} blueGradient`}>
+                  {noteArr[0] === "null" ? "Unsorted" : noteArr[0]}
+                </div>
+                {noteArr[1].map((note: Note) => {
+                  const { id } = note;
+
+                  return (
+                    <div className={styles.noteContainer} key={id}>
+                      <NoteCard
+                        question={note.question}
+                        note={note.note}
+                        noteId={id}
+                        editCallback={handleShowEditNote}
+                        deleteCallback={handleDeleteNote}
+                        responseMessage={noteResponse}
+                        showEditField={notesToEdit.includes(id)}
+                        disableButtonCallback={disableButton}
+                        answerInputsCallback={handleSetAnswerInputs}
+                        submitNoteCallback={handleSubmitNote}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             );
           })}
@@ -171,7 +186,7 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
   }
 
   return (
-    <div className='signedOut'>
+    <div className="signedOut">
       <SpeechBubblePrompt
         text={notSignedInText}
         onClick={() => signIn()}

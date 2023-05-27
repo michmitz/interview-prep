@@ -36,13 +36,16 @@
   margin-top: 12px;
 }
 
-.label {
+.icon {
   margin-right: 10px;
+}
+
+.label {
   letter-spacing: 2px;
 }
 
 .loadingLabel {
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .returnLabel {
@@ -50,9 +53,10 @@
 }
 
 .signedInLabel {
-  margin-top: 12px;
+  margin-top: 16px;
   margin-bottom: 12px;
   font-style: italic;
+  color: gray;
 }
 
 .signOutButton {
@@ -60,8 +64,13 @@
 }
 
 @keyframes bounce {
-  0%, 100% {transform: translateY(0px)}
-  50% {transform: translateY(-2px)}
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
 }
 
 .expandCollapseIcon {

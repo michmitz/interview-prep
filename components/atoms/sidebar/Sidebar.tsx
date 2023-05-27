@@ -122,6 +122,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 }
                 onClick={() => handleNotesClick()}
               >
+                {notesLoading ? (
+                  <LoadingOutlined className={styles.icon} />
+                ) : (
+                  <FormOutlined className={styles.icon} />
+                )}
                 <p
                   className={
                     notesLoading
@@ -131,7 +136,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 >
                   {notesLink}
                 </p>
-                {notesLoading ? <LoadingOutlined /> : <FormOutlined />}
               </span>
             ) : (
               <></>

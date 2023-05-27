@@ -3,8 +3,10 @@ import React from "react";
 import styles from "./SidebarStyles.module.css";
 import {
   ArrowLeftOutlined,
+  DownCircleOutlined,
   FormOutlined,
   LoadingOutlined,
+  UpCircleOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
@@ -34,7 +36,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
   softwareQuestionType,
   setSoftwareQuestionType,
 }) => {
+  const [expandedView, setExpandedView] = React.useState<boolean>(false);
   const [notesLoading, setNotesLoading] = React.useState<boolean>(false);
+  const [windowSize, setWindowSize] = React.useState([
+    window.innerWidth,
+    window.innerHeight,
+  ]);
   const router = useRouter();
 
   const handleNotesClick = () => {
@@ -57,8 +64,32 @@ export const Sidebar: React.FC<SidebarProps> = ({
     "soft skills",
   ] as ReadonlyArray<string>;
 
+  React.useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowSize([window.innerWidth, window.innerHeight]);
+    };
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, [windowSize]);
+
+  const mobileView = windowSize[0] < 850;
+  const mobileContainerStyles = `${styles.container} ${styles.mobileContainer}`;
+  const expandedContainerStyles = `${styles.container} ${styles.expandedContainer}`;
+
   return (
-    <div className={styles.container}>
+    <div
+      className={`${
+        mobileView && !expandedView
+          ? mobileContainerStyles
+          : mobileView && expandedView
+          ? expandedContainerStyles
+          : styles.container
+      }`}
+    >
       <div>
         <p className={styles.headerText}>{headerText}</p>
 
@@ -82,21 +113,29 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </div>
             )}
 
-            <span
-              className={styles.labelContainer}
-              onClick={() => handleNotesClick()}
-            >
-              <p
+            {expandedView || windowSize[0] > 850 ? (
+              <span
                 className={
-                  notesLoading
-                    ? `${styles.loadingLabel} ${styles.label}`
-                    : styles.label
+                  expandedView
+                    ? `${styles.labelContainer} quickFadeIn`
+                    : styles.labelContainer
                 }
+                onClick={() => handleNotesClick()}
               >
-                {notesLink}
-              </p>
-              {notesLoading ? <LoadingOutlined /> : <FormOutlined />}
-            </span>
+                <p
+                  className={
+                    notesLoading
+                      ? `${styles.loadingLabel} ${styles.label}`
+                      : styles.label
+                  }
+                >
+                  {notesLink}
+                </p>
+                {notesLoading ? <LoadingOutlined /> : <FormOutlined />}
+              </span>
+            ) : (
+              <></>
+            )}
           </div>
         ) : (
           <span
@@ -109,8 +148,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
         )}
       </div>
 
-      {isLoggedIn && (
-        <div>
+      {isLoggedIn && !expandedView ? (
+        <></>
+      ) : (
+        <div className={expandedView ? "quickFadeIn" : ""}>
           <p className={styles.signedInLabel}> Signed in as {user}</p>
           <RaisedButton
             onClick={() => signOut()}
@@ -119,6 +160,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
             width="110px"
             customBackground="greenGradient"
           />
+        </div>
+      )}
+
+      {mobileView && (
+        <div
+          onClick={() => setExpandedView(expandedView === false ? true : false)}
+          className={styles.expandCollapseIconContainer}
+        >
+          {!expandedView ? (
+            <DownCircleOutlined className={styles.expandCollapseIcon} />
+          ) : (
+            <UpCircleOutlined className={styles.expandCollapseIcon} />
+          )}
         </div>
       )}
     </div>

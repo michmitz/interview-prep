@@ -16,6 +16,10 @@
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
+.mobileContainer {
+  transition: height ease-in 0.5s;
+}
+
 .headerText {
   font-weight: 600;
   margin-bottom: 10px;
@@ -23,7 +27,6 @@
 
 .labelContainer {
   display: flex;
-  flex-direction: row;
   align-items: center;
   cursor: pointer;
   margin-top: 12px;
@@ -53,5 +56,21 @@
 }
 
 .signOutButton {
+  margin-top: 10px;
+}
+
+@keyframes bounce {
+  0%, 100% {transform: translateY(0px)}
+  50% {transform: translateY(-2px)}
+}
+
+.expandCollapseIcon {
+  animation: bounce 2s infinite;
+  cursor: pointer;
+}
+
+.expandCollapseIconContainer {
+  font-size: 20px;
+  align-self: flex-end;
   margin-top: 10px;
 }

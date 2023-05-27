@@ -11,6 +11,7 @@
   padding: 0;
   margin: 0;
   font-family: "Poppins", sans-serif;
+  user-select: none;
 }
 
 html,
@@ -20,7 +21,7 @@ body {
 }
 
 body {
-  background-image: url("/background.jpg");
+  background-image: url("/background-2.jpg");
   height: 100vh;
   width: 100vw;
   background-size: cover;
@@ -82,7 +83,6 @@ a {
   }
   .sidebar {
     width: 100%;
-    height: 250px;
   }
   .rightContainer {
     width: 100%;
@@ -115,6 +115,12 @@ a {
 
 .fadeIn {
   animation: fadeInAnimation ease 3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.quickFadeIn {
+  animation: fadeInAnimation ease 1s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }

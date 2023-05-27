@@ -24,6 +24,7 @@ export const SpeechBubblePrompt: React.FC<SpeechBubblePromptProps> = ({
         height={65}
         alt="robot"
         className={styles.icon}
+        priority
       />
       <div className={`${styles.speechBubble} lightGlassEffect purpleGradient`}>
         {text}

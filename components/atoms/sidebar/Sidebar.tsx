@@ -25,7 +25,7 @@ export interface SidebarProps {
   readonly setSoftwareQuestionType?: (v: string) => void;
 }
 
-const { notesLink } = appStrings.header;
+const { notesLink, about } = appStrings.header;
 
 export const Sidebar: React.FC<SidebarProps> = ({
   headerText,
@@ -51,6 +51,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
       setNotesLoading(false);
     }
   };
+
+  const handleAboutClick = () => {
+    router.push('/about');
+  }
 
   const handleReturnHome = () => {
     router.push("/");
@@ -114,29 +118,42 @@ export const Sidebar: React.FC<SidebarProps> = ({
             )}
 
             {expandedView || windowSize[0] > 850 ? (
-              <span
-                className={
-                  expandedView
-                    ? `${styles.labelContainer} quickFadeIn`
-                    : styles.labelContainer
-                }
-                onClick={() => handleNotesClick()}
-              >
-                {notesLoading ? (
-                  <LoadingOutlined className={styles.icon} />
-                ) : (
-                  <FormOutlined className={styles.icon} />
-                )}
-                <p
+              <>
+                <span
                   className={
-                    notesLoading
-                      ? `${styles.loadingLabel} ${styles.label}`
-                      : styles.label
+                    expandedView
+                      ? `${styles.labelContainer} quickFadeIn`
+                      : styles.labelContainer
                   }
+                  onClick={() => handleNotesClick()}
                 >
-                  {notesLink}
-                </p>
-              </span>
+                  {notesLoading ? (
+                    <LoadingOutlined className={styles.icon} />
+                  ) : (
+                    <FormOutlined className={styles.icon} />
+                  )}
+                  <p
+                    className={
+                      notesLoading
+                        ? `${styles.loadingLabel} ${styles.label}`
+                        : styles.label
+                    }
+                  >
+                    {notesLink}
+                  </p>
+                </span>
+
+                <span
+                  className={
+                    expandedView
+                      ? `${styles.labelContainer} quickFadeIn`
+                      : styles.labelContainer
+                  }
+                  onClick={() => handleAboutClick()}
+                >
+                  <p className={styles.label}>{about}</p>
+                </span>
+              </>
             ) : (
               <></>
             )}

@@ -5,6 +5,7 @@ import {
   ArrowLeftOutlined,
   DownCircleOutlined,
   FormOutlined,
+  InfoCircleFilled,
   LoadingOutlined,
   UpCircleOutlined,
 } from "@ant-design/icons";
@@ -151,6 +152,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   }
                   onClick={() => handleAboutClick()}
                 >
+                  <InfoCircleFilled className={styles.icon} />
                   <p className={styles.label}>{about}</p>
                 </span>
               </>

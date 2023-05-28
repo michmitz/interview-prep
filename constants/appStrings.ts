@@ -30,6 +30,7 @@ export const appStrings = {
     softwareQuestionTypeLabel: 'Question Type',
     notesPage: 'Notes',
     returnHome: 'Return to Interview',
+    about: 'About',
   },
   notesPage: {
     noteHeader: 'Note:',

@@ -1,0 +1,54 @@
+.header {
+  font-style: italic;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: purple;
+}
+
+.subHeader {
+  border-radius: 20px;
+  padding: 0.5em;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: rgb(107, 100, 163);
+  margin-bottom: 15px;
+  width: fit-content;
+  box-shadow: 5px 5px rgba(54, 54, 160, 0.402);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+}
+
+.contentBlock {
+  margin-bottom: 15px;
+  padding-left: 15px;
+  color: rgb(78, 32, 74);
+  font-weight: 300;
+}
+
+.list {
+  padding-left: 30px;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+}
+
+.linkSpan {
+  margin-bottom: 5px;
+}
+
+.link {
+  color: purple;
+  font-style: italic;
+  cursor: pointer;
+  letter-spacing: 1px;
+  margin-left: 10px;
+  margin-bottom: 15px;
+  margin-right: 5px;
+  font-size: 14px;
+}

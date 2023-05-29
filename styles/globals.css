@@ -21,16 +21,16 @@ body {
 }
 
 body {
-  background-image: url("/background-2.jpg");
   height: 100vh;
   width: 100vw;
-  background-size: cover;
 }
 
 #__next {
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* height: 100%;
+  width: 100%; */
 }
 
 main {
@@ -38,8 +38,6 @@ main {
   min-width: 450px;
   width: 80%;
   border-radius: 20px;
-  margin-top: 5%;
-  margin-bottom: 5%;
 }
 
 .signedOut {
@@ -76,6 +74,8 @@ a {
   main {
     min-width: 370px;
     height: 100%;
+    margin-top: 15%;
+    margin-bottom: 5%;
   }
   .container {
     flex-direction: column;

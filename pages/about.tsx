@@ -27,7 +27,7 @@ const About: NextPage = () => {
 
   if (session) {
     return (
-      <main className="lightGlassEffect fadeIn">
+      <main className="lightGlassEffect">
         <div className="container">
           <div className="sidebar">
             <Sidebar
@@ -37,7 +37,7 @@ const About: NextPage = () => {
             />
           </div>
 
-          <div className="rightContainer">
+          <div className="rightContainer fadeIn">
             <p className={styles.header}>{header}</p>
 
             <div className={styles.container}>

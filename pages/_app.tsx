@@ -1,8 +1,8 @@
+import React from "react";
 import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import type { Session } from "next-auth";
-import React from "react";
 
 export default function App({
   Component,
@@ -38,11 +38,9 @@ export default function App({
           width: "100vw",
           backgroundSize: "cover",
           overflow: "auto",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
           minHeight: "650px",
         }}
+        className="centerContent"
       >
         <Component {...pageProps} />
       </div>

@@ -82,7 +82,7 @@ a {
     height: 100%;
     margin-top: 40px;
     margin-bottom: 5%;
-    max-height: 900px;
+    max-height: 800px;
   }
   .container {
     flex-direction: column;
@@ -94,7 +94,7 @@ a {
   .rightContainer {
     width: 100%;
     min-height: 400px;
-    max-height: 900px;
+    max-height: 800px;
   }
   .centerContent {
    align-items: flex-start;

@@ -8,7 +8,10 @@
   border-radius: 25px;
   margin-top: 8%;
   background: rgba(158, 250, 255, 0.284);
+  width: 60%;
   padding: 2em;
+  min-width: 300px;
+  max-width: 98%;
 }
 
 .label {
@@ -16,6 +19,8 @@
   letter-spacing: 1px;
   color: rgb(37, 96, 125);
   margin-top: 10px;
+  margin-bottom: 15px;
+  text-align: center;
 }
 
 .input {
@@ -28,5 +33,5 @@
   border-radius: 10px;
   user-select: none;
   outline: none;
-  width: 25em;
+  width: 95%;
 }

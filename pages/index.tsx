@@ -39,7 +39,7 @@ const Home: NextPage = () => {
 
   if (session) {
     return (
-      <main className="lightGlassEffect fadeIn">
+      <main className="lightGlassEffect">
         <div className="container">
           <div className="sidebar">
             <Sidebar
@@ -53,7 +53,7 @@ const Home: NextPage = () => {
             />
           </div>
 
-          <div className="rightContainer">
+          <div className="rightContainer fadeIn">
             <ContentContainer
               mode={mode}
               completion={completion}

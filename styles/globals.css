@@ -5,6 +5,7 @@
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
   --muted-purple-text: rgb(106, 103, 169);
+  --muted-green: rgb(107, 161, 158);
   --gray-text: gray;
   --off-white: rgb(255, 251, 244);
 }

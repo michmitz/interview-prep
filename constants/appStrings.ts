@@ -36,7 +36,7 @@ export const appStrings = {
     about: "About",
   },
   notesPage: {
-    noteHeader: "Note:",
+    noteHeader: "Note",
     updateButton: "Update",
     deleteButton: "Delete",
   },

@@ -45,7 +45,7 @@ main {
 }
 
 .signedOut {
-  margin-top: 5%;
+  max-width: 80%;
 }
 
 a {

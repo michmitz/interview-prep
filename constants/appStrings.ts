@@ -9,7 +9,7 @@ export const appStrings = {
     questionPromptText:
       "Welcome! I'm a virtual interviewer. Click the button below to get started!",
     questionPromptButtonText: "Ask Me a Question",
-    notSignedInText: "Click here to sign in!",
+    notSignedInText: "Welcome! I'm a virtual interviewer. Click here to sign in.",
     signInButtonText: "Sign In",
   },
   mode: {
@@ -24,7 +24,7 @@ export const appStrings = {
     },
     changeSubjectText: "Change Subject",
   },
-  getNewQuestion: "Ask Me Another Question!",
+  getNewQuestion: "Get New Question",
   thinking: "Thinking",
   header: {
     welcome: "Welcome! I'm a virtual interviewer.",
@@ -44,7 +44,7 @@ export const appStrings = {
     header: "Thanks for visiting!",
     whatIsAppHeader: "What is this app?",
     whatIsAppText:
-      "This application serves as a virtual interviewer using questions fetched from the chatGPT API. AI is not perfect, and occasionally questions may be irrelevant or weirdly formatted.",
+      "This application serves as a virtual interviewer using questions fetched from the chatGPT API. AI is not perfect, and occasionally questions may be irrelevant or weirdly formatted. Sometimes the AI will ramble in its response despite having a token cap.",
     howToUseBlock: {
       howToUse: "How to Use:",
       stepOne:

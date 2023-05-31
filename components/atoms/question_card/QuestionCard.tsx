@@ -24,7 +24,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ response }) => {
   return (
     <div className={styles.outerContainer}>
       <Image
-        src={"/robot.png"}
+        src={"/robot-neutral.png"}
         width={45}
         height={45}
         alt="robot"
@@ -32,7 +32,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ response }) => {
       />
       <div className={styles.arrow} />
 
-      <div className={`${styles.contentContainer} lightGlassEffect`}>
+      <div className={`${styles.contentContainer} layeredGlassEffect`}>
         <p className={styles.question}>{question}</p>
 
         {showAdviceButton && (
@@ -43,7 +43,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ response }) => {
         )}
 
         {showAdvice && (
-          <div className={styles.adviceContainer}>
+          <div className={`${styles.adviceContainer} creamGradient`}>
             <p className={styles.adviceLabel}>Example answer:</p>
             <p className={styles.advice}>{advice}</p>
           </div>

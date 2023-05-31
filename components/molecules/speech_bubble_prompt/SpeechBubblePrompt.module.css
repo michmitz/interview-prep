@@ -1,22 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap');
+
 .container {
-  min-width: 200px;
-  max-width: 350px;
+  min-width: 250px;
+  max-width: 500px;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  margin-top: 8%;
-}
-
-@media screen and (max-width: 850px) {
-  .container {
-    margin-top: 5%;
-  }
+  margin-top: 10%;
 }
 
 .icon {
   border-radius: 50%;
   box-shadow: 8px 8px rgba(54, 54, 160, 0.402);
-  animation: float 10s ease-in-out infinite;
+  animation: float2 10s ease-in-out infinite;
   margin-bottom: -85px;
   margin-right: 10px;
   rotate: -7deg;
@@ -39,13 +35,14 @@
 }
 
 .speechBubble:after {
+  font-family: 'Inter', 'sans-serif';
   animation: float2 10s ease-in-out infinite;
-  content: "o";
-  font-weight: 600;
+  content: ".";
+  font-weight: 900;
   text-shadow: 10px 10px rgba(54, 54, 160, 0.402);
   text-align: left;
-  font-size: 20px;
-  width: 27px;
+  font-size: 50px;
+  width: 24px;
   height: 13px;
   border-radius: 11px;
   position: absolute;
@@ -72,21 +69,72 @@
 
 @keyframes float2 {
   0% {
-    line-height: 55px;
+    line-height: 30px;
     transform: translatey(0px);
   }
   55% {
-    transform: translatey(-15px);
+    transform: translatey(-10px);
   }
-  60% {
-    line-height: 50px;
+  /* 60% {
+    line-height: 10px;
+  } */
+  100% {
+    line-height: 30px;
+    transform: translatey(0px);
+  }
+}
+
+@keyframes float3 {
+  0% {
+    line-height: 75px;
+    transform: translatey(0px);
+  }
+  55% {
+    transform: translatey(5px);
   }
   100% {
-    line-height: 55px;
+    line-height: 75px;
+    transform: translatey(0px);
+  }
+}
+
+@keyframes float4 {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-5px);
+  }
+  100% {
     transform: translatey(0px);
   }
 }
 
 .button {
   margin-top: 16px;
+}
+
+@media screen and (max-width: 850px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 13%;
+  }
+  .icon {
+    animation: float4 10s infinite;
+    margin-bottom: 65px;
+    margin-right: 0;
+    rotate: 0deg;
+  }
+  .speechBubble:after {
+    text-shadow: 6px 6px rgba(54, 54, 160, 0.402);
+    box-shadow: 8px 6px rgba(54, 54, 160, 0.402);
+    left: 47%;
+    top: -30px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    animation: float3 10s ease-in-out infinite;
+  }
 }

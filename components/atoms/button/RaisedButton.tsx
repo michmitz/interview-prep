@@ -24,7 +24,7 @@ export const RaisedButton: React.FC<ButtonProps> = ({
   const { background, front } = styles;
   const backgroundStyles = customBackground
     ? `${background} ${customBackground}`
-    : `${background} greenGradient`;
+    : `${background} whiteGradient`;
 
   return (
     <button

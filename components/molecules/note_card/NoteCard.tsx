@@ -32,24 +32,24 @@ export const NoteCard: React.FC<NoteCardProps> = ({
   showEditField,
 }) => {
   return (
-    <div className={`${styles.container} lightGlassEffect`}>
+    <div className={`${styles.container} layeredGlassEffect`}>
       <p className={styles.question}>{question}</p>
       <div className={styles.noteContainer}>
-        <div className={styles.noteLabel}>
+        <div className={`${styles.noteLabel} creamGradient`}>
           {noteHeader}
           <div>
             <button
               onClick={() => {
                 editCallback(noteId);
               }}
-              className={`${styles.button} ${styles.updateButton} purpleGradient`}
+              className={`${styles.button} ${styles.updateButton} greenGradient`}
               key={noteId}
             >
               {updateButton}
             </button>
             <button
               onClick={() => deleteCallback(noteId)}
-              className={`${styles.button} blueGradient`}
+              className={`${styles.button} greenGradient`}
             >
               {deleteButton}
             </button>

@@ -18,7 +18,7 @@ const { notes, noteOne, noteTwo, noteThree, noteFour } =
 const { contact, linkedIn, github } = appStrings.aboutPage.contactBlock;
 
 const SubHeader: React.FC<{ text: string }> = ({ text }) => {
-  return <p className={`${styles.subHeader} purpleGradient`}>{text}</p>;
+  return <p className={`${styles.subHeader} greenGradient`}>{text}</p>;
 };
 
 const About: NextPage = () => {

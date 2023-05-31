@@ -6,7 +6,7 @@ export const ThinkingRobot: React.FC = () => {
   return (
     <div className={`${styles.container} layeredGlassEffect`}>
       <Image
-        src={"/robot.png"}
+        src={"/robot-neutral.png"}
         width={65}
         height={65}
         alt="robot"

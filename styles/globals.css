@@ -128,29 +128,6 @@ a {
   animation-fill-mode: forwards;
 }
 
-@keyframes slide-in {
-  0% {
-    transform: translateX(200%);
-  }
-  50% {
-    transform: translateX(20%);
-  }
-  99% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(205%);
-    opacity: 0;
-  }
-}
-
-.speechBubbleSlide {
-  animation: slide-in 8s;
-  animation-fill-mode: forwards;
-  position: absolute;
-  bottom: 5%;
-}
-
 .questionButton {
   margin-top: 5%;
 }

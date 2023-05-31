@@ -53,7 +53,7 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
 
     if (response.status === 200) {
       setNoteSaving(false);
-      setNoteResponse("Note successfully created");
+      setNoteResponse("Note successfully created!");
       setShowAnswerField(false);
     } else {
       setNoteResponse("Note failed");
@@ -87,7 +87,7 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
           />
         </div>
       )}
-      {showAnswerField && (
+     {showAnswerField && (
         <AnswerField
           onChange={(e) => setAnswerInput(e)}
           onSubmit={handleSubmitNote}

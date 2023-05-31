@@ -14,7 +14,6 @@ const Home: NextPage = () => {
   const pageLoading = status === "loading";
   const [mode, setMode] = React.useState<InterviewMode>("software");
   const [completion, setCompletion] = React.useState<string>("");
-  const [noteResponse, setNoteResponse] = React.useState<string>("");
   const [softwareQuestionType, setSoftwareQuestionType] =
     React.useState<string>("any");
   const [techQuestionSubject, setTechQuestionSubject] =
@@ -58,17 +57,10 @@ const Home: NextPage = () => {
               mode={mode}
               completion={completion}
               setCompletion={setCompletion}
-              noteResponse={noteResponse}
-              setNoteResponse={setNoteResponse}
               softwareQuestionType={softwareQuestionType}
               techQuestionSubject={techQuestionSubject}
               onTechQuestionSubjectChange={setTechQuestionSubject}
             />
-            {noteResponse && (
-              <div className="speechBubbleSlide">
-                <SpeechBubblePrompt text={noteResponse} />
-              </div>
-            )}
           </div>
         </div>
       </main>

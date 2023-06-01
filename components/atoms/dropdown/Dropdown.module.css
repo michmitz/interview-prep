@@ -40,7 +40,7 @@
   box-shadow: 5px 5px 5px 0 rgba(31, 38, 135, 0.209);
   width: 100%;
   padding: 0.7em;
-  color: purple;
+  color: var(--muted-green);
   font-weight: bold;
   letter-spacing: 0.1rem;
   user-select: none;

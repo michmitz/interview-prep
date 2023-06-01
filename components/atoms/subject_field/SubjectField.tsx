@@ -20,7 +20,7 @@ export const SubjectField: React.FC<SubjectFieldProps> = ({
   buttonDisabled,
 }) => {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} layeredGlassEffect`}>
       <p className={styles.label}>{label}</p>
       <input
         className={styles.input}

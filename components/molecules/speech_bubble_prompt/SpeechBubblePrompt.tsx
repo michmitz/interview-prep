@@ -19,14 +19,15 @@ export const SpeechBubblePrompt: React.FC<SpeechBubblePromptProps> = ({
   return (
     <div className={styles.container}>
       <Image
-        src={"/robot.png"}
-        width={65}
-        height={65}
+        src={"/robot-neutral.png"}
+        width={75}
+        height={75}
         alt="robot"
         className={styles.icon}
-        priority
+        priority={true}
+        loading="eager"
       />
-      <div className={`${styles.speechBubble} lightGlassEffect purpleGradient`}>
+      <div className={`${styles.speechBubble} layeredGlassEffect`}>
         {text}
         {onClick && (
           <div className={styles.button}>

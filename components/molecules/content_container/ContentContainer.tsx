@@ -1,7 +1,6 @@
-import { RaisedButton } from "@/components/atoms/button/RaisedButton";
+import React from "react";
 import { InterviewMode } from "@/components/atoms/sidebar/Sidebar";
 import { SubjectField } from "@/components/atoms/subject_field/SubjectField";
-import React from "react";
 import { QuestionNotesSection } from "../question_notes_section/QuestionNotesSection";
 import { ThinkingRobot } from "../thinking_robot/ThinkingRobot";
 import { SpeechBubblePrompt } from "../speech_bubble_prompt/SpeechBubblePrompt";
@@ -10,8 +9,6 @@ import styles from "./ContentContainer.module.css";
 
 interface ContentContainerProps {
   readonly mode: InterviewMode;
-  readonly noteResponse: string;
-  readonly setNoteResponse: (v: string) => void;
   readonly completion: string;
   readonly setCompletion: (v: string) => void;
   readonly softwareQuestionType?: string;
@@ -26,7 +23,6 @@ const { jobTitleFieldLabel, jobTitleFieldPlaceholder } =
 
 export const ContentContainer: React.FC<ContentContainerProps> = ({
   mode,
-  setNoteResponse,
   completion,
   setCompletion,
   softwareQuestionType,
@@ -44,6 +40,7 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   const [jobTitle, setJobTitle] = React.useState<string>("");
   const [toggleSubjectField, setToggleSubjectField] =
     React.useState<boolean>(jobMode);
+  const [noteResponse, setNoteResponse] = React.useState<string>("");
 
   React.useEffect(() => {
     if (jobMode || techSubjectQuestions) {
@@ -103,7 +100,7 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   };
 
   return (
-    <div style={{ width: "100%" }} className="flexCenter">
+    <div className={`${styles.container} flexCenter`}>
       {!questionLoading ? (
         <div style={{ width: "100%" }} className="flexCenter">
           {completion && !toggleSubjectField ? (
@@ -115,8 +112,23 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
                 questionLoading={questionLoading}
                 setToggleSubjectField={setToggleSubjectField}
                 allowSubjectField={jobMode || techSubjectQuestions}
-                noteSubject={jobMode ? jobTitle : techSubjectQuestions ? techQuestionSubject : softSkillsQuestions ? 'Soft Skills' : 'General Tech Questions'}
+                noteSubject={
+                  jobMode
+                    ? jobTitle
+                    : techSubjectQuestions
+                    ? techQuestionSubject
+                    : softSkillsQuestions
+                    ? "Soft Skills"
+                    : "General Tech Questions"
+                }
               />
+              {noteResponse && (
+                <div className={styles.noteResponseContainer}>
+                  <div className={`${styles.noteResponse} mutedPurpleGradient`}>
+                    {noteResponse}
+                  </div>
+                </div>
+              )}
             </div>
           ) : jobMode ? (
             <SubjectField

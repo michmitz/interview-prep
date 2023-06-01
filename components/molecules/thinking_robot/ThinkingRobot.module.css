@@ -1,6 +1,6 @@
 .container {
   border: solid 1px white;
-  height: 200px;
+  height: 300px;
   width: 300px;
   display: flex;
   flex-direction: column;
@@ -9,8 +9,7 @@
   box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.3),
     0 0.0625rem 0.125rem rgba(0, 0, 0, 0.2);
   border-radius: 25px;
-  margin-top: 8%;
-  background: rgba(158, 250, 255, 0.284);
+  margin-top: 10%;
 }
 
 .icon {
@@ -25,7 +24,7 @@
   font-size: 20px;
   font-weight: 600;
   font-style: italic;
-  color: rgb(91, 57, 114);
+  color: var(--muted-purple-text);
   letter-spacing: 3px;
   width: 47%;
 }
@@ -81,5 +80,11 @@
   }
   100% {
     transform: scale(1, 1) translateY(0);
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .container {
+    margin-top: 13%;
   }
 }

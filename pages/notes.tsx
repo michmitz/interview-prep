@@ -160,7 +160,7 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
               sortedNotes.map((noteArr, i) => {
                 return (
                   <div key={`${noteArr}-${i}`} className="flexCenter fadeIn">
-                    <div className={`${styles.notesSubject} blueGradient`}>
+                    <div className={`${styles.notesSubject} mutedPurpleGradient`}>
                       {noteArr[0] === "null" ? "Unsorted" : noteArr[0]}
                     </div>
                     {noteArr[1].map((note: Note) => {

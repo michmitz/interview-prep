@@ -6,20 +6,18 @@
 
 .changeSubjectButtonContainer {
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  right: 5%;
-  top: 5%;
+  align-self: flex-end;
   cursor: pointer;
   font-size: 13px;
+  height: 15px;
 }
 
 .changeSubjectIcon {
   margin-right: 5px;
   color: purple;
-  animation: bounce 1s;
+  animation: bounce 2s;
 }
 
 .changeSubjectButton {
@@ -38,4 +36,3 @@
 .changeSubjectIcon:hover, .changeSubjectButton:hover {
   font-size: 15px;
 }
-

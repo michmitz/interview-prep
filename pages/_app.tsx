@@ -10,12 +10,13 @@ export default function App({
 }: AppProps<{ session: Session }>) {
   const [randomBackground, setRandomBackground] = React.useState<string>("");
 
-  const backgrounds = [...Array(9).keys()].map(i => { return `background-${i + 1}.jpg`})
-
+  const backgrounds = [...Array(8).keys()].map((i) => {
+    return `background-${i + 1}.jpg`;
+  });
 
   const randomizeBackground = () => {
     const randomBgIndex = Math.floor(Math.random() * backgrounds.length);
-    return backgrounds[randomBgIndex - 1];
+    return backgrounds[randomBgIndex];
   };
 
   const background = randomizeBackground();
@@ -26,7 +27,7 @@ export default function App({
     }
 
     setRandomBackground(background);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [randomBackground]);
 
   return (

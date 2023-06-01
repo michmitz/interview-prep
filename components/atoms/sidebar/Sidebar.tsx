@@ -171,7 +171,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         )}
       </div>
 
-      {isLoggedIn && !expandedView ? (
+      {isLoggedIn && !expandedView && mobileView ? (
         <></>
       ) : (
         <div className={expandedView ? "quickFadeIn" : ""}>
@@ -181,7 +181,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             text="Sign Out"
             height="25px"
             width="110px"
-            customBackground="greenGradient"
+            customBackground="mutedPurpleGradient"
           />
         </div>
       )}

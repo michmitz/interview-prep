@@ -1,5 +1,9 @@
+.container {
+  width: 100%;
+}
+
 .questionNotesSection {
-  width: 95%;
+  width: 98%;
   max-width: 800px;
 }
 

@@ -100,7 +100,7 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   };
 
   return (
-    <div style={{ width: "100%" }} className="flexCenter">
+    <div className={`${styles.container} flexCenter`}>
       {!questionLoading ? (
         <div style={{ width: "100%" }} className="flexCenter">
           {completion && !toggleSubjectField ? (

@@ -93,7 +93,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           : mobileView && expandedView
           ? expandedContainerStyles
           : styles.container
-      }`}
+      } layeredGlassEffect`}
     >
       <div>
         <p className={styles.headerText}>{headerText}</p>

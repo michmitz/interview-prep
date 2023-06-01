@@ -87,7 +87,7 @@ a {
 @media screen and (max-width: 850px) {
   main {
     min-width: 350px;
-    height: 93%;
+    height: 85%;
     margin-top: 35px;
   }
   .container {
@@ -96,10 +96,12 @@ a {
   }
   .sidebar {
     width: 100%;
+    position: absolute;
   }
   .rightContainer {
     width: 100%;
     border-radius: 20px;
+    padding-top: 200px;
   }
   .centerContent {
     align-items: flex-start;

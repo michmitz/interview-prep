@@ -71,3 +71,4 @@ export const appStrings = {
   answerSubmitButton: "Save Note",
   showAdviceText: "Show Advice?",
 };
+

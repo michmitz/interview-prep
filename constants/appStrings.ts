@@ -72,4 +72,3 @@ export const appStrings = {
   showAdviceText: "Show Advice?",
 };
 
-// Test commit

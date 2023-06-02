@@ -4,12 +4,12 @@ import styles from "../styles/Home.module.css";
 import prisma from "@/lib/prisma";
 import { Sidebar } from "@/components/atoms/sidebar/Sidebar";
 import { appStrings } from "@/constants/appStrings";
-import { getSession, signIn, useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { NoteCard } from "@/components/molecules/note_card/NoteCard";
-import { SpeechBubblePrompt } from "@/components/molecules/speech_bubble_prompt/SpeechBubblePrompt";
 import { sortArrByKey } from "@/utils/utils";
 import { LoadingOutlined } from "@ant-design/icons";
+import { SignedOut } from "@/components/molecules/signed_out/SignedOut";
 
 export type Note = {
   readonly id: string;
@@ -198,13 +198,7 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
   }
 
   return (
-    <div className="signedOut">
-      <SpeechBubblePrompt
-        text={notSignedInText}
-        onClick={() => signIn()}
-        buttonText={signInButtonText}
-      />
-    </div>
+    <SignedOut />
   );
 };
 

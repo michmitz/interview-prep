@@ -15,7 +15,7 @@ export default function App({
   });
 
   const randomizeBackground = () => {
-    const randomBgIndex = Math.floor(Math.random() * backgrounds.length);
+    const randomBgIndex = Math.floor(Math.random() * 9);
     return backgrounds[randomBgIndex - 1];
   };
 

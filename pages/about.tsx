@@ -2,12 +2,10 @@ import React from "react";
 import { NextPage } from "next";
 import { Sidebar } from "@/components/atoms/sidebar/Sidebar";
 import { appStrings } from "@/constants/appStrings";
-import { signIn, useSession } from "next-auth/react";
-import { SpeechBubblePrompt } from "@/components/molecules/speech_bubble_prompt/SpeechBubblePrompt";
+import { useSession } from "next-auth/react";
 import styles from "../styles/About.module.css";
 import { RightCircleFilled } from "@ant-design/icons";
-
-const { notSignedInText, signInButtonText } = appStrings.speechBubble;
+import { SignedOut } from "@/components/molecules/signed_out/SignedOut";
 
 const { about } = appStrings.header;
 const { header, whatIsAppHeader, whatIsAppText } = appStrings.aboutPage;
@@ -93,13 +91,7 @@ const About: NextPage = () => {
   }
 
   return (
-    <div className="signedOut">
-      <SpeechBubblePrompt
-        text={notSignedInText}
-        onClick={() => signIn()}
-        buttonText={signInButtonText}
-      />
-    </div>
+   <SignedOut />
   );
 };
 

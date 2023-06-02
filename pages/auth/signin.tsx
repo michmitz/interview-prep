@@ -15,17 +15,26 @@ const SignIn = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { data: session } = useSession();
   const router = useRouter();
-  console.log(providers);
 
   useEffect(() => {
     if (session) {
       router.push("/");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
 
   return (
-    <>
+    <div
+      style={{
+        backgroundImage: `url('/backgrounds/background-1.jpg')`,
+        height: "100vh",
+        width: "100vw",
+        backgroundSize: "cover",
+        overflow: "auto",
+        minHeight: "650px",
+      }}
+      className="centerContent"
+    >
       <section>
         <h1>Login</h1>
 
@@ -35,11 +44,9 @@ const SignIn = ({
             <input type="email" id="email" name="email" placeholder="Email" />
             <button type="submit">Sign in with Email</button>
           </form>
-
-          <div></div>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 

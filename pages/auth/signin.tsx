@@ -1,13 +1,9 @@
-import {
-  getProviders,
-  signIn,
-  getCsrfToken,
-  useSession,
-} from "next-auth/react";
+import { getProviders, getCsrfToken, useSession } from "next-auth/react";
 import { InferGetServerSidePropsType } from "next";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { CtxOrReq } from "next-auth/client/_utils";
+import styles from "../../styles/SignIn.module.css";
 
 const SignIn = ({
   providers,
@@ -35,17 +31,25 @@ const SignIn = ({
       }}
       className="centerContent"
     >
-      <section>
-        <h1>Login</h1>
+      <p className={styles.loginText}>Login</p>
 
-        <div>
-          <form method="post" action="/api/auth/signin/email">
-            <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-            <input type="email" id="email" name="email" placeholder="Email" />
-            <button type="submit">Sign in with Email</button>
-          </form>
-        </div>
-      </section>
+      <div>
+        <form
+          method="post"
+          action="/api/auth/signin/email"
+          className={styles.form}
+        >
+          <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            className={styles.input}
+          />
+          <button className={styles.button}>Submit</button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -1,3 +1,8 @@
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
 .button {
   display: flex;
   justify-content: center;
@@ -58,4 +63,10 @@
   font-size: 35px;
   letter-spacing: 1px;
   font-weight: 600;
+}
+
+@media screen and (max-width: 850px) {
+  .container {
+    margin-top: 10%;
+  }
 }

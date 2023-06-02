@@ -31,9 +31,9 @@ const SignIn = ({
       }}
       className="centerContent"
     >
-      <p className={styles.loginText}>Login</p>
 
-      <div>
+      <div className={styles.container}>
+      <p className={styles.loginText}>Login</p>
         <form
           method="post"
           action="/api/auth/signin/email"

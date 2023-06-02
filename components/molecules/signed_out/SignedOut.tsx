@@ -19,12 +19,12 @@ export const SignedOut: React.FC = () => {
       className="centerContent"
     >
       <div className="signedOut">
-        <SpeechBubblePrompt
-          text={notSignedInText}
-          onClick={() => signIn()}
-          buttonText={signInButtonText}
-        />
-      </div>
+          <SpeechBubblePrompt
+            text={notSignedInText}
+            onClick={() => signIn()}
+            buttonText={signInButtonText}
+          />
+        </div>
     </div>
   );
 };

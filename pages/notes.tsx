@@ -25,8 +25,6 @@ export type UpdatedNote = {
   updatedNote: string;
 };
 
-const { notSignedInText, signInButtonText } = appStrings.speechBubble;
-
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
 
@@ -160,7 +158,9 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
               sortedNotes.map((noteArr, i) => {
                 return (
                   <div key={`${noteArr}-${i}`} className="flexCenter fadeIn">
-                    <div className={`${styles.notesSubject} mutedPurpleGradient`}>
+                    <div
+                      className={`${styles.notesSubject} mutedPurpleGradient`}
+                    >
                       {noteArr[0] === "null" ? "Unsorted" : noteArr[0]}
                     </div>
                     {noteArr[1].map((note: Note) => {
@@ -197,9 +197,7 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
     return <></>;
   }
 
-  return (
-    <SignedOut />
-  );
+  return <SignedOut />;
 };
 
 export default Notes;

@@ -1,7 +1,7 @@
 import { getProviders, getCsrfToken, useSession } from "next-auth/react";
 import { InferGetServerSidePropsType } from "next";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
+// import { useEffect } from "react";
+// import { useRouter } from "next/router";
 import { CtxOrReq } from "next-auth/client/_utils";
 import styles from "../../styles/SignIn.module.css";
 
@@ -9,15 +9,15 @@ const SignIn = ({
   providers,
   csrfToken,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { data: session } = useSession();
-  const router = useRouter();
+  // const { data: session } = useSession();
+  // const router = useRouter();
 
-  useEffect(() => {
-    if (session) {
-      router.push("/");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session]);
+  // useEffect(() => {
+  //   if (session) {
+  //     router.push("/");
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [session]);
 
   return (
     <div
@@ -31,9 +31,8 @@ const SignIn = ({
       }}
       className="centerContent"
     >
-
       <div className={styles.container}>
-      <p className={styles.loginText}>Login</p>
+        <p className={styles.loginText}>Login</p>
         <form
           method="post"
           action="/api/auth/signin/email"

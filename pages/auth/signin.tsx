@@ -1,4 +1,4 @@
-import { getProviders, getCsrfToken, useSession } from "next-auth/react";
+import { getProviders, getCsrfToken } from "next-auth/react";
 import { InferGetServerSidePropsType } from "next";
 // import { useEffect } from "react";
 // import { useRouter } from "next/router";
@@ -8,7 +8,7 @@ import styles from "../../styles/SignIn.module.css";
 const SignIn = ({
   providers,
   csrfToken,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+}: InferGetServerSidePropsType<typeof getStaticProps>) => {
   // const { data: session } = useSession();
   // const router = useRouter();
 
@@ -53,7 +53,7 @@ const SignIn = ({
   );
 };
 
-export const getServerSideProps = async (context: CtxOrReq | undefined) => {
+export const getStaticProps = async (context: CtxOrReq | undefined) => {
   const providers = await getProviders();
   const csrfToken = await getCsrfToken(context);
   return {

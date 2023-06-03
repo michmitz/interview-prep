@@ -48,6 +48,7 @@
   user-select: none;
   outline: none;
   color: white;
+  -webkit-user-select: text;
 }
 
 .input::placeholder {

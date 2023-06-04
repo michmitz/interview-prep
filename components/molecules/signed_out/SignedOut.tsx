@@ -7,24 +7,12 @@ const { notSignedInText, signInButtonText } = appStrings.speechBubble;
 
 export const SignedOut: React.FC = () => {
   return (
-    <div
-      style={{
-        backgroundImage: `url('/background-1.jpg')`,
-        height: "100vh",
-        width: "100vw",
-        backgroundSize: "cover",
-        overflow: "auto",
-        minHeight: "650px",
-      }}
-      className="centerContent"
-    >
-      <div className="signedOut">
-          <SpeechBubblePrompt
-            text={notSignedInText}
-            onClick={() => signIn()}
-            buttonText={signInButtonText}
-          />
-        </div>
+    <div className="signedOut">
+      <SpeechBubblePrompt
+        text={notSignedInText}
+        onClick={() => signIn()}
+        buttonText={signInButtonText}
+      />
     </div>
   );
 };

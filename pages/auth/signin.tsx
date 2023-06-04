@@ -20,17 +20,6 @@ const SignIn = ({
   }, [session]);
 
   return (
-    <div
-      style={{
-        backgroundImage: `url('/background-1.jpg')`,
-        height: "100vh",
-        width: "100vw",
-        backgroundSize: "cover",
-        overflow: "auto",
-        minHeight: "650px",
-      }}
-      className="centerContent"
-    >
       <div className={styles.container}>
         <p className={styles.loginText}>Login</p>
         <form
@@ -49,7 +38,6 @@ const SignIn = ({
           <button className={styles.button}>Submit</button>
         </form>
       </div>
-    </div>
   );
 };
 

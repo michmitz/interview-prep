@@ -1,15 +1,13 @@
 .container {
   border: solid 1px white;
-  height: 300px;
-  width: 300px;
+  height: 200px;
+  width: 270px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.3),
-    0 0.0625rem 0.125rem rgba(0, 0, 0, 0.2);
+  box-shadow: 8px 8px rgba(54, 54, 160, 0.402);
   border-radius: 25px;
-  margin-top: 10%;
 }
 
 .icon {
@@ -21,7 +19,7 @@
 }
 
 .text {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   font-style: italic;
   color: var(--muted-purple-text);

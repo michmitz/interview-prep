@@ -166,7 +166,9 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
           )}
         </div>
       ) : (
-        <ThinkingRobot />
+        <div className={styles.thinkingContainer}>
+          <ThinkingRobot />
+        </div>
       )}
     </div>
   );

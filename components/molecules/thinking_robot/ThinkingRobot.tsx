@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export const ThinkingRobot: React.FC = () => {
   return (
-    <div className={`${styles.container} layeredGlassEffect`}>
+    <div className={`${styles.container} whiteGradient`}>
       <Image
         src={"/robot-neutral.png"}
         width={65}

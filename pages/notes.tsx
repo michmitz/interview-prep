@@ -4,12 +4,12 @@ import styles from "../styles/Home.module.css";
 import prisma from "@/lib/prisma";
 import { Sidebar } from "@/components/atoms/sidebar/Sidebar";
 import { appStrings } from "@/constants/appStrings";
-import { getSession, signIn, useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { NoteCard } from "@/components/molecules/note_card/NoteCard";
-import { SpeechBubblePrompt } from "@/components/molecules/speech_bubble_prompt/SpeechBubblePrompt";
 import { sortArrByKey } from "@/utils/utils";
 import { LoadingOutlined } from "@ant-design/icons";
+import { SignedOut } from "@/components/molecules/signed_out/SignedOut";
 
 export type Note = {
   readonly id: string;
@@ -24,8 +24,6 @@ export type UpdatedNote = {
   id: string;
   updatedNote: string;
 };
-
-const { notSignedInText, signInButtonText } = appStrings.speechBubble;
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -160,7 +158,9 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
               sortedNotes.map((noteArr, i) => {
                 return (
                   <div key={`${noteArr}-${i}`} className="flexCenter fadeIn">
-                    <div className={`${styles.notesSubject} mutedPurpleGradient`}>
+                    <div
+                      className={`${styles.notesSubject} mutedPurpleGradient`}
+                    >
                       {noteArr[0] === "null" ? "Unsorted" : noteArr[0]}
                     </div>
                     {noteArr[1].map((note: Note) => {
@@ -197,15 +197,7 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
     return <></>;
   }
 
-  return (
-    <div className="signedOut">
-      <SpeechBubblePrompt
-        text={notSignedInText}
-        onClick={() => signIn()}
-        buttonText={signInButtonText}
-      />
-    </div>
-  );
+  return <SignedOut />;
 };
 
 export default Notes;

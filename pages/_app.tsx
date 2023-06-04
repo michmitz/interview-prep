@@ -15,7 +15,7 @@ export default function App({
   });
 
   const randomizeBackground = () => {
-    const randomBgIndex = Math.floor(Math.random() * backgrounds.length);
+    const randomBgIndex = Math.floor(Math.random() * 9);
     return backgrounds[randomBgIndex - 1];
   };
 
@@ -34,7 +34,7 @@ export default function App({
     <SessionProvider session={session}>
       <div
         style={{
-          backgroundImage: `url('/backgrounds/${randomBackground}')`,
+          backgroundImage: `url('/${randomBackground}')`,
           height: "100vh",
           width: "100vw",
           backgroundSize: "cover",

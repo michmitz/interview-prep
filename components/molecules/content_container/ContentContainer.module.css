@@ -2,9 +2,14 @@
   width: 100%;
 }
 
+.speechBubbleContainer {
+  margin-top: 8%;
+}
+
 .questionNotesSection {
   width: 98%;
   max-width: 800px;
+  margin-top: 2%;
 }
 
 .noteResponseContainer {
@@ -45,4 +50,8 @@
     opacity: 0;
     display: hidden;
   }
+}
+
+.thinkingContainer {
+  margin-top: 18%;
 }

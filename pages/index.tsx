@@ -2,12 +2,11 @@ import React from "react";
 import type { NextPage } from "next";
 import { appStrings } from "@/constants/appStrings";
 import { InterviewMode, Sidebar } from "@/components/atoms/sidebar/Sidebar";
-import { useSession, signIn } from "next-auth/react";
-import { SpeechBubblePrompt } from "@/components/molecules/speech_bubble_prompt/SpeechBubblePrompt";
+import { useSession } from "next-auth/react";
 import { ContentContainer } from "@/components/molecules/content_container/ContentContainer";
+import { SignedOut } from "@/components/molecules/signed_out/SignedOut";
 
 const { welcome } = appStrings.header;
-const { notSignedInText, signInButtonText } = appStrings.speechBubble;
 
 const Home: NextPage = () => {
   const { data: session, status } = useSession();
@@ -71,15 +70,7 @@ const Home: NextPage = () => {
     return <></>;
   }
 
-  return (
-    <div className="signedOut">
-      <SpeechBubblePrompt
-        text={notSignedInText}
-        onClick={() => signIn()}
-        buttonText={signInButtonText}
-      />
-    </div>
-  );
+  return <SignedOut />;
 };
 
 export default Home;

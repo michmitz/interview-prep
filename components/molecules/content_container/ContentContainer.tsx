@@ -149,22 +149,26 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
               buttonDisabled={questionLoading}
             />
           ) : (
-            <SpeechBubblePrompt
-              text={
-                softSkillsQuestions
-                  ? "Ready to be asked about your soft skills?"
-                  : generalTechQuestions
-                  ? "Ready for some technical questions?"
-                  : "Let's do some software interview questions!"
-              }
-              onClick={handleClick}
-              disableButton={questionLoading}
-              buttonText={questionPromptButtonText}
-            />
+            <div className={styles.speechBubbleContainer}>
+              <SpeechBubblePrompt
+                text={
+                  softSkillsQuestions
+                    ? "Ready to be asked about your soft skills?"
+                    : generalTechQuestions
+                    ? "Ready for some technical questions?"
+                    : "Let's do some software interview questions!"
+                }
+                onClick={handleClick}
+                disableButton={questionLoading}
+                buttonText={questionPromptButtonText}
+              />
+            </div>
           )}
         </div>
       ) : (
-        <ThinkingRobot />
+        <div className={styles.thinkingContainer}>
+          <ThinkingRobot />
+        </div>
       )}
     </div>
   );

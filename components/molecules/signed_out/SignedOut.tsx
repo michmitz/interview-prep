@@ -9,7 +9,7 @@ export const SignedOut: React.FC = () => {
   return (
     <div
       style={{
-        backgroundImage: `url('/backgrounds/background-1.jpg')`,
+        backgroundImage: `url('/background-1.jpg')`,
         height: "100vh",
         width: "100vw",
         backgroundSize: "cover",

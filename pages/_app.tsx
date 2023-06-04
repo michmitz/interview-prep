@@ -34,7 +34,7 @@ export default function App({
     <SessionProvider session={session}>
       <div
         style={{
-          backgroundImage: `url('/backgrounds/${randomBackground}')`,
+          backgroundImage: `url('/${randomBackground}')`,
           height: "100vh",
           width: "100vw",
           backgroundSize: "cover",

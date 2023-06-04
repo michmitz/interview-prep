@@ -9,6 +9,7 @@
 .questionNotesSection {
   width: 98%;
   max-width: 800px;
+  margin-top: 2%;
 }
 
 .noteResponseContainer {

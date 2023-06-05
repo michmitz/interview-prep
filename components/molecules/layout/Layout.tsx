@@ -14,15 +14,13 @@ export const Layout = ({ children }: LayoutProps) => {
     return `background-${i + 1}.jpg`;
   });
 
-  const randomizeBackground = () => {
-    const randomBgIndex = Math.floor(Math.random() * 9);
-    return backgrounds[randomBgIndex - 1];
-  };
-
-  const background = randomizeBackground();
-
   React.useEffect(() => {
     if (randomBackground === "background-1.jpg" && session) {
+      const randomizeBackground = () => {
+        const randomBgIndex = Math.floor(Math.random() * 8);
+        return backgrounds[randomBgIndex];
+      };
+      const background = randomizeBackground();
       setRandomBackground(background);
     }
 

@@ -1,26 +1,65 @@
 import React from "react";
-import { GetServerSideProps, NextPage } from "next";
+import { NextPage } from "next";
 import { Sidebar } from "@/components/atoms/sidebar/Sidebar";
 import { useSession } from "next-auth/react";
 import { SignedOut } from "@/components/molecules/signed_out/SignedOut";
-
-export const getServerSideProps: GetServerSideProps<{
-  data: string;
-}> = async () => {
-  const res = await fetch("/api/openai", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ messages: [{ "role": 'system', "content": 'Give me an array of 20 job interview tips.'}], maxTokens: 400 }),
-  });
-
-  const data = await res.json();
-  return { props: { data } };
-};
+import { ThinkingRobot } from "@/components/molecules/thinking_robot/ThinkingRobot";
+import { SpeechBubblePrompt } from "@/components/molecules/speech_bubble_prompt/SpeechBubblePrompt";
 
 const InterviewTips: NextPage = () => {
   const { data: session, status } = useSession();
+  const [response, setResponse] = React.useState<any>(null);
+  const [interviewTips, setInterviewTips] =
+    React.useState<ReadonlyArray<string> | null>(null);
+  const [loading, setLoading] = React.useState(false);
+  const [showError, setShowError] = React.useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = React.useState<string>(
+    "Sorry, the rate limit per minute has been exceeded. Try again in a minute!"
+  );
+
+  React.useEffect(() => {
+    setLoading(true);
+    if (!interviewTips) {
+      fetch("/api/openai", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messages: [
+            {
+              role: "system",
+              content: "Give me an array of 20 job interview tips.",
+            },
+          ],
+          maxTokens: 400,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.response.name !== "Error") {
+            setResponse(data);
+            setLoading(false);
+          } else {
+            setLoading(false);
+            if (
+              data.response.message !== "Request failed with status code 429"
+            ) {
+              setErrorMessage(data.response.message);
+            }
+            setShowError(true);
+          }
+        });
+    }
+  }, [interviewTips]);
+
+  React.useEffect(() => {
+    if (response) {
+      console.log("response", response.response.content.split("\n"));
+      setInterviewTips(response.response.content.split("\n"));
+    }
+  }, [response]);
+
   const pageLoading = status === "loading";
 
   if (session) {
@@ -36,8 +75,17 @@ const InterviewTips: NextPage = () => {
           </div>
 
           <div className="rightContainer fadeIn">
-          
-            
+            {response && interviewTips ? (
+              interviewTips.map((tip, i) => {
+                return <p key={i}>{tip}</p>;
+              })
+            ) : loading ? (
+              <ThinkingRobot />
+            ) : (
+              <div style={{ marginTop: "8%" }}>
+                <SpeechBubblePrompt text={errorMessage} />
+              </div>
+            )}
           </div>
         </div>
       </main>
@@ -48,9 +96,7 @@ const InterviewTips: NextPage = () => {
     return <></>;
   }
 
-  return (
-   <SignedOut />
-  );
+  return <SignedOut />;
 };
 
 export default InterviewTips;

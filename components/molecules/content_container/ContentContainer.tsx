@@ -88,12 +88,6 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, techQuestionSubject, jobTitle]);
 
-  React.useEffect(() => {
-    console.log("asked questions", askedQuestionsArr)
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [askedQuestionsArr]);
-
   const handleClick = async (e: any) => {
     setShowError(false)
     setCompletion("");

@@ -6,6 +6,7 @@ import { ThinkingRobot } from "../thinking_robot/ThinkingRobot";
 import { SpeechBubblePrompt } from "../speech_bubble_prompt/SpeechBubblePrompt";
 import { appStrings } from "@/constants/appStrings";
 import styles from "./ContentContainer.module.css";
+import { ChatCompletionRequestMessage } from "openai";
 
 interface ContentContainerProps {
   readonly mode: InterviewMode;
@@ -13,11 +14,10 @@ interface ContentContainerProps {
   readonly setCompletion: (v: string) => void;
   readonly softwareQuestionType?: string;
   readonly techQuestionSubject: string;
-  readonly onTechQuestionSubjectChange: (v: string) => void;
+  readonly setTechQuestionSubject: (v: string) => void;
 }
 
 const { questionPromptButtonText } = appStrings.speechBubble;
-const { askQuestionPrompt } = appStrings.aiPrompts;
 const { jobTitleFieldLabel, jobTitleFieldPlaceholder } =
   appStrings.mode.jobTitle;
 
@@ -27,70 +27,104 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   setCompletion,
   softwareQuestionType,
   techQuestionSubject,
-  onTechQuestionSubjectChange,
+  setTechQuestionSubject,
 }) => {
   const jobMode = mode === "job-title";
-  const techSubjectQuestions =
-    mode === "software" && softwareQuestionType === "technical (subject)";
-  const generalTechQuestions =
-    mode === "software" && softwareQuestionType === "technical (general)";
-  const softSkillsQuestions =
-    mode === "software" && softwareQuestionType === "soft skills";
+  const softwareMode = mode === "software";
   const [questionLoading, setQuestionLoading] = React.useState<boolean>(false);
   const [jobTitle, setJobTitle] = React.useState<string>("");
+  const [noteResponse, setNoteResponse] = React.useState<string>("");
   const [toggleSubjectField, setToggleSubjectField] =
     React.useState<boolean>(jobMode);
-  const [noteResponse, setNoteResponse] = React.useState<string>("");
+  
+  
+  const techSubjectQuestions =
+    softwareMode && softwareQuestionType === "technical (subject)";
+  const generalTechQuestions =
+    softwareMode && softwareQuestionType === "technical (general)";
+  const softSkillsQuestions =
+    softwareMode && softwareQuestionType === "soft skills";
+  // const jobQuestionSubject = mode === 'job-title' && jobTitle
+
+  const softwareSubject = generalTechQuestions
+    ? "general technical question"
+    : softSkillsQuestions
+    ? "soft skills question"
+    : techSubjectQuestions
+    ? techQuestionSubject
+    : "technical or soft skills";
+
+  const softwareSystemPrompt = {
+    role: "system",
+    content: `Pretend you are interviewing me for a software engineer position. Ask me a ${softwareSubject} question, labeled "Q:", then give me a brief example answer, labeled "A:". If my subject is inappropriate, please respond with "Michelle says 'nice try'.".`,
+  } as ChatCompletionRequestMessage;
+
+  const jobModeSystemPrompt = {
+    role: "system",
+    content: `Pretend you are interviewing me for a ${jobTitle} position. Ask me one question, labeled "Q:", then give me a brief example answer, labeled "A:". If my subject is inappropriate, please respond with "Michelle says 'nice try."`,
+  } as ChatCompletionRequestMessage;
+
+
+  const [askedQuestionsArr, setAskedQuestionsArr] = React.useState<string[]>(
+    []
+  );
+  const previouslyAsked = {
+    role: "user",
+    content: `You have already asked the following questions: ${JSON.stringify(
+      askedQuestionsArr
+    )}`,
+  } as ChatCompletionRequestMessage;
+
+  const [aiConvoMessages, setAiConvoMessages] = React.useState<
+    ChatCompletionRequestMessage[]
+  >([softwareSystemPrompt]);
+
 
   React.useEffect(() => {
-    if (jobMode || techSubjectQuestions) {
-      setToggleSubjectField(true);
-    }
-  }, [jobMode, techSubjectQuestions]);
+    setAiConvoMessages(jobMode ? [jobModeSystemPrompt] : [softwareSystemPrompt])
+    setAskedQuestionsArr([])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, techQuestionSubject])
 
-  const generatePrompt = (
-    mode: InterviewMode,
-    softwareQuestionType: string | undefined
-  ): string => {
-    const softwareMode = mode === "software";
+  React.useEffect(() => {
+    console.log("completion", completion)
+    // console.log("job title", jobTitle)
+    console.log("aiConvoMessages", aiConvoMessages)
+    console.log("previouslyAsked", previouslyAsked)
+    // console.log("tech question subj", techQuestionSubject)
 
-    if (softwareMode) {
-      if (softwareQuestionType === "technical (general)") {
-        return "Pretend you are interviewing me for a software engineer position. Ask me one question, then give me an example answer. Label the question and answer. Ask me only technical questions.";
-      } else if (softwareQuestionType === "soft skills") {
-        return "Pretend you are interviewing me for a software engineer position. Ask me one question, then give me an example answer. Label the question and answer. Ask me only soft skills questions.";
-      } else if (
-        softwareQuestionType === "technical (subject)" &&
-        techQuestionSubject
-      ) {
-        return `Pretend you are interviewing me for a software engineer position. Ask me one question, then give me an example answer. Label the question and answer. The interview subject is ${techQuestionSubject}`;
-      } else {
-        return askQuestionPrompt;
-      }
-    } else {
-      return `Pretend you are interviewing me for a ${jobTitle} position. Ask me one question, then give me an example answer. Label the question and answer.`;
-    }
-  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [completion, aiConvoMessages, jobTitle, techQuestionSubject])
 
   const handleClick = async (e: any) => {
-    setToggleSubjectField(false);
-    const prompt = generatePrompt(mode, softwareQuestionType);
     setCompletion("");
     setNoteResponse("");
     setQuestionLoading(true);
+    setToggleSubjectField(false);
 
     const response = await fetch("/api/openai", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ role: "user", content: prompt, maxTokens: 200 }),
+      body: JSON.stringify({ messages: aiConvoMessages, maxTokens: 200 }),
     });
 
     const data = await response.json();
 
     if (data) {
       setCompletion(data.response.content);
+      const returnedQuestion = data.response.content
+        .split("A:")[0]
+        .split("Q:")[1];
+      // console.log("returned q", returnedQuestion)
+      setAskedQuestionsArr([...askedQuestionsArr, returnedQuestion]);
+
+      askedQuestionsArr.length > 1 &&
+        setAiConvoMessages([
+          jobMode ? jobModeSystemPrompt : softwareSystemPrompt,
+          previouslyAsked,
+        ]);
     }
     setQuestionLoading(false);
   };
@@ -112,6 +146,8 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
                 questionLoading={questionLoading}
                 setToggleSubjectField={setToggleSubjectField}
                 allowSubjectField={jobMode || techSubjectQuestions}
+                setJobTitle={setJobTitle}
+                setTechQuestionSubject={setTechQuestionSubject}
                 noteSubject={
                   jobMode
                     ? jobTitle
@@ -138,15 +174,17 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
               onClick={handleClick}
               buttonText={questionPromptButtonText}
               buttonDisabled={questionLoading}
+              value={jobTitle}
             />
           ) : techSubjectQuestions ? (
             <SubjectField
-              onChange={onTechQuestionSubjectChange}
+              onChange={setTechQuestionSubject}
               label="Enter a technology"
               placeholder="ex. JavaScript"
               onClick={handleClick}
               buttonText={questionPromptButtonText}
               buttonDisabled={questionLoading}
+              value={techQuestionSubject}
             />
           ) : (
             <div className={styles.speechBubbleContainer}>

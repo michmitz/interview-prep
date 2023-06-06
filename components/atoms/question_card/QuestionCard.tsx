@@ -11,8 +11,8 @@ interface QuestionCardProps {
 const { showAdviceText } = appStrings;
 
 export const QuestionCard: React.FC<QuestionCardProps> = ({ response }) => {
-  const question = response.split("Answer:")[0];
-  const advice = response.split("Answer:")[1];
+  const question = response.split("A:")[0].split("Q:")[1];
+  const advice = response.split("A:")[1];
   const [showAdvice, setShowAdvice] = React.useState<boolean>(false);
   const [showAdviceButton, setShowAdviceButton] = React.useState<boolean>(true);
 

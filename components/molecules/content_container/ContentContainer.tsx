@@ -36,7 +36,10 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   const [noteResponse, setNoteResponse] = React.useState<string>("");
   const [toggleSubjectField, setToggleSubjectField] =
     React.useState<boolean>(jobMode);
-  const [error, setShowError] = React.useState<boolean>(false);
+  const [showError, setShowError] = React.useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = React.useState<string>(
+    "Sorry, the rate limit per minute has been exceeded. Try again in a minute!"
+  );
 
   const techSubjectQuestions =
     softwareMode && softwareQuestionType === "technical (subject)";
@@ -69,9 +72,7 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   );
   const previouslyAsked = {
     role: "user",
-    content: `Please ask new questions. You have already asked the following questions: ${JSON.stringify(
-      askedQuestionsArr
-    )}.`,
+    content: `Please ask new questions. You have already asked the following questions: ${askedQuestionsArr.toString()}`,
   } as ChatCompletionRequestMessage;
 
   const [aiConvoMessages, setAiConvoMessages] = React.useState<
@@ -83,20 +84,18 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
       jobMode ? [jobModeSystemPrompt] : [softwareSystemPrompt]
     );
     setAskedQuestionsArr([]);
+    setShowError(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, techQuestionSubject, jobTitle]);
 
-  // React.useEffect(() => {
-  //   console.log("completion", completion)
-  //   // console.log("job title", jobTitle)
-  //   console.log("aiConvoMessages", aiConvoMessages)
-  //   console.log("previouslyAsked", previouslyAsked)
-  //   // console.log("tech question subj", techQuestionSubject)
+  React.useEffect(() => {
+    console.log("asked questions", askedQuestionsArr)
 
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [completion, aiConvoMessages, jobTitle, techQuestionSubject])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [askedQuestionsArr]);
 
   const handleClick = async (e: any) => {
+    setShowError(false)
     setCompletion("");
     setNoteResponse("");
     setQuestionLoading(true);
@@ -107,18 +106,20 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ messages: aiConvoMessages, maxTokens: 200 }),
+      body: JSON.stringify({ messages: aiConvoMessages, maxTokens: 400 }),
     });
 
     const data = await response.json();
 
+    console.log("DATATATATATATA", data);
+
     if (data) {
-      if (data.response) {
+      if (data.response.name !== "Error") {
         setCompletion(data.response.content);
         const returnedQuestion = data.response.content
           .split("A:")[0]
           .split("Q:")[1];
-        // console.log("returned q", returnedQuestion)
+
         setAskedQuestionsArr([...askedQuestionsArr, returnedQuestion]);
 
         askedQuestionsArr.length > 1 &&
@@ -127,14 +128,14 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
             previouslyAsked,
           ]);
       } else {
-        setShowError(true);
         setQuestionLoading(false);
+        if (data.response.message !== "Request failed with status code 429") {
+          setErrorMessage(data.response.message);
+        }
+        setShowError(true);
       }
     }
 
-    if (!data) {
-      setShowError(true);
-    }
     setQuestionLoading(false);
   };
 
@@ -144,7 +145,7 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
 
   return (
     <div className={`${styles.container} flexCenter`}>
-      {!questionLoading ? (
+      {!questionLoading && !showError ? (
         <div style={{ width: "100%" }} className="flexCenter">
           {completion && !toggleSubjectField ? (
             <div className={styles.questionNotesSection}>
@@ -195,7 +196,7 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
               buttonDisabled={questionLoading}
               value={techQuestionSubject}
             />
-          ) : !error ? (
+          ) : (
             <div className={styles.speechBubbleContainer}>
               <SpeechBubblePrompt
                 text={
@@ -210,16 +211,16 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
                 buttonText={questionPromptButtonText}
               />
             </div>
-          ) : (
-            <div className={styles.speechBubbleContainer}>
-              <SpeechBubblePrompt
-                text="Sorry, an error occured with generating a response. Sometimes this happens if the 'next question' button is clicked too quickly. Please try again."
-                onClick={handleClick}
-                disableButton={questionLoading}
-                buttonText={questionPromptButtonText}
-              />
-            </div>
           )}
+        </div>
+      ) : showError ? (
+        <div className={styles.speechBubbleContainer}>
+          <SpeechBubblePrompt
+            text={errorMessage}
+            onClick={handleClick}
+            disableButton={questionLoading}
+            buttonText={questionPromptButtonText}
+          />
         </div>
       ) : (
         <div className={styles.thinkingContainer}>

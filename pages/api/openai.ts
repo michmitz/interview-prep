@@ -25,6 +25,7 @@ const generateResponse = async ({ messages, maxTokens }: ResponseProps) => {
     return completion?.data?.choices[0].message
   } catch (err) {
     console.log("ERROR:", err)
+    return err
   }
 }
 

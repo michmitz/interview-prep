@@ -36,7 +36,7 @@ export const SubjectField: React.FC<SubjectFieldProps> = ({
         }}
         placeholder={placeholder}
       />
-      {showError && <p className={styles.emptyFieldError}>Please enter a value in.</p>}
+      {showError && <p className={styles.emptyFieldError}>Please enter a value.</p>}
       <div className="questionButton">
         <RaisedButton
           onClick={(e) => {

@@ -32,3 +32,8 @@
   outline: none;
   width: 95%;
 }
+
+.emptyFieldError {
+  color: var(--muted-purple-text);
+  font-size: 15px;
+}

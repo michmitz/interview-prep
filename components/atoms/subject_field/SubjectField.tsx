@@ -9,6 +9,7 @@ interface SubjectFieldProps {
   readonly onClick: (e: any) => void;
   readonly buttonText?: string;
   readonly buttonDisabled: boolean;
+  readonly value: string;
 }
 
 export const SubjectField: React.FC<SubjectFieldProps> = ({
@@ -18,18 +19,28 @@ export const SubjectField: React.FC<SubjectFieldProps> = ({
   onClick,
   buttonText,
   buttonDisabled,
+  value,
 }) => {
+  const [showError, setShowError] = React.useState<boolean>(false);
+
   return (
     <div className={`${styles.container} layeredGlassEffect`}>
       <p className={styles.label}>{label}</p>
       <input
         className={styles.input}
-        onChange={(e) => onChange && onChange(e.target.value)}
+        onChange={(e) => {
+          onChange && onChange(e.target.value)
+          if (e.target.value) {
+            setShowError(false)
+          }
+        }}
         placeholder={placeholder}
       />
+      {showError && <p className={styles.emptyFieldError}>Please enter a value in.</p>}
       <div className="questionButton">
         <RaisedButton
-          onClick={onClick}
+          onClick={(e) => {
+            !value ? setShowError(true) : onClick(e)}}
           text={buttonText}
           height="35px"
           width="200px"

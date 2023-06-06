@@ -36,8 +36,8 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   const [noteResponse, setNoteResponse] = React.useState<string>("");
   const [toggleSubjectField, setToggleSubjectField] =
     React.useState<boolean>(jobMode);
-  
-  
+  const [error, setShowError] = React.useState<boolean>(false);
+
   const techSubjectQuestions =
     softwareMode && softwareQuestionType === "technical (subject)";
   const generalTechQuestions =
@@ -56,45 +56,45 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
 
   const softwareSystemPrompt = {
     role: "system",
-    content: `Pretend you are interviewing me for a software engineer position. Ask me a ${softwareSubject} question, labeled "Q:", then give me a brief example answer, labeled "A:". If my subject is inappropriate, please respond with "Michelle says 'nice try'.".`,
+    content: `Pretend you are interviewing me for a software engineer position. Ask me a ${softwareSubject} question, labeled "Q:", then give me a brief example answer, labeled "A:".`,
   } as ChatCompletionRequestMessage;
 
   const jobModeSystemPrompt = {
     role: "system",
-    content: `Pretend you are interviewing me for a ${jobTitle} position. Ask me one question, labeled "Q:", then give me a brief example answer, labeled "A:". If my subject is inappropriate, please respond with "Michelle says 'nice try."`,
+    content: `Pretend you are interviewing me for a ${jobTitle} position. Ask me one question, labeled "Q:", then give me a brief example answer, labeled "A:"."`,
   } as ChatCompletionRequestMessage;
-
 
   const [askedQuestionsArr, setAskedQuestionsArr] = React.useState<string[]>(
     []
   );
   const previouslyAsked = {
     role: "user",
-    content: `You have already asked the following questions: ${JSON.stringify(
+    content: `Please ask new questions. You have already asked the following questions: ${JSON.stringify(
       askedQuestionsArr
-    )}`,
+    )}.`,
   } as ChatCompletionRequestMessage;
 
   const [aiConvoMessages, setAiConvoMessages] = React.useState<
     ChatCompletionRequestMessage[]
   >([softwareSystemPrompt]);
 
-
   React.useEffect(() => {
-    setAiConvoMessages(jobMode ? [jobModeSystemPrompt] : [softwareSystemPrompt])
-    setAskedQuestionsArr([])
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode, techQuestionSubject])
+    setAiConvoMessages(
+      jobMode ? [jobModeSystemPrompt] : [softwareSystemPrompt]
+    );
+    setAskedQuestionsArr([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, techQuestionSubject, jobTitle]);
 
-  React.useEffect(() => {
-    console.log("completion", completion)
-    // console.log("job title", jobTitle)
-    console.log("aiConvoMessages", aiConvoMessages)
-    console.log("previouslyAsked", previouslyAsked)
-    // console.log("tech question subj", techQuestionSubject)
+  // React.useEffect(() => {
+  //   console.log("completion", completion)
+  //   // console.log("job title", jobTitle)
+  //   console.log("aiConvoMessages", aiConvoMessages)
+  //   console.log("previouslyAsked", previouslyAsked)
+  //   // console.log("tech question subj", techQuestionSubject)
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [completion, aiConvoMessages, jobTitle, techQuestionSubject])
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [completion, aiConvoMessages, jobTitle, techQuestionSubject])
 
   const handleClick = async (e: any) => {
     setCompletion("");
@@ -113,18 +113,27 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
     const data = await response.json();
 
     if (data) {
-      setCompletion(data.response.content);
-      const returnedQuestion = data.response.content
-        .split("A:")[0]
-        .split("Q:")[1];
-      // console.log("returned q", returnedQuestion)
-      setAskedQuestionsArr([...askedQuestionsArr, returnedQuestion]);
+      if (data.response) {
+        setCompletion(data.response.content);
+        const returnedQuestion = data.response.content
+          .split("A:")[0]
+          .split("Q:")[1];
+        // console.log("returned q", returnedQuestion)
+        setAskedQuestionsArr([...askedQuestionsArr, returnedQuestion]);
 
-      askedQuestionsArr.length > 1 &&
-        setAiConvoMessages([
-          jobMode ? jobModeSystemPrompt : softwareSystemPrompt,
-          previouslyAsked,
-        ]);
+        askedQuestionsArr.length > 1 &&
+          setAiConvoMessages([
+            jobMode ? jobModeSystemPrompt : softwareSystemPrompt,
+            previouslyAsked,
+          ]);
+      } else {
+        setShowError(true);
+        setQuestionLoading(false);
+      }
+    }
+
+    if (!data) {
+      setShowError(true);
     }
     setQuestionLoading(false);
   };
@@ -186,7 +195,7 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
               buttonDisabled={questionLoading}
               value={techQuestionSubject}
             />
-          ) : (
+          ) : !error ? (
             <div className={styles.speechBubbleContainer}>
               <SpeechBubblePrompt
                 text={
@@ -196,6 +205,15 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
                     ? "Ready for some technical questions?"
                     : "Let's do some software interview questions!"
                 }
+                onClick={handleClick}
+                disableButton={questionLoading}
+                buttonText={questionPromptButtonText}
+              />
+            </div>
+          ) : (
+            <div className={styles.speechBubbleContainer}>
+              <SpeechBubblePrompt
+                text="Sorry, an error occured with generating a response. Please try again."
                 onClick={handleClick}
                 disableButton={questionLoading}
                 buttonText={questionPromptButtonText}

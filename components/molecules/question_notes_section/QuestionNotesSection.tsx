@@ -15,6 +15,8 @@ export interface QuestionNotesSectionProps {
   readonly allowSubjectField: boolean;
   readonly setToggleSubjectField: (v: boolean) => void;
   readonly noteSubject: string;
+  readonly setTechQuestionSubject: (v: string) => void;
+  readonly setJobTitle: (v: string) => void;
 }
 
 const { getNewQuestion } = appStrings;
@@ -28,6 +30,8 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
   allowSubjectField,
   setToggleSubjectField,
   noteSubject,
+  setTechQuestionSubject,
+  setJobTitle,
 }) => {
   const [answerInput, setAnswerInput] = React.useState<string>("");
   const [noteSaving, setNoteSaving] = React.useState<boolean>(false);
@@ -37,8 +41,8 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
   const handleSubmitNote = async () => {
     setNoteSaving(true);
     const data = {
-      question: aiResponse.split("Answer:")[0],
-      advice: aiResponse.split("Answer")[1],
+      question: aiResponse.split("A:")[0].split("Q:")[1],
+      advice: aiResponse.split("A:")[1],
       note: answerInput,
       subject: noteSubject,
     };
@@ -60,6 +64,12 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
     }
   };
 
+  const handleClearSubject = () => {
+    setToggleSubjectField(true)
+    setTechQuestionSubject('')
+    setJobTitle('')
+  }
+
   return (
     <div className="flexCenter">
       {allowSubjectField && (
@@ -67,7 +77,7 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
           <DoubleLeftOutlined className={styles.changeSubjectIcon} />
           <button
             className={styles.changeSubjectButton}
-            onClick={() => setToggleSubjectField(true)}
+            onClick={handleClearSubject}
           >
             {changeSubjectText}
           </button>

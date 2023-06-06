@@ -58,7 +58,7 @@ const Home: NextPage = () => {
               setCompletion={setCompletion}
               softwareQuestionType={softwareQuestionType}
               techQuestionSubject={techQuestionSubject}
-              onTechQuestionSubjectChange={setTechQuestionSubject}
+              setTechQuestionSubject={setTechQuestionSubject}
             />
           </div>
         </div>

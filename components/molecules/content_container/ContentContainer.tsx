@@ -50,9 +50,9 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   // const jobQuestionSubject = mode === 'job-title' && jobTitle
 
   const softwareSubject = generalTechQuestions
-    ? "general technical question"
+    ? "technical"
     : softSkillsQuestions
-    ? "soft skills question"
+    ? "soft skills"
     : techSubjectQuestions
     ? techQuestionSubject
     : "technical or soft skills";
@@ -106,12 +106,10 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ messages: aiConvoMessages, maxTokens: 400 }),
+      body: JSON.stringify({ messages: aiConvoMessages, maxTokens: 250 }),
     });
 
     const data = await response.json();
-
-    console.log("DATATATATATATA", data);
 
     if (data) {
       if (data.response.name !== "Error") {

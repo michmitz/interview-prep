@@ -41,8 +41,8 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
   const handleSubmitNote = async () => {
     setNoteSaving(true);
     const data = {
-      question: aiResponse.split("Answer:")[0],
-      advice: aiResponse.split("Answer")[1],
+      question: aiResponse.split("A:")[0].split("Q:")[1],
+      advice: aiResponse.split("A:")[1],
       note: answerInput,
       subject: noteSubject,
     };

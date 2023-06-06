@@ -213,7 +213,7 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
           ) : (
             <div className={styles.speechBubbleContainer}>
               <SpeechBubblePrompt
-                text="Sorry, an error occured with generating a response. Please try again."
+                text="Sorry, an error occured with generating a response. Sometimes this happens if the 'next question' button is clicked too quickly. Please try again."
                 onClick={handleClick}
                 disableButton={questionLoading}
                 buttonText={questionPromptButtonText}

@@ -1,11 +1,25 @@
 import React from "react";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { Sidebar } from "@/components/atoms/sidebar/Sidebar";
 import { useSession } from "next-auth/react";
 import { SignedOut } from "@/components/molecules/signed_out/SignedOut";
 
+export const getServerSideProps: GetServerSideProps<{
+  data: string;
+}> = async () => {
+  const res = await fetch("/api/openai", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ messages: [{ "role": 'system', "content": 'Give me an array of 20 job interview tips.'}], maxTokens: 400 }),
+  });
 
-const JobTips: NextPage = () => {
+  const data = await res.json();
+  return { props: { data } };
+};
+
+const InterviewTips: NextPage = () => {
   const { data: session, status } = useSession();
   const pageLoading = status === "loading";
 
@@ -22,11 +36,7 @@ const JobTips: NextPage = () => {
           </div>
 
           <div className="rightContainer fadeIn">
-           
-
-             
-              
-              
+          
             
           </div>
         </div>
@@ -43,4 +53,4 @@ const JobTips: NextPage = () => {
   );
 };
 
-export default JobTips;
+export default InterviewTips;

@@ -3,6 +3,7 @@ import React from "react";
 import styles from "./SidebarStyles.module.css";
 import {
   ArrowLeftOutlined,
+  BulbOutlined,
   DownCircleOutlined,
   FormOutlined,
   InfoCircleFilled,
@@ -26,7 +27,7 @@ export interface SidebarProps {
   readonly setSoftwareQuestionType?: (v: string) => void;
 }
 
-const { notesLink, about } = appStrings.header;
+const { notesLink, about, interviewTips } = appStrings.header;
 
 export const Sidebar: React.FC<SidebarProps> = ({
   headerText,
@@ -54,11 +55,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
   };
 
   const handleAboutClick = () => {
-    router.push('/about');
-  }
+    router.push("/about");
+  };
 
   const handleReturnHome = () => {
     router.push("/");
+  };
+
+  const handleJobTipsClick = () => {
+    router.push("/interview-tips");
   };
 
   const modeValues = ["job-title", "software"] as ReadonlyArray<InterviewMode>;
@@ -154,6 +159,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 >
                   <InfoCircleFilled className={styles.icon} />
                   <p className={styles.label}>{about}</p>
+                </span>
+
+                <span
+                  className={
+                    expandedView
+                      ? `${styles.labelContainer} quickFadeIn`
+                      : styles.labelContainer
+                  }
+                  onClick={() => handleJobTipsClick()}
+                >
+                  <BulbOutlined className={styles.icon} />
+                  <p className={styles.label}>{interviewTips}</p>
                 </span>
               </>
             ) : (

@@ -34,6 +34,7 @@ export const appStrings = {
     notesPage: "Notes",
     returnHome: "Return to Interview",
     about: "About",
+    interviewTips: 'Interview Tips',
   },
   notesPage: {
     noteHeader: "Note",

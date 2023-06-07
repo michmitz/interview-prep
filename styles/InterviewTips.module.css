@@ -1,0 +1,40 @@
+.header {
+  font-weight: bold;
+  font-style: italic;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+  padding: 0.7em;
+  border-radius: 10px;
+  color: var(--muted-purple-text);
+  box-shadow: 5px 5px rgba(54, 54, 160, 0.402);
+}
+
+.tipsContainer {
+  margin-bottom: 15px;
+  margin-top: 10px;
+}
+
+.tip {
+  color: var(--muted-purple-text);
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  border-radius: 15px;
+  padding: 0.5em;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.25),
+    rgba(200, 239, 255, 0.477),
+    70%,
+    rgba(157, 255, 154, 0.25)
+  );
+  box-shadow: 2px 2px 3px rgba(54, 54, 160, 0.402);
+  backdrop-filter: blur(5px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.noDataContainer {
+  margin-top: 30px;
+}

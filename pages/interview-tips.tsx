@@ -5,6 +5,10 @@ import { useSession } from "next-auth/react";
 import { SignedOut } from "@/components/molecules/signed_out/SignedOut";
 import { ThinkingRobot } from "@/components/molecules/thinking_robot/ThinkingRobot";
 import { SpeechBubblePrompt } from "@/components/molecules/speech_bubble_prompt/SpeechBubblePrompt";
+import styles from "../styles/InterviewTips.module.css";
+import { appStrings } from "@/constants/appStrings";
+
+const { header } = appStrings.interviewTipsPage;
 
 const InterviewTips: NextPage = () => {
   const { data: session, status } = useSession();
@@ -29,7 +33,7 @@ const InterviewTips: NextPage = () => {
           messages: [
             {
               role: "system",
-              content: "Give me an array of 20 job interview tips.",
+              content: "Give me an array of 15 job interview tips.",
             },
           ],
           maxTokens: 400,
@@ -75,16 +79,27 @@ const InterviewTips: NextPage = () => {
           </div>
 
           <div className="rightContainer fadeIn">
+            <p className={`${styles.header} greenGradient`}>{header}</p>
             {response && interviewTips ? (
-              interviewTips.map((tip, i) => {
-                return <p key={i}>{tip}</p>;
-              })
+              <div className={`${styles.tipsContainer}`}>
+                {interviewTips.map((tip, i) => {
+                  return (
+                    <p key={i} className={styles.tip}>
+                      {tip}
+                    </p>
+                  );
+                })}
+              </div>
             ) : loading ? (
-              <ThinkingRobot />
-            ) : (
-              <div style={{ marginTop: "8%" }}>
+              <div className={`${styles.noDataContainer} flexCenter`}>
+                <ThinkingRobot />
+              </div>
+            ) : showError ? (
+              <div className={`${styles.noDataContainer} flexCenter`}>
                 <SpeechBubblePrompt text={errorMessage} />
               </div>
+            ) : (
+              <></>
             )}
           </div>
         </div>

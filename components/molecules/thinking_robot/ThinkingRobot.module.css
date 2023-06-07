@@ -31,7 +31,7 @@
   display: inline-block;
   animation: dots steps(1, end) 3s infinite;
   content: "";
-  color: rgb(91, 57, 114);
+  color: var(--muted-purple-text);
 }
 
 @keyframes dots {

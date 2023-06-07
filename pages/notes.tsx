@@ -152,6 +152,7 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
           </div>
 
           <div className="rightContainer">
+            {sortedNotes.length === 0 && <h2 className={styles.noNotes}>No notes yet.</h2>}
             {!sortedNotes ? (
               <LoadingOutlined />
             ) : (

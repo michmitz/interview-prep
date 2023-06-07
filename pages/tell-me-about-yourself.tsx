@@ -1,15 +1,43 @@
 import React from "react";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import styles from "../styles/TellMeAboutYourself.module.css";
 import prisma from "@/lib/prisma";
 import { Sidebar } from "@/components/atoms/sidebar/Sidebar";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { SignedOut } from "@/components/molecules/signed_out/SignedOut";
 import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
 import { NeumorphicButton } from "@/components/atoms/button/NeumorphicButton";
 
-const TellMeAboutYourself: NextPage = () => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getSession({ req });
+
+  if (!session) {
+    res.statusCode = 403;
+    return { props: { tellMePrompt: {} } };
+  }
+
+  const tellMeAnswer = await prisma.tellMePrompt.findFirst({
+    where: {
+      author: { email: session?.user?.email },
+    },
+  });
+
+  const existingAnswer = tellMeAnswer?.promptAnswer;
+
+  return {
+    props: { existingAnswer },
+  };
+};
+
+interface TellMeAboutYourselfProps {
+  readonly existingAnswer: string;
+}
+
+const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
+  existingAnswer,
+}) => {
+  console.log("tell me answer", existingAnswer);
   const router = useRouter();
   const { data: session, status } = useSession();
   const pageLoading = status === "loading";
@@ -76,21 +104,22 @@ const TellMeAboutYourself: NextPage = () => {
       body: JSON.stringify(data),
     });
 
-    console.log('response', response)
+    console.log("response", response);
 
     if (response.status === 200) {
       setAnswerSaving(false);
       setSavingResponse("Answer successfully saved!");
+      refreshData();
     } else {
       setAnswerSaving(false);
       setSavingResponse("Answer failed to save");
     }
   };
 
-  React.useEffect(() => {
-    console.log("saving response", savingResponse)
-    console.log("prompt answer", answerInput)
-  }, [savingResponse])
+  // React.useEffect(() => {
+  //   console.log("saving response", savingResponse);
+  //   console.log("prompt answer", answerInput);
+  // }, [savingResponse]);
 
   if (session) {
     return (
@@ -143,6 +172,12 @@ const TellMeAboutYourself: NextPage = () => {
                 loading={aiLoading}
               />
             </div>
+
+            {existingAnswer ? (
+              <div>{existingAnswer}</div>
+            ) : (
+              <div>You currently have no answer to this prompt saved.</div>
+            )}
           </div>
         </div>
       </main>

@@ -45,6 +45,14 @@ model Note {
   subject   String?
 }
 
+model TellMePrompt {
+  id        String    @default(cuid()) @id
+  promptAnswer    String /// @encrypted
+  promptAnswerHash   String? /// @encryption:hash(promptAnswer)
+  author    User?  @relation(fields: [authorId], references: [id])
+  authorId  String? @unique
+}
+
 model User {
   id            String       @default(cuid()) @id
   name          String?
@@ -56,6 +64,7 @@ model User {
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   notes         Note[]
+  tellMePrompt  TellMePrompt?
   @@map(name: "users")
 }
 

@@ -8,6 +8,8 @@ interface AnswerFieldProps {
   readonly onSubmit: () => void;
   readonly loading?: boolean;
   readonly disableButton?: boolean;
+  readonly placeholder?: string;
+  readonly buttonText?: string;
 }
 
 const { answerField, answerSubmitButton } = appStrings;
@@ -17,19 +19,21 @@ export const AnswerField: React.FC<AnswerFieldProps> = ({
   onSubmit,
   loading,
   disableButton,
+  placeholder,
+  buttonText,
 }) => {
   return (
     <div className={styles.container}>
       <textarea
         className={styles.input}
         onChange={(e) => onChange(e.target.value)}
-        placeholder={answerField}
+        placeholder={placeholder || answerField}
       />
       <NeumorphicButton
         onClick={onSubmit}
         height="25px"
         width="120px"
-        text={answerSubmitButton}
+        text={buttonText || answerSubmitButton}
         disabled={disableButton || loading}
         loading={loading}
       />

@@ -1,0 +1,22 @@
+.header {
+  font-weight: bold;
+  font-style: italic;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+  padding: 0.7em;
+  border-radius: 10px;
+  color: var(--muted-purple-text);
+  box-shadow: 5px 5px rgba(54, 54, 160, 0.402);
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5em;
+}
+
+.saveButton {
+  margin-right: 20px;
+}

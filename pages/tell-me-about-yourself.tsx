@@ -1,6 +1,6 @@
 import React from "react";
 import { NextPage } from "next";
-import styles from "../styles/Home.module.css";
+import styles from "../styles/TellMeAboutYourself.module.css";
 import prisma from "@/lib/prisma";
 import { Sidebar } from "@/components/atoms/sidebar/Sidebar";
 import { useSession } from "next-auth/react";
@@ -14,7 +14,7 @@ const TellMeAboutYourself: NextPage = () => {
   const { data: session, status } = useSession();
   const pageLoading = status === "loading";
   const [answerInput, setAnswerInput] = React.useState<string>("");
-  const [loading, setLoading] = React.useState(false);
+  const [aiLoading, setAILoading] = React.useState(false);
   const [showError, setShowError] = React.useState<boolean>(false);
   const [errorMessage, setErrorMessage] = React.useState<string>(
     "Sorry, the rate limit per minute has been exceeded. Try again in a minute!"
@@ -30,7 +30,7 @@ const TellMeAboutYourself: NextPage = () => {
   const handleGenerateAIClick = async (e: any) => {
     setShowError(false);
     setResponse("");
-    setLoading(true);
+    setAILoading(true);
 
     const response = await fetch("/api/openai", {
       method: "POST",
@@ -49,7 +49,7 @@ const TellMeAboutYourself: NextPage = () => {
       if (data.response.name !== "Error") {
         setResponse(data.response.content);
       } else {
-        setLoading(false);
+        setAILoading(false);
         if (data.response.message !== "Request failed with status code 429") {
           setErrorMessage(data.response.message);
         }
@@ -57,7 +57,7 @@ const TellMeAboutYourself: NextPage = () => {
       }
     }
 
-    setLoading(false);
+    setAILoading(false);
   };
 
   if (session) {
@@ -77,8 +77,8 @@ const TellMeAboutYourself: NextPage = () => {
               Tell me about yourself.
             </p>
             <p>
-              Enter your answer below. If you would like the AI to touch it up,
-              click the Touch Up button.
+              Enter your answer below. If you would like the AI to add some
+              razzle dazzle, click the Touch Up button.
             </p>
             {/* Add link for notes page */}
             <p>
@@ -87,21 +87,30 @@ const TellMeAboutYourself: NextPage = () => {
 
             <AnswerField
               onChange={(e) => setAnswerInput(e)}
-              onSubmit={() => {}}
               loading={false}
               disableButton={false}
               placeholder="Write your answer here..."
-              buttonText="Save"
             />
             {response && <p>{response}</p>}
-            <NeumorphicButton
-              onClick={handleGenerateAIClick}
-              height="25px"
-              width="120px"
-              text={response ? "Regenerate Response" : "Touch up with AI"}
-              disabled={!answerInput || loading}
-              loading={loading}
-            />
+            <div className={styles.buttonContainer}>
+              <div className={styles.saveButton}>
+                {" "}
+                <NeumorphicButton
+                  onClick={() => {}}
+                  height="25px"
+                  width="120px"
+                  text="Save"
+                />
+              </div>
+              <NeumorphicButton
+                onClick={handleGenerateAIClick}
+                height="25px"
+                width="120px"
+                text={response ? "Regenerate Response" : "Touch Up"}
+                disabled={!answerInput || aiLoading}
+                loading={aiLoading}
+              />
+            </div>
           </div>
         </div>
       </main>
@@ -116,3 +125,12 @@ const TellMeAboutYourself: NextPage = () => {
 };
 
 export default TellMeAboutYourself;
+
+// Todo:
+
+// Make CRUD routes
+// Update prisma model, encrypt answer
+// Get any saved input from prisma a la notes page, display below input, handle when no saved data exists
+// Add link for notes page
+// Fix issue of all elements having user-select:none
+// App strings

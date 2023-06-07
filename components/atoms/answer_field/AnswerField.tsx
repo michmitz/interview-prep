@@ -5,7 +5,7 @@ import { NeumorphicButton } from "../button/NeumorphicButton";
 
 interface AnswerFieldProps {
   readonly onChange: (e: string) => void;
-  readonly onSubmit: () => void;
+  readonly onSubmit?: () => void;
   readonly loading?: boolean;
   readonly disableButton?: boolean;
   readonly placeholder?: string;
@@ -29,6 +29,7 @@ export const AnswerField: React.FC<AnswerFieldProps> = ({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder || answerField}
       />
+      {onSubmit && 
       <NeumorphicButton
         onClick={onSubmit}
         height="25px"
@@ -36,7 +37,7 @@ export const AnswerField: React.FC<AnswerFieldProps> = ({
         text={buttonText || answerSubmitButton}
         disabled={disableButton || loading}
         loading={loading}
-      />
+      />}
     </div>
   );
 };

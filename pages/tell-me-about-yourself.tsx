@@ -20,6 +20,8 @@ const TellMeAboutYourself: NextPage = () => {
     "Sorry, the rate limit per minute has been exceeded. Try again in a minute!"
   );
   const [response, setResponse] = React.useState<any>(null);
+  const [answerSaving, setAnswerSaving] = React.useState<boolean>(false);
+  const [savingResponse, setSavingResponse] = React.useState<string>("");
 
   const refreshData = () => {
     router.replace(router.asPath);
@@ -60,6 +62,36 @@ const TellMeAboutYourself: NextPage = () => {
     setAILoading(false);
   };
 
+  const handleSaveAnswer = async () => {
+    setAnswerSaving(true);
+    const data = {
+      promptAnswer: answerInput,
+    };
+
+    const response = await fetch("/api/tell_me_prompt/create_tell_me_answer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    console.log('response', response)
+
+    if (response.status === 200) {
+      setAnswerSaving(false);
+      setSavingResponse("Answer successfully saved!");
+    } else {
+      setAnswerSaving(false);
+      setSavingResponse("Answer failed to save");
+    }
+  };
+
+  React.useEffect(() => {
+    console.log("saving response", savingResponse)
+    console.log("prompt answer", answerInput)
+  }, [savingResponse])
+
   if (session) {
     return (
       <main className="lightGlassEffect">
@@ -96,7 +128,7 @@ const TellMeAboutYourself: NextPage = () => {
               <div className={styles.saveButton}>
                 {" "}
                 <NeumorphicButton
-                  onClick={() => {}}
+                  onClick={handleSaveAnswer}
                   height="25px"
                   width="120px"
                   text="Save"

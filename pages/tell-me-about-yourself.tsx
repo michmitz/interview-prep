@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     },
   });
 
-  const existingAnswer = tellMeAnswer?.promptAnswer;
+  const existingAnswer = tellMeAnswer?.promptAnswer || null;
 
   return {
     props: { existingAnswer },
@@ -37,7 +37,6 @@ interface TellMeAboutYourselfProps {
 const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
   existingAnswer,
 }) => {
-  console.log("tell me answer", existingAnswer);
   const router = useRouter();
   const { data: session, status } = useSession();
   const pageLoading = status === "loading";

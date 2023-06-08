@@ -38,6 +38,7 @@ export const appStrings = {
   },
   notesPage: {
     noteHeader: "Note",
+    tellMeHeader: `"Tell me about yourself"`,
     updateButton: "Update",
     deleteButton: "Delete",
   },

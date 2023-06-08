@@ -10,33 +10,35 @@ interface NoteCardProps {
   readonly noteId: string;
   readonly editCallback: (id: string) => void;
   readonly deleteCallback: (id: string) => void;
-  readonly answerInputsCallback: (updatedNote: UpdatedNote) => void;
-  readonly submitNoteCallback: (id: string) => void;
-  readonly disableButtonCallback: (id: string) => boolean | undefined;
-  readonly responseMessage?: string;
+  readonly onInputChange: (v: any) => void;
+  readonly onSubmit: (id: string) => void;
+  readonly disableButtonCallback?: (id: string) => boolean | undefined;
+  readonly disableButton?: boolean;
   readonly showEditField: boolean;
+  readonly variant: "note" | "tell-me-answer";
 }
 
-const { noteHeader, updateButton, deleteButton } = appStrings.notesPage
+const { noteHeader, updateButton, deleteButton } = appStrings.notesPage;
 
 export const NoteCard: React.FC<NoteCardProps> = ({
   question,
   note,
   editCallback,
   deleteCallback,
-  answerInputsCallback,
-  submitNoteCallback,
+  onInputChange,
+  onSubmit,
   disableButtonCallback,
   noteId,
-  responseMessage,
   showEditField,
+  variant,
+  disableButton,
 }) => {
   return (
     <div className={`${styles.container} layeredGlassEffect`}>
       <p className={styles.question}>{question}</p>
       <div className={styles.noteContainer}>
         <div className={`${styles.noteLabel} creamGradient`}>
-          {noteHeader}
+          {variant === "note" ? noteHeader : "Your Answer"}
           <div>
             <button
               onClick={() => {
@@ -61,13 +63,17 @@ export const NoteCard: React.FC<NoteCardProps> = ({
         <div className={styles.answerField}>
           <AnswerField
             onChange={(e) => {
-              answerInputsCallback({
-                id: noteId,
-                updatedNote: e,
-              } as UpdatedNote);
+              onInputChange(
+                variant === "note"
+                  ? ({
+                      id: noteId,
+                      updatedNote: e,
+                    } as UpdatedNote)
+                  : e
+              );
             }}
-            onSubmit={() => submitNoteCallback(noteId)}
-            disableButton={disableButtonCallback(noteId)}
+            onSubmit={() => onSubmit(noteId)}
+            disableButton={disableButtonCallback && disableButtonCallback(noteId) || disableButton}
           />
         </div>
       )}

@@ -97,7 +97,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
   };
 
   const handleSaveAnswer = async (input: string) => {
-    setAPIResponse("")
+    setAPIResponse("");
     setAnswerSaving(true);
     const data = {
       promptAnswer: input,
@@ -232,6 +232,14 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
               <div className="noteResponseContainer">
                 <div className={`noteResponse mutedPurpleGradient`}>
                   {apiResponse}
+                </div>
+              </div>
+            )}
+
+            {showError && (
+              <div className="noteResponseContainer">
+                <div className={`noteResponse mutedPurpleGradient`}>
+                  {errorMessage}
                 </div>
               </div>
             )}

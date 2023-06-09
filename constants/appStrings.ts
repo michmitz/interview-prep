@@ -74,7 +74,7 @@ export const appStrings = {
   },
   tellMePage: {
     header: 'Tell Me About Yourself',
-    subHeader: 'Enter your answer below. If you would like the AI to provide a suggestion or improve your answer, click the Touch Up button.',
+    subHeader: 'Enter your response below. If you would like the AI to provide a suggestion or improve your answer, click the Touch Up button. ',
   },
   answerField: "Write your notes here...",
   answerSubmitButton: "Save Note",

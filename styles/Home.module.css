@@ -40,3 +40,7 @@
 .noNotes {
   color: var(--muted-purple-text);
 }
+
+.tellMeContainer {
+  margin-bottom: 20px;
+}

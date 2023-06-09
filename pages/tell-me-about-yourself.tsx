@@ -10,6 +10,7 @@ import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
 import { NeumorphicButton } from "@/components/atoms/button/NeumorphicButton";
 import { appStrings } from "@/constants/appStrings";
 import Link from "next/link";
+import { LoadingOutlined } from "@ant-design/icons";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -52,7 +53,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
   );
   const [aiResponse, setAIResponse] = React.useState<any>(null);
   const [answerSaving, setAnswerSaving] = React.useState<boolean>(false);
-  const [savingResponse, setSavingResponse] = React.useState<string>("");
+  const [apiResponse, setAPIResponse] = React.useState<string>("");
   const [showPreviouslySaved, setShowPreviouslySaved] =
     React.useState<boolean>(false);
 
@@ -96,6 +97,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
   };
 
   const handleSaveAnswer = async (input: string) => {
+    setAPIResponse("")
     setAnswerSaving(true);
     const data = {
       promptAnswer: input,
@@ -113,11 +115,12 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
 
     if (response.status === 200) {
       setAnswerSaving(false);
-      setSavingResponse("Answer successfully saved!");
+      setAIResponse("");
+      setAPIResponse("Answer successfully saved!");
       refreshData();
     } else {
       setAnswerSaving(false);
-      setSavingResponse("Answer failed to save");
+      setAPIResponse("Answer failed to save");
     }
   };
 
@@ -180,7 +183,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
                 onClick={handleGenerateAIClick}
                 height="25px"
                 width="120px"
-                text={aiResponse ? "Regenerate Response" : "Touch Up"}
+                text={aiResponse ? "Regenerate" : "Touch Up"}
                 disabled={!answerInput || aiLoading}
                 loading={aiLoading}
               />
@@ -190,7 +193,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
               <div
                 className={`${styles.answerContainer} lightGlassEffect quickFadeIn`}
               >
-                <p className={`${styles.answerHeader} purpleGradient`}>
+                <p className={`${styles.answerHeader} beigeGradient`}>
                   Previously Saved Answer:
                   <button
                     onClick={() => setShowPreviouslySaved(false)}
@@ -207,16 +210,29 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
               <div
                 className={`${styles.answerContainer} ${styles.aiAnswerContainer} lightGlassEffect quickFadeIn`}
               >
-                <p className={`${styles.answerHeader} grayGradient`}>
+                <p className={`${styles.answerHeader} greenGradient`}>
                   AI Reponse:
                   <button
                     onClick={() => handleSaveAnswer(aiResponse)}
                     className={styles.showHideButton}
+                    disabled={answerSaving}
                   >
-                    Save (Override existing answer)
+                    {answerSaving ? (
+                      <LoadingOutlined />
+                    ) : (
+                      "Save (Override existing answer)"
+                    )}
                   </button>
                 </p>
                 <p className={styles.answerText}>{aiResponse}</p>
+              </div>
+            )}
+
+            {apiResponse && (
+              <div className="noteResponseContainer">
+                <div className={`noteResponse mutedPurpleGradient`}>
+                  {apiResponse}
+                </div>
               </div>
             )}
           </div>
@@ -233,12 +249,3 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
 };
 
 export default TellMeAboutYourself;
-
-// Todo:
-
-// Make CRUD routes
-// Update prisma model, encrypt answer
-// Get any saved input from prisma a la notes page, display below input, handle when no saved data exists
-// Add link for notes page
-// Fix issue of all elements having user-select:none
-// App strings

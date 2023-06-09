@@ -214,7 +214,7 @@ const Notes: NextPage<NotesProps> = ({ notes, tellMeAnswer }) => {
 
           <div className="rightContainer">
             {tellMeAnswer && (
-              <div className={`flexCenter fadeIn`}>
+              <div className={`${styles.tellMeContainer} flexCenter fadeIn`}>
                 <div className={`${styles.notesSubject} mutedPurpleGradient`}>
                   {tellMeHeader}
                 </div>

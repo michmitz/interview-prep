@@ -20,3 +20,36 @@
 .saveButton {
   margin-right: 20px;
 }
+
+.link {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.subHeader {
+  color: var(--muted-purple-text);
+  font-size: 15px;
+  padding: 0.7em;
+}
+
+.existingAnswerContainer {
+  border-radius: 12px;
+  box-shadow: 5px 5px rgba(54, 54, 160, 0.402);
+}
+
+.existingAnswerHeader {
+  background-color: rgb(255, 251, 246);
+  color: var(--muted-purple-text);
+  font-weight: bold;
+  border-radius: 12px 12px 0px 0px;
+  padding: 0.5em;
+  font-size: 15px;
+}
+
+.existingAnswerText {
+  padding: 0.8em;
+  color: gray;
+  font-size: 14px;
+  font-style: italic;
+  letter-spacing: 0.5px;
+}

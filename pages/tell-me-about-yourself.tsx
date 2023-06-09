@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 import { SignedOut } from "@/components/molecules/signed_out/SignedOut";
 import { AnswerField } from "@/components/atoms/answer_field/AnswerField";
 import { NeumorphicButton } from "@/components/atoms/button/NeumorphicButton";
+import { appStrings } from "@/constants/appStrings";
+import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -30,6 +32,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   };
 };
 
+const { header, subHeader } = appStrings.tellMePage;
+
 interface TellMeAboutYourselfProps {
   readonly existingAnswer: string;
 }
@@ -46,9 +50,11 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
   const [errorMessage, setErrorMessage] = React.useState<string>(
     "Sorry, the rate limit per minute has been exceeded. Try again in a minute!"
   );
-  const [response, setResponse] = React.useState<any>(null);
+  const [aiResponse, setAIResponse] = React.useState<any>(null);
   const [answerSaving, setAnswerSaving] = React.useState<boolean>(false);
   const [savingResponse, setSavingResponse] = React.useState<string>("");
+  const [showPreviouslySaved, setShowPreviouslySaved] =
+    React.useState<boolean>(false);
 
   const refreshData = () => {
     router.replace(router.asPath);
@@ -58,7 +64,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
 
   const handleGenerateAIClick = async (e: any) => {
     setShowError(false);
-    setResponse("");
+    setAIResponse("");
     setAILoading(true);
 
     const response = await fetch("/api/openai", {
@@ -76,7 +82,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
 
     if (data) {
       if (data.response.name !== "Error") {
-        setResponse(data.response.content);
+        setAIResponse(data.response.content);
       } else {
         setAILoading(false);
         if (data.response.message !== "Request failed with status code 429") {
@@ -115,11 +121,6 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
     }
   };
 
-  // React.useEffect(() => {
-  //   console.log("saving response", savingResponse);
-  //   console.log("prompt answer", answerInput);
-  // }, [savingResponse]);
-
   if (session) {
     return (
       <main className="lightGlassEffect">
@@ -133,17 +134,17 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
           </div>
 
           <div className="rightContainer">
-            <p className={`${styles.header} greenGradient`}>
-              Tell me about yourself.
-            </p>
-            <p>
-              Enter your answer below. If you would like the AI to add some
-              razzle dazzle, click the Touch Up button.
-            </p>
-            {/* Add link for notes page */}
-            <p>
-              Your saved response can be viewed and edited in the Notes page.
-            </p>
+            <p className={`${styles.header} greenGradient`}>{header}</p>
+            <div className={styles.subHeader}>
+              <p>
+                {subHeader}
+                Your saved response can be viewed and edited in the{" "}
+                <Link href="/notes" className={styles.link}>
+                  Notes
+                </Link>{" "}
+                page. {!existingAnswer && "You currently have no answer saved."}
+              </p>
+            </div>
 
             <AnswerField
               onChange={(e) => setAnswerInput(e)}
@@ -151,7 +152,6 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
               disableButton={false}
               placeholder="Write your answer here..."
             />
-            {response && <p>{response}</p>}
             <div className={styles.buttonContainer}>
               <div className={styles.saveButton}>
                 {" "}
@@ -160,23 +160,31 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
                   height="25px"
                   width="120px"
                   text="Save"
+                  disabled={answerSaving || !answerInput}
+                  loading={answerSaving}
                 />
               </div>
               <NeumorphicButton
                 onClick={handleGenerateAIClick}
                 height="25px"
                 width="120px"
-                text={response ? "Regenerate Response" : "Touch Up"}
+                text={aiResponse ? "Regenerate Response" : "Touch Up"}
                 disabled={!answerInput || aiLoading}
                 loading={aiLoading}
               />
             </div>
 
-            {existingAnswer ? (
-              <div>{existingAnswer}</div>
-            ) : (
-              <div>You currently have no answer to this prompt saved.</div>
+            {existingAnswer && showPreviouslySaved && (
+              <div
+                className={`${styles.existingAnswerContainer} lightGlassEffect`}
+              >
+                <p className={styles.existingAnswerHeader}>
+                  Previously Saved Answer:
+                </p>
+                <p className={styles.existingAnswerText}>{existingAnswer}</p>
+              </div>
             )}
+            {aiResponse && <div>{aiResponse}</div>}
           </div>
         </div>
       </main>

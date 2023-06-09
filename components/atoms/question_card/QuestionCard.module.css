@@ -36,6 +36,7 @@
 .question {
   margin-bottom: 20px;
   text-align: center;
+  user-select: text;
 }
 
 .showAdviceLabel {
@@ -75,4 +76,5 @@
   font-weight: 500;
   letter-spacing: 0.8px;
   border-radius: 0px 0px 12px 12px;
+  user-select: text;
 }

@@ -1,0 +1,76 @@
+.header {
+  font-weight: bold;
+  font-style: italic;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+  padding: 0.7em;
+  border-radius: 10px;
+  color: var(--muted-purple-text);
+  box-shadow: 5px 5px rgba(54, 54, 160, 0.402);
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5em;
+}
+
+.saveButton {
+  margin-right: 20px;
+}
+
+.link {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.subHeader {
+  color: var(--muted-purple-text);
+  font-size: 15px;
+  padding: 0.7em;
+}
+
+.subHeaderToggleAnswer {
+  margin-top: 8px;
+}
+
+.answerContainer {
+  border-radius: 12px;
+  box-shadow: 5px 5px rgba(54, 54, 160, 0.402);
+  margin-top: 15px;
+}
+
+.answerHeader {
+  color: var(--muted-purple-text);
+  font-weight: bold;
+  border-radius: 12px 12px 0px 0px;
+  padding: 0.5em;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.answerText {
+  padding: 0.8em;
+  color: gray;
+  font-size: 14px;
+  font-style: italic;
+  letter-spacing: 0.5px;
+  user-select: text;
+  text-align: center;
+}
+
+.showHideButton {
+  border: 2px solid rgb(175, 208, 175);
+  border-radius: 10px;
+  color: var(--muted-green);
+  padding: 0.3em;
+  font-weight: 300;
+  letter-spacing: 1px;
+  font-size: 12px;
+  cursor: pointer;
+  width: 220px;
+}

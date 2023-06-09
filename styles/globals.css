@@ -144,6 +144,46 @@ a {
   justify-content: center;
 }
 
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    display: hidden;
+  }
+  50% {
+    opacity: 1;
+    display: visible;
+  }
+  100% {
+    opacity: 0;
+    display: hidden;
+  }
+}
+
+.noteResponseContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.noteResponse {
+  border-radius: 20px;
+  margin-top: 10px;
+  height: 60px;
+  width: 260px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-style: italic;
+  text-align: center;
+  animation: fadeInOut ease 5s forwards;
+  animation-fill-mode: forwards;
+  box-shadow: 8px 8px rgba(54, 54, 160, 0.402);
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
 /* GRADIENTS AND GLASS EFFECTS */
 
 .lightGlassEffect {

@@ -161,8 +161,8 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
                 }
               />
               {noteResponse && (
-                <div className={styles.noteResponseContainer}>
-                  <div className={`${styles.noteResponse} mutedPurpleGradient`}>
+                <div className="noteResponseContainer">
+                  <div className={`noteResponse mutedPurpleGradient`}>
                     {noteResponse}
                   </div>
                 </div>

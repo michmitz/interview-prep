@@ -9,6 +9,7 @@ import {
   InfoCircleFilled,
   LoadingOutlined,
   UpCircleOutlined,
+  CommentOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
@@ -64,6 +65,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const handleJobTipsClick = () => {
     router.push("/interview-tips");
+  };
+
+  const handleTellMeClick = () => {
+    router.push("/tell-me-about-yourself");
   };
 
   const modeValues = ["job-title", "software"] as ReadonlyArray<InterviewMode>;
@@ -171,6 +176,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 >
                   <BulbOutlined className={styles.icon} />
                   <p className={styles.label}>{interviewTips}</p>
+                </span>
+
+                <span
+                  className={
+                    expandedView
+                      ? `${styles.labelContainer} quickFadeIn`
+                      : styles.labelContainer
+                  }
+                  onClick={() => handleTellMeClick()}
+                >
+                  <CommentOutlined className={styles.icon} />
+                  <p className={styles.label}>Tell Me About Yourself Prompt</p>
                 </span>
               </>
             ) : (

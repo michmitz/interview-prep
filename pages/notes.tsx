@@ -25,6 +25,16 @@ export type UpdatedNote = {
   updatedNote: string;
 };
 
+export type TellMeAnswer = {
+  readonly id: string;
+  readonly promptAnswer: string;
+};
+
+export type UpdatedTellMeAnswer = {
+  id: string;
+  updatedTellMeAnswer: string;
+};
+
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
 
@@ -39,18 +49,26 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     },
   });
 
+  const tellMeAnswer = await prisma.tellMePrompt.findFirst({
+    where: {
+      author: { email: session?.user?.email },
+    },
+  });
+
   return {
-    props: { notes },
+    props: { notes, tellMeAnswer },
   };
 };
 
 interface NotesProps {
   readonly notes: ReadonlyArray<Note>;
+  readonly tellMeAnswer: TellMeAnswer;
 }
 
 const { notesPage } = appStrings.header;
+const { tellMeHeader } = appStrings.notesPage;
 
-const Notes: NextPage<NotesProps> = ({ notes }) => {
+const Notes: NextPage<NotesProps> = ({ notes, tellMeAnswer }) => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const pageLoading = status === "loading";
@@ -61,6 +79,9 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
   const [notesWithUpdatedAnswers, setNotesWithUpdatedAnswers] = React.useState<
     UpdatedNote[] | []
   >([]);
+  const [showTellMeEditField, setShowTellMeEditField] =
+    React.useState<boolean>(false);
+  const [tellMeInput, setTellMeInput] = React.useState<string>("");
 
   const refreshData = () => {
     router.replace(router.asPath);
@@ -115,6 +136,29 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
     setNotesToEdit([...notesToEditCopy.splice(indexOfNoteToRemove, 1)]);
   };
 
+  const handleSubmitTellMeAnswer = async (id: string) => {
+    const data = {
+      promptAnswer: tellMeInput,
+    };
+
+    console.log("data", data);
+
+    const response = await fetch(`/api/tell_me_prompt/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.status === 200) {
+      setShowTellMeEditField(false);
+      refreshData();
+    } else {
+      console.log("failed");
+    }
+  };
+
   const handleDeleteNote = async (id: string) => {
     const response = await fetch(`/api/note/${id}`, {
       method: "DELETE",
@@ -130,14 +174,31 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
     }
   };
 
+  const onTellMeChange = (v: string) => {
+    setTellMeInput(v);
+  };
+
+  const handleDeleteTellMeAnswer = async (id: string) => {
+    const response = await fetch(`/api/tell_me_prompt/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.status === 200) {
+      refreshData();
+    } else {
+      console.log("delete failed");
+    }
+  };
+
   const disableButton = (noteId: string) => {
     const updatedNote = notesWithUpdatedAnswers.find((x) => x.id === noteId);
     return updatedNote?.updatedNote === "" ? true : !updatedNote ? true : false;
   };
 
   const sortedNotes = sortArrByKey([...notes], "subject");
-
-  console.log("Sorted notes", sortedNotes);
 
   if (session) {
     return (
@@ -152,6 +213,28 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
           </div>
 
           <div className="rightContainer">
+            {tellMeAnswer && (
+              <div className={`${styles.tellMeContainer} flexCenter fadeIn`}>
+                <div className={`${styles.notesSubject} mutedPurpleGradient`}>
+                  {tellMeHeader}
+                </div>
+                <NoteCard
+                  question="Tell Me About Yourself Prompt"
+                  note={tellMeAnswer.promptAnswer}
+                  noteId={tellMeAnswer.id}
+                  onInputChange={onTellMeChange}
+                  editCallback={() => setShowTellMeEditField(true)}
+                  deleteCallback={handleDeleteTellMeAnswer}
+                  showEditField={showTellMeEditField}
+                  disableButton={false}
+                  onSubmit={handleSubmitTellMeAnswer}
+                  variant="tell-me-answer"
+                />
+              </div>
+            )}
+            {sortedNotes.length === 0 && (
+              <h2 className={styles.noNotes}>No notes yet.</h2>
+            )}
             {!sortedNotes ? (
               <LoadingOutlined />
             ) : (
@@ -174,11 +257,11 @@ const Notes: NextPage<NotesProps> = ({ notes }) => {
                             noteId={id}
                             editCallback={handleShowEditNote}
                             deleteCallback={handleDeleteNote}
-                            responseMessage={noteResponse}
                             showEditField={notesToEdit.includes(id)}
                             disableButtonCallback={disableButton}
-                            answerInputsCallback={handleSetAnswerInputs}
-                            submitNoteCallback={handleSubmitNote}
+                            onInputChange={handleSetAnswerInputs}
+                            onSubmit={handleSubmitNote}
+                            variant="note"
                           />
                         </div>
                       );

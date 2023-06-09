@@ -153,7 +153,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
                 ) : (
                   <button
                     onClick={() => setShowPreviouslySaved(true)}
-                    className={styles.showHideButton}
+                    className={`${styles.showHideButton} ${styles.greenButtonOutline}`}
                   >
                     Show Saved Answer
                   </button>
@@ -193,11 +193,11 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
               <div
                 className={`${styles.answerContainer} lightGlassEffect quickFadeIn`}
               >
-                <p className={`${styles.answerHeader} beigeGradient`}>
+                <p className={`${styles.answerHeader} whiteGradient`}>
                   Previously Saved Answer:
                   <button
                     onClick={() => setShowPreviouslySaved(false)}
-                    className={styles.showHideButton}
+                    className={`${styles.showHideButton} ${styles.purpleButtonOutline}`}
                   >
                     Hide Answer
                   </button>
@@ -210,11 +210,11 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
               <div
                 className={`${styles.answerContainer} ${styles.aiAnswerContainer} lightGlassEffect quickFadeIn`}
               >
-                <p className={`${styles.answerHeader} greenGradient`}>
+                <p className={`${styles.answerHeader} whiteGradient`}>
                   AI Reponse:
                   <button
                     onClick={() => handleSaveAnswer(aiResponse)}
-                    className={styles.showHideButton}
+                    className={`${styles.showHideButton} ${styles.purpleButtonOutline}`}
                     disabled={answerSaving}
                   >
                     {answerSaving ? (

@@ -64,13 +64,21 @@
 }
 
 .showHideButton {
-  border: 2px solid rgb(175, 208, 175);
   border-radius: 10px;
-  color: var(--muted-green);
   padding: 0.3em;
   font-weight: 300;
   letter-spacing: 1px;
   font-size: 12px;
   cursor: pointer;
   width: 220px;
+}
+
+.greenButtonOutline {
+  color: var(--muted-green);
+  border: 2px solid rgb(175, 208, 175);
+}
+
+.purpleButtonOutline {
+  color: var(--muted-purple-text);
+  border: 2px solid rgba(170, 157, 179, 0.64);
 }

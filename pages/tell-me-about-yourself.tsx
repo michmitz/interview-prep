@@ -186,23 +186,6 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
               />
             </div>
 
-            {aiResponse && (
-              <div
-                className={`${styles.answerContainer} ${styles.aiAnswerContainer} lightGlassEffect quickFadeIn`}
-              >
-                <p className={`${styles.answerHeader} grayGradient`}>
-                  AI Reponse:
-                  <button
-                    onClick={() => handleSaveAnswer(aiResponse)}
-                    className={styles.showHideButton}
-                  >
-                    Save (Override existing answer)
-                  </button>
-                </p>
-                <p className={styles.answerText}>{aiResponse}</p>
-              </div>
-            )}
-
             {existingAnswer && showPreviouslySaved && (
               <div
                 className={`${styles.answerContainer} lightGlassEffect quickFadeIn`}
@@ -217,6 +200,23 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
                   </button>
                 </p>
                 <p className={styles.answerText}>{existingAnswer}</p>
+              </div>
+            )}
+
+            {aiResponse && (
+              <div
+                className={`${styles.answerContainer} ${styles.aiAnswerContainer} lightGlassEffect quickFadeIn`}
+              >
+                <p className={`${styles.answerHeader} grayGradient`}>
+                  AI Reponse:
+                  <button
+                    onClick={() => handleSaveAnswer(aiResponse)}
+                    className={styles.showHideButton}
+                  >
+                    Save (Override existing answer)
+                  </button>
+                </p>
+                <p className={styles.answerText}>{aiResponse}</p>
               </div>
             )}
           </div>

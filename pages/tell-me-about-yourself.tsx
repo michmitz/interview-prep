@@ -95,10 +95,10 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
     setAILoading(false);
   };
 
-  const handleSaveAnswer = async () => {
+  const handleSaveAnswer = async (input: string) => {
     setAnswerSaving(true);
     const data = {
-      promptAnswer: answerInput,
+      promptAnswer: input,
     };
 
     const response = await fetch("/api/tell_me_prompt/create_tell_me_answer", {
@@ -142,7 +142,19 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
                 <Link href="/notes" className={styles.link}>
                   Notes
                 </Link>{" "}
-                page. {!existingAnswer && "You currently have no answer saved."}
+                page.
+              </p>
+              <p className={styles.subHeaderToggleAnswer}>
+                {!existingAnswer ? (
+                  "You currently have no answer saved."
+                ) : (
+                  <button
+                    onClick={() => setShowPreviouslySaved(true)}
+                    className={styles.showHideButton}
+                  >
+                    Show Saved Answer
+                  </button>
+                )}
               </p>
             </div>
 
@@ -156,7 +168,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
               <div className={styles.saveButton}>
                 {" "}
                 <NeumorphicButton
-                  onClick={handleSaveAnswer}
+                  onClick={() => handleSaveAnswer(answerInput)}
                   height="25px"
                   width="120px"
                   text="Save"
@@ -174,17 +186,39 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
               />
             </div>
 
-            {existingAnswer && showPreviouslySaved && (
+            {aiResponse && (
               <div
-                className={`${styles.existingAnswerContainer} lightGlassEffect`}
+                className={`${styles.answerContainer} ${styles.aiAnswerContainer} lightGlassEffect quickFadeIn`}
               >
-                <p className={styles.existingAnswerHeader}>
-                  Previously Saved Answer:
+                <p className={`${styles.answerHeader} grayGradient`}>
+                  AI Reponse:
+                  <button
+                    onClick={() => handleSaveAnswer(aiResponse)}
+                    className={styles.showHideButton}
+                  >
+                    Save (Override existing answer)
+                  </button>
                 </p>
-                <p className={styles.existingAnswerText}>{existingAnswer}</p>
+                <p className={styles.answerText}>{aiResponse}</p>
               </div>
             )}
-            {aiResponse && <div>{aiResponse}</div>}
+
+            {existingAnswer && showPreviouslySaved && (
+              <div
+                className={`${styles.answerContainer} lightGlassEffect quickFadeIn`}
+              >
+                <p className={`${styles.answerHeader} purpleGradient`}>
+                  Previously Saved Answer:
+                  <button
+                    onClick={() => setShowPreviouslySaved(false)}
+                    className={styles.showHideButton}
+                  >
+                    Hide Answer
+                  </button>
+                </p>
+                <p className={styles.answerText}>{existingAnswer}</p>
+              </div>
+            )}
           </div>
         </div>
       </main>

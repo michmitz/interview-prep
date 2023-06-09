@@ -6,7 +6,7 @@
 ### Backgrounds:
 
 Pexels:
-- glass windows - Ben Neale
+- black and white leaf - Valeriia Miller
 - window with clouds - Dó Castle
 - books - Karolina Grabowska
 - desk with notebook - Tirachard Kumtanom

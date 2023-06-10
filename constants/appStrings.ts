@@ -12,7 +12,7 @@ export const appStrings = {
       "Pretend you are interviewing me for a software engineer position. Ask me one question, then give me an example answer. Label question and answer.",
     getSubjectsPrompt:
       "Generate an array of software engineer interview subjects, including frontend and backend technologies",
-    tellMePrompt: `Update the following to be a fairly brief and more professional response to the interview prompt "Tell me about yourself":`,
+    tellMePrompt: `Update the following to be a more professional response to the interview prompt "Tell me about yourself", no longer than 6 sentences:`,
     askNewQuestionsPrompt: 'Please ask new questions. You have already asked the following questions:',
   },
   speechBubble: {
@@ -98,6 +98,8 @@ export const appStrings = {
     prevSaved: 'Previously Saved Answer:',
     hideAnswer: 'Hide Answer',
     aiResponseHeader: "AI Response:",
+    noExistingAnswer: "You currently have no answer saved.",
+    saveButton: "Save (Override existing answer)",
   },
   subjectField: {
     enterTech: 'Enter a technology',

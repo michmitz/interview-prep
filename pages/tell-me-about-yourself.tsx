@@ -44,6 +44,8 @@ const {
   hideAnswer,
   aiResponseHeader,
   fieldPlaceholder,
+  noExistingAnswer,
+  saveButton,
 } = appStrings.tellMePage;
 const { rateLimitErr, statusCode429 } = appStrings.errors;
 const { tellMePrompt } = appStrings.aiPrompts;
@@ -161,7 +163,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
               </p>
               <p className={styles.subHeaderToggleAnswer}>
                 {!existingAnswer ? (
-                  "You currently have no answer saved."
+                  noExistingAnswer
                 ) : (
                   <button
                     onClick={() => setShowPreviouslySaved(true)}
@@ -229,11 +231,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
                     className={`${styles.showHideButton} ${styles.purpleButtonOutline}`}
                     disabled={answerSaving}
                   >
-                    {answerSaving ? (
-                      <LoadingOutlined />
-                    ) : (
-                      "Save (Override existing answer)"
-                    )}
+                    {answerSaving ? <LoadingOutlined /> : saveButton}
                   </button>
                 </p>
                 <p className={styles.answerText}>{aiResponse}</p>

@@ -33,7 +33,21 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   };
 };
 
-const { header, subHeader } = appStrings.tellMePage;
+const {
+  sidebarHeader,
+  header,
+  subHeader,
+  subHeaderSavedResponse,
+  notesLink,
+  showSavedAnswer,
+  prevSaved,
+  hideAnswer,
+  aiResponseHeader,
+  fieldPlaceholder,
+} = appStrings.tellMePage;
+const { rateLimitErr, statusCode429 } = appStrings.errors;
+const { tellMePrompt } = appStrings.aiPrompts;
+const { answerSaved, answerSaveFailed } = appStrings.apiResponses;
 
 interface TellMeAboutYourselfProps {
   readonly existingAnswer: string;
@@ -48,9 +62,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
   const [answerInput, setAnswerInput] = React.useState<string>("");
   const [aiLoading, setAILoading] = React.useState(false);
   const [showError, setShowError] = React.useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = React.useState<string>(
-    "Sorry, the rate limit per minute has been exceeded. Try again in a minute!"
-  );
+  const [errorMessage, setErrorMessage] = React.useState<string>(rateLimitErr);
   const [aiResponse, setAIResponse] = React.useState<any>(null);
   const [answerSaving, setAnswerSaving] = React.useState<boolean>(false);
   const [apiResponse, setAPIResponse] = React.useState<string>("");
@@ -61,7 +73,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
     router.replace(router.asPath);
   };
 
-  const generateAIPrompt = `Update the following to be a fairly brief and more professional response to the interview prompt "Tell me about yourself": ${answerInput}`;
+  const generateAIPrompt = `${tellMePrompt} ${answerInput}`;
 
   const handleGenerateAIClick = async (e: any) => {
     setShowError(false);
@@ -86,7 +98,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
         setAIResponse(data.response.content);
       } else {
         setAILoading(false);
-        if (data.response.message !== "Request failed with status code 429") {
+        if (data.response.message !== statusCode429) {
           setErrorMessage(data.response.message);
         }
         setShowError(true);
@@ -116,11 +128,11 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
     if (response.status === 200) {
       setAnswerSaving(false);
       setAIResponse("");
-      setAPIResponse("Answer successfully saved!");
+      setAPIResponse(answerSaved);
       refreshData();
     } else {
       setAnswerSaving(false);
-      setAPIResponse("Answer failed to save");
+      setAPIResponse(answerSaveFailed);
     }
   };
 
@@ -130,7 +142,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
         <div className="container">
           <div className="sidebar">
             <Sidebar
-              headerText="Tell Me About Yourself."
+              headerText={sidebarHeader}
               isLoggedIn={true}
               user={session?.user?.email}
             />
@@ -141,9 +153,9 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
             <div className={styles.subHeader}>
               <p>
                 {subHeader}
-                Your saved response can be viewed and edited in the{" "}
+                {subHeaderSavedResponse}{" "}
                 <Link href="/notes" className={styles.link}>
-                  Notes
+                  {notesLink}
                 </Link>{" "}
                 page.
               </p>
@@ -155,7 +167,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
                     onClick={() => setShowPreviouslySaved(true)}
                     className={`${styles.showHideButton} ${styles.greenButtonOutline}`}
                   >
-                    Show Saved Answer
+                    {showSavedAnswer}
                   </button>
                 )}
               </p>
@@ -165,7 +177,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
               onChange={(e) => setAnswerInput(e)}
               loading={false}
               disableButton={false}
-              placeholder="Write your answer here..."
+              placeholder={fieldPlaceholder}
             />
             <div className={styles.buttonContainer}>
               <div className={styles.saveButton}>
@@ -194,12 +206,12 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
                 className={`${styles.answerContainer} lightGlassEffect quickFadeIn`}
               >
                 <p className={`${styles.answerHeader} whiteGradient`}>
-                  Previously Saved Answer:
+                  {prevSaved}
                   <button
                     onClick={() => setShowPreviouslySaved(false)}
                     className={`${styles.showHideButton} ${styles.purpleButtonOutline}`}
                   >
-                    Hide Answer
+                    {hideAnswer}
                   </button>
                 </p>
                 <p className={styles.answerText}>{existingAnswer}</p>
@@ -211,7 +223,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
                 className={`${styles.answerContainer} ${styles.aiAnswerContainer} lightGlassEffect quickFadeIn`}
               >
                 <p className={`${styles.answerHeader} whiteGradient`}>
-                  AI Reponse:
+                  {aiResponseHeader}
                   <button
                     onClick={() => handleSaveAnswer(aiResponse)}
                     className={`${styles.showHideButton} ${styles.purpleButtonOutline}`}

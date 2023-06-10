@@ -25,7 +25,7 @@ export const SpeechBubblePrompt: React.FC<SpeechBubblePromptProps> = ({
         alt="robot"
         className={styles.icon}
         priority={true}
-        loading="eager"
+        // loading="eager"
       />
       <div className={`${styles.speechBubble} layeredGlassEffect`}>
         {text}

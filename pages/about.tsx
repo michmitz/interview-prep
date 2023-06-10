@@ -7,7 +7,7 @@ import styles from "../styles/About.module.css";
 import { RightCircleFilled } from "@ant-design/icons";
 import { SignedOut } from "@/components/molecules/signed_out/SignedOut";
 
-const { about } = appStrings.header;
+const { about } = appStrings.sidebar;
 const { header, whatIsAppHeader, whatIsAppText } = appStrings.aboutPage;
 const { howToUse, stepOne, stepTwo, stepThree } =
   appStrings.aboutPage.howToUseBlock;

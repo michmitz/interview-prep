@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./SubjectField.module.css";
 import { RaisedButton } from "../button/RaisedButton";
+import { appStrings } from "@/constants/appStrings";
 
 interface SubjectFieldProps {
   readonly label?: string;
@@ -11,6 +12,8 @@ interface SubjectFieldProps {
   readonly buttonDisabled: boolean;
   readonly value: string;
 }
+
+const { noValue } = appStrings.subjectField;
 
 export const SubjectField: React.FC<SubjectFieldProps> = ({
   label,
@@ -36,7 +39,7 @@ export const SubjectField: React.FC<SubjectFieldProps> = ({
         }}
         placeholder={placeholder}
       />
-      {showError && <p className={styles.emptyFieldError}>Please enter a value.</p>}
+      {showError && <p className={styles.emptyFieldError}>{noValue}</p>}
       <div className="questionButton">
         <RaisedButton
           onClick={(e) => {

@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { ContentContainer } from "@/components/molecules/content_container/ContentContainer";
 import { SignedOut } from "@/components/molecules/signed_out/SignedOut";
 
-const { welcome } = appStrings.header;
+const { welcome } = appStrings.sidebar;
 
 const Home: NextPage = () => {
   const { data: session, status } = useSession();

@@ -17,9 +17,13 @@ interface ContentContainerProps {
   readonly setTechQuestionSubject: (v: string) => void;
 }
 
-const { questionPromptButtonText } = appStrings.speechBubble;
+const { questionPromptButtonText, softSkillsQs, techQs, anySoftwareQs } =
+  appStrings.speechBubble;
 const { jobTitleFieldLabel, jobTitleFieldPlaceholder } =
   appStrings.mode.jobTitle;
+const { rateLimitErr, statusCode429 } = appStrings.errors;
+const { askNewQuestionsPrompt } = appStrings.aiPrompts;
+const { enterTech, techPlaceholder } = appStrings.subjectField;
 
 export const ContentContainer: React.FC<ContentContainerProps> = ({
   mode,
@@ -37,9 +41,7 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   const [toggleSubjectField, setToggleSubjectField] =
     React.useState<boolean>(jobMode);
   const [showError, setShowError] = React.useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = React.useState<string>(
-    "Sorry, the rate limit per minute has been exceeded. Try again in a minute!"
-  );
+  const [errorMessage, setErrorMessage] = React.useState<string>(rateLimitErr);
 
   const techSubjectQuestions =
     softwareMode && softwareQuestionType === "technical (subject)";
@@ -72,7 +74,7 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   );
   const previouslyAsked = {
     role: "user",
-    content: `Please ask new questions. You have already asked the following questions: ${askedQuestionsArr.toString()}`,
+    content: `${askNewQuestionsPrompt} ${askedQuestionsArr.toString()}`,
   } as ChatCompletionRequestMessage;
 
   const [aiConvoMessages, setAiConvoMessages] = React.useState<
@@ -89,7 +91,7 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   }, [mode, techQuestionSubject, jobTitle]);
 
   const handleClick = async (e: any) => {
-    setShowError(false)
+    setShowError(false);
     setCompletion("");
     setNoteResponse("");
     setQuestionLoading(true);
@@ -121,7 +123,7 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
           ]);
       } else {
         setQuestionLoading(false);
-        if (data.response.message !== "Request failed with status code 429") {
+        if (data.response.message !== statusCode429) {
           setErrorMessage(data.response.message);
         }
         setShowError(true);
@@ -181,8 +183,8 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
           ) : techSubjectQuestions ? (
             <SubjectField
               onChange={setTechQuestionSubject}
-              label="Enter a technology"
-              placeholder="ex. JavaScript"
+              label={enterTech}
+              placeholder={techPlaceholder}
               onClick={handleClick}
               buttonText={questionPromptButtonText}
               buttonDisabled={questionLoading}
@@ -193,10 +195,10 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
               <SpeechBubblePrompt
                 text={
                   softSkillsQuestions
-                    ? "Ready to be asked about your soft skills?"
+                    ? softSkillsQs
                     : generalTechQuestions
-                    ? "Ready for some technical questions?"
-                    : "Let's do some software interview questions!"
+                    ? techQs
+                    : anySoftwareQs
                 }
                 onClick={handleClick}
                 disableButton={questionLoading}

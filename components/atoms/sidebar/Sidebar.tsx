@@ -28,7 +28,8 @@ export interface SidebarProps {
   readonly setSoftwareQuestionType?: (v: string) => void;
 }
 
-const { notesLink, about, interviewTips } = appStrings.header;
+const { notesLink, about, interviewTips, tellMePage, signedInAs, returnHome } =
+  appStrings.sidebar;
 
 export const Sidebar: React.FC<SidebarProps> = ({
   headerText,
@@ -41,6 +42,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const [expandedView, setExpandedView] = React.useState<boolean>(false);
   const [notesLoading, setNotesLoading] = React.useState<boolean>(false);
+  const [tellMePageLoading, setTellMePageLoading] =
+    React.useState<boolean>(false);
   const [windowSize, setWindowSize] = React.useState([
     window.innerWidth,
     window.innerHeight,
@@ -68,7 +71,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
   };
 
   const handleTellMeClick = () => {
+    setTellMePageLoading(true);
     router.push("/tell-me-about-yourself");
+    if (router.pathname === "/tell-me-about-yourself" && router.isReady) {
+      setTellMePageLoading(false);
+    }
   };
 
   const modeValues = ["job-title", "software"] as ReadonlyArray<InterviewMode>;
@@ -186,8 +193,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   }
                   onClick={() => handleTellMeClick()}
                 >
-                  <CommentOutlined className={styles.icon} />
-                  <p className={styles.label}>Tell Me About Yourself Prompt</p>
+                  {tellMePageLoading ? (
+                    <LoadingOutlined className={styles.icon} />
+                  ) : (
+                    <CommentOutlined className={styles.icon} />
+                  )}
+                  <p
+                    className={
+                      tellMePageLoading
+                        ? `${styles.loadingLabel} ${styles.label}`
+                        : styles.label
+                    }
+                  >
+                    {tellMePage}
+                  </p>
                 </span>
               </>
             ) : (
@@ -200,7 +219,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             onClick={() => handleReturnHome()}
           >
             <ArrowLeftOutlined />
-            <p className={styles.returnLabel}>Return to Interview</p>
+            <p className={styles.returnLabel}>{returnHome}</p>
           </span>
         )}
       </div>
@@ -209,7 +228,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <></>
       ) : (
         <div className={expandedView ? "quickFadeIn" : ""}>
-          <p className={styles.signedInLabel}> Signed in as {user}</p>
+          <p className={styles.signedInLabel}>
+            {" "}
+            {signedInAs} {user}
+          </p>
           <RaisedButton
             onClick={() => signOut()}
             text="Sign Out"

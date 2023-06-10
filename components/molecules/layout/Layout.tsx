@@ -1,5 +1,5 @@
-import { useSession } from "next-auth/react";
 import React from "react";
+import { useSession } from "next-auth/react";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -39,9 +39,8 @@ export const Layout = ({ children }: LayoutProps) => {
         backgroundSize: "cover",
         overflow: "auto",
         backgroundPosition: "center center",
-        // minHeight: "650px",
       }}
-      className="centerContent"
+      className={`centerContent ${session && 'fadeIn'}`}
     >
       {children}
     </div>

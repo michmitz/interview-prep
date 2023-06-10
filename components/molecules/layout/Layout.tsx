@@ -38,7 +38,7 @@ export const Layout = ({ children }: LayoutProps) => {
         width: "100vw",
         backgroundSize: "cover",
         overflow: "auto",
-        minHeight: "650px",
+        // minHeight: "650px",
       }}
       className="centerContent"
     >

@@ -28,7 +28,8 @@ export interface SidebarProps {
   readonly setSoftwareQuestionType?: (v: string) => void;
 }
 
-const { notesLink, about, interviewTips, tellMePage } = appStrings.sidebar;
+const { notesLink, about, interviewTips, tellMePage, signedInAs, returnHome } =
+  appStrings.sidebar;
 
 export const Sidebar: React.FC<SidebarProps> = ({
   headerText,
@@ -218,7 +219,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             onClick={() => handleReturnHome()}
           >
             <ArrowLeftOutlined />
-            <p className={styles.returnLabel}>Return to Interview</p>
+            <p className={styles.returnLabel}>{returnHome}</p>
           </span>
         )}
       </div>
@@ -227,7 +228,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <></>
       ) : (
         <div className={expandedView ? "quickFadeIn" : ""}>
-          <p className={styles.signedInLabel}> Signed in as {user}</p>
+          <p className={styles.signedInLabel}>
+            {" "}
+            {signedInAs} {user}
+          </p>
           <RaisedButton
             onClick={() => signOut()}
             text="Sign Out"

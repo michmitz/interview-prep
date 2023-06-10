@@ -49,6 +49,7 @@ export const appStrings = {
     about: "About",
     interviewTips: 'Interview Tips',
     tellMePage: 'Tell Me About Yourself Prompt',
+    signedInAs: 'Signed in as ',
   },
   notesPage: {
     noteHeader: "Note",

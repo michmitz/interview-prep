@@ -61,7 +61,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
     router.replace(router.asPath);
   };
 
-  const generateAIPrompt = `Update the following to be a more professional response to the interview prompt "Tell me about yourself": ${answerInput}`;
+  const generateAIPrompt = `Update the following to be a fairly brief and more professional response to the interview prompt "Tell me about yourself": ${answerInput}`;
 
   const handleGenerateAIClick = async (e: any) => {
     setShowError(false);
@@ -75,7 +75,7 @@ const TellMeAboutYourself: NextPage<TellMeAboutYourselfProps> = ({
       },
       body: JSON.stringify({
         messages: [{ role: "user", content: generateAIPrompt }],
-        maxTokens: 250,
+        maxTokens: 300,
       }),
     });
 

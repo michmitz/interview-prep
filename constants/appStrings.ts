@@ -100,6 +100,7 @@ export const appStrings = {
   subjectField: {
     enterTech: 'Enter a technology',
     techPlaceholder: 'ex. JavaScript',
+    noValue: 'Please enter a value.',
   },
   answerField: "Write your notes here...",
   answerSubmitButton: "Save Note",

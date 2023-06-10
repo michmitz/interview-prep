@@ -14,7 +14,7 @@
 .label {
   font-weight: bold;
   letter-spacing: 1px;
-  color: rgb(37, 96, 125);
+  color: var(--teal);
   margin-top: 10px;
   margin-bottom: 15px;
   text-align: center;
@@ -28,7 +28,6 @@
   background: rgba(83, 62, 93, 0.145);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 10px;
-  user-select: none;
   outline: none;
   width: 95%;
 }

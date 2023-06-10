@@ -23,7 +23,7 @@ export const appStrings = {
     signInButtonText: "Sign In",
     softSkillsQs: 'Ready to be asked about your soft skills?',
     techQs: 'Ready for some technical questions?',
-    anySoftwareQs: `Let's do some software interview questions!`,
+    anySoftwareQs: `Let's try a few software interview questions!`,
   },
   mode: {
     jobTitle: {

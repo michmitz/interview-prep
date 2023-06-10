@@ -39,7 +39,7 @@ export const appStrings = {
   },
   getNewQuestion: "Get New Question",
   thinking: "Thinking",
-  header: {
+  sidebar: {
     welcome: "Welcome! I'm a virtual interviewer.",
     notesLink: "View Notes",
     modeLabel: "Mode",
@@ -48,6 +48,7 @@ export const appStrings = {
     returnHome: "Return to Interview",
     about: "About",
     interviewTips: 'Interview Tips',
+    tellMePage: 'Tell Me About Yourself Prompt',
   },
   notesPage: {
     noteHeader: "Note",

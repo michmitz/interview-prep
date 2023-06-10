@@ -10,7 +10,7 @@ export interface DropdownProps {
   readonly variant: "mode" | "software-question-types";
 }
 
-const { modeLabel, softwareQuestionTypeLabel } = appStrings.header;
+const { modeLabel, softwareQuestionTypeLabel } = appStrings.sidebar;
 
 export const Dropdown: React.FC<DropdownProps> = ({
   defaultValue,

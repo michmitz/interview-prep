@@ -65,7 +65,7 @@ interface NotesProps {
   readonly tellMeAnswer: TellMeAnswer;
 }
 
-const { notesPage } = appStrings.header;
+const { notesPage } = appStrings.sidebar;
 const { tellMeHeader } = appStrings.notesPage;
 
 const Notes: NextPage<NotesProps> = ({ notes, tellMeAnswer }) => {

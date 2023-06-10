@@ -13,6 +13,7 @@ export const appStrings = {
     getSubjectsPrompt:
       "Generate an array of software engineer interview subjects, including frontend and backend technologies",
     tellMePrompt: `Update the following to be a fairly brief and more professional response to the interview prompt "Tell me about yourself":`,
+    askNewQuestionsPrompt: 'Please ask new questions. You have already asked the following questions:',
   },
   speechBubble: {
     questionPromptText:
@@ -20,6 +21,9 @@ export const appStrings = {
     questionPromptButtonText: "Ask Me a Question",
     notSignedInText: "Welcome! I'm a virtual interviewer. Click here to sign in.",
     signInButtonText: "Sign In",
+    softSkillsQs: 'Ready to be asked about your soft skills?',
+    techQs: 'Ready for some technical questions?',
+    anySoftwareQs: `Let's do some software interview questions!`,
   },
   mode: {
     jobTitle: {
@@ -92,6 +96,10 @@ export const appStrings = {
     prevSaved: 'Previously Saved Answer:',
     hideAnswer: 'Hide Answer',
     aiResponseHeader: "AI Response:",
+  },
+  subjectField: {
+    enterTech: 'Enter a technology',
+    techPlaceholder: 'ex. JavaScript',
   },
   answerField: "Write your notes here...",
   answerSubmitButton: "Save Note",

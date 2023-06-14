@@ -40,11 +40,13 @@ export const Layout = ({ children }: LayoutProps) => {
         src={`/background-2.jpg`}
         width={0}
         height={0}
-        fill
+        // fill
         sizes="100%"
         priority={true}
         quality={100}
         style={{
+          width: '100vw',
+          height: '100vh',
         objectFit: "cover",
         overflow: "auto",
         backgroundPosition: "center center", position: 'absolute', zIndex: -100, }}

@@ -15,6 +15,7 @@ interface ResponseProps {
 
 const generateResponse = async ({ messages, maxTokens }: ResponseProps) => {
   try {
+    console.log("messages in api", messages)
     const completion = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       messages: messages,

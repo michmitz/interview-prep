@@ -22,7 +22,7 @@ export default function App({
           name="description"
           content="Brush up on your interview skills using chatGPT!"
         />
-        <meta property="og:image" content="robot-neutral.png" />
+        <meta property="og:image" content="og-preview.png" />
       </Head>
       <SessionProvider session={session}>
         <Layout>

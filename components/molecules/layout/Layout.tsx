@@ -10,14 +10,14 @@ export const Layout = ({ children }: LayoutProps) => {
   const [randomBackground, setRandomBackground] =
     React.useState<string>("background-1.jpg");
 
-  const backgrounds = [...Array(8).keys()].map((i) => {
+  const backgrounds = [...Array(7).keys()].map((i) => {
     return `background-${i + 1}.jpg`;
   });
 
   React.useEffect(() => {
     if (randomBackground === "background-1.jpg" && session) {
       const randomizeBackground = () => {
-        const randomBgIndex = Math.floor(Math.random() * 8);
+        const randomBgIndex = Math.floor(Math.random() * 7);
         return backgrounds[randomBgIndex];
       };
       const background = randomizeBackground();

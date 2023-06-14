@@ -17,11 +17,12 @@ export default function App({
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1"
         />
-        <title>AI Interview Question App</title>
+        <title>AI Interview Prep App</title>
         <meta
           name="description"
           content="Brush up on your interview skills using chatGPT!"
         />
+        <meta property="og:image" content="/robot-neutral.jpg" />
       </Head>
       <SessionProvider session={session}>
         <Layout>

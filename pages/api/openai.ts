@@ -21,6 +21,11 @@ const generateResponse = async ({ messages, maxTokens }: ResponseProps) => {
       temperature: 1,
       max_tokens: maxTokens,
     })
+
+    if (completion.status !== 200) {
+      console.log
+        return `Request failed with status ${completion.status}`;
+      }
     // console.log("Completion", completion?.data?.choices[0].message)
     return completion?.data?.choices[0].message
   } catch (err) {

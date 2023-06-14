@@ -38,13 +38,14 @@
 }
 
 .input {
-  height: 30px;
+  font-size: 16px;
+  height: 36px;
   margin-top: 5px;
   margin-bottom: 10px;
   padding: 10px;
   background: rgba(83, 62, 93, 0.387);
   border: 1px solid rgba(255, 255, 255, 0.66);
-  border-radius: 10px;
+  border-radius: 15px;
   user-select: none;
   outline: none;
   color: white;

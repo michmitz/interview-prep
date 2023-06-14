@@ -22,10 +22,6 @@ export default function App({
           name="description"
           content="Brush up on your interview skills using chatGPT!"
         />
-        <link
-          rel="icon"
-          href="/favicon.ico"
-        />
       </Head>
       <SessionProvider session={session}>
         <Layout>

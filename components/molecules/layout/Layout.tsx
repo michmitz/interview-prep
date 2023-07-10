@@ -37,7 +37,7 @@ export const Layout = ({ children }: LayoutProps) => {
       className={`centerContent ${session && "fadeIn"}`}
     >
       <Image
-        src={`/background-2.jpg`}
+        src={`/background-5.jpg`}
         width={0}
         height={0}
         // fill

@@ -16,8 +16,6 @@ interface SidebarProps {
   readonly setSoftwareQuestionType?: (v: string) => void;
 }
 
-const { notesLink, about, interviewTips, tellMePage } = appStrings.sidebar;
-
 export const Sidebar: React.FC<SidebarProps> = ({
   headerText,
   mode,

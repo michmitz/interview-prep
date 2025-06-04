@@ -140,7 +140,8 @@ const Notes: React.FC = () => {
           {sortedNotes.length === 0 && (
             <h2 className={styles.noNotes}>No notes yet.</h2>
           )}
-          {sortedNotes.map((note) => (
+          {sortedNotes.map((note, i) => (
+            <div key={i} style={{ marginBottom: '20px'}}>
             <NoteCard
               key={note.id}
               question={note.question}
@@ -149,11 +150,12 @@ const Notes: React.FC = () => {
               onInputChange={(value) => onNoteChange(note.id, value)}
               editCallback={() => {}}
               deleteCallback={handleDeleteNote}
-              showEditField={true}
+              showEditField={false}
               disableButton={disableButton(note.id)}
               onSubmit={handleSubmitNote}
               variant="note"
-            />
+              />
+              </div>
           ))}
 
           {apiResponse && (

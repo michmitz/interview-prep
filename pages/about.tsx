@@ -48,8 +48,6 @@ const About: NextPage = () => {
             <ul className={`${styles.contentBlock} ${styles.list}`}>
               <li>{noteOne}</li>
               <li>{noteTwo}</li>
-              <li>{noteThree}</li>
-              <li>{noteFour}</li>
             </ul>
 
             <SubHeader text={contact} />

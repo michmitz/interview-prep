@@ -112,9 +112,8 @@ const Notes: React.FC = () => {
       <div className="container">
         <div className="sidebar">
           <Sidebar
-            headerText={appStrings.notesPage}
+            headerText={appStrings.notesPage.noteHeader}
             isLoggedIn={true}
-            user="Local User"
           />
         </div>
 
@@ -147,7 +146,7 @@ const Notes: React.FC = () => {
               question={note.question}
               note={note.note}
               noteId={note.id}
-              onInputChange={onNoteChange}
+              onInputChange={(value) => onNoteChange(note.id, value)}
               editCallback={() => {}}
               deleteCallback={handleDeleteNote}
               showEditField={true}

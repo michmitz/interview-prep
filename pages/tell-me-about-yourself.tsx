@@ -102,7 +102,6 @@ const TellMeAboutYourself: React.FC = () => {
           <Sidebar
             headerText={sidebarHeader}
             isLoggedIn={true}
-            user="Local User"
           />
         </div>
 

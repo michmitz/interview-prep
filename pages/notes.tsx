@@ -119,7 +119,7 @@ const Notes: React.FC = () => {
 
         <div className="rightContainer">
           {tellMeAnswer && (
-            <div className={`${styles.tellMeContainer} flexCenter fadeIn`}>
+            <div className={`${styles.tellMeContainer} flexCenter`}>
               <div className={`${styles.notesSubject} mutedPurpleGradient`}>
                 {appStrings.tellMePage.header}
               </div>

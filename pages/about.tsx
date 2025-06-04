@@ -9,8 +9,7 @@ const { about } = appStrings.sidebar;
 const { header, whatIsAppHeader, whatIsAppText } = appStrings.aboutPage;
 const { howToUse, stepOne, stepTwo, stepThree } =
   appStrings.aboutPage.howToUseBlock;
-const { notes, noteOne, noteTwo, noteThree, noteFour } =
-  appStrings.aboutPage.notesBlock;
+const { notes, noteOne, noteTwo } = appStrings.aboutPage.notesBlock;
 const { contact, linkedIn, github } = appStrings.aboutPage.contactBlock;
 
 const SubHeader: React.FC<{ text: string }> = ({ text }) => {
@@ -18,8 +17,6 @@ const SubHeader: React.FC<{ text: string }> = ({ text }) => {
 };
 
 const About: NextPage = () => {
-  const pageLoading = status === "loading";
-
   return (
     <main className="lightGlassEffect">
       <div className="container">

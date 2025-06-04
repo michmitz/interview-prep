@@ -2,15 +2,10 @@ import React from "react";
 import type { NextPage } from "next";
 import { appStrings } from "@/constants/appStrings";
 import { InterviewMode, Sidebar } from "@/components/atoms/sidebar/Sidebar";
-import { useSession } from "next-auth/react";
 import { ContentContainer } from "@/components/molecules/content_container/ContentContainer";
-import { SignedOut } from "@/components/molecules/signed_out/SignedOut";
-
 const { welcome } = appStrings.sidebar;
 
 const Home: NextPage = () => {
-  const { data: session, status } = useSession();
-  const pageLoading = status === "loading";
   const [mode, setMode] = React.useState<InterviewMode>("software");
   const [completion, setCompletion] = React.useState<string>("");
   const [softwareQuestionType, setSoftwareQuestionType] =
@@ -35,7 +30,7 @@ const Home: NextPage = () => {
     setSoftwareQuestionType(questionType);
   };
 
-  if (session) {
+
     return (
       <main className="lightGlassEffect">
         <div className="container">
@@ -45,7 +40,6 @@ const Home: NextPage = () => {
               mode={mode}
               onModeClick={handleModeClick}
               isLoggedIn={true}
-              user={session?.user?.email}
               softwareQuestionType={softwareQuestionType}
               setSoftwareQuestionType={handleChangeSoftwareQuestionType}
             />
@@ -66,11 +60,5 @@ const Home: NextPage = () => {
     );
   }
 
-  if (!session && pageLoading) {
-    return <></>;
-  }
-
-  return <SignedOut />;
-};
 
 export default Home;

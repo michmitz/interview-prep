@@ -1,8 +1,6 @@
 import React from "react";
 import { NextPage } from "next";
 import { Sidebar } from "@/components/atoms/sidebar/Sidebar";
-import { useSession } from "next-auth/react";
-import { SignedOut } from "@/components/molecules/signed_out/SignedOut";
 import { ThinkingRobot } from "@/components/molecules/thinking_robot/ThinkingRobot";
 import { SpeechBubblePrompt } from "@/components/molecules/speech_bubble_prompt/SpeechBubblePrompt";
 import styles from "../styles/InterviewTips.module.css";
@@ -11,7 +9,6 @@ import { appStrings } from "@/constants/appStrings";
 const { header } = appStrings.interviewTipsPage;
 
 const InterviewTips: NextPage = () => {
-  const { data: session, status } = useSession();
   const [response, setResponse] = React.useState<any>(null);
   const [interviewTips, setInterviewTips] =
     React.useState<ReadonlyArray<string> | null>(null);
@@ -64,54 +61,40 @@ const InterviewTips: NextPage = () => {
     }
   }, [response]);
 
-  const pageLoading = status === "loading";
-
-  if (session) {
-    return (
-      <main className="lightGlassEffect">
-        <div className="container">
-          <div className="sidebar">
-            <Sidebar
-              headerText="Job Tips"
-              isLoggedIn={true}
-              user={session?.user?.email}
-            />
-          </div>
-
-          <div className="rightContainer fadeIn">
-            <p className={`${styles.header} greenGradient`}>{header}</p>
-            {response && interviewTips ? (
-              <div className={`${styles.tipsContainer}`}>
-                {interviewTips.map((tip, i) => {
-                  return (
-                    <p key={i} className={styles.tip}>
-                      {tip}
-                    </p>
-                  );
-                })}
-              </div>
-            ) : loading ? (
-              <div className={`${styles.noDataContainer} flexCenter`}>
-                <ThinkingRobot />
-              </div>
-            ) : showError ? (
-              <div className={`${styles.noDataContainer} flexCenter`}>
-                <SpeechBubblePrompt text={errorMessage} />
-              </div>
-            ) : (
-              <></>
-            )}
-          </div>
+  return (
+    <main className="lightGlassEffect">
+      <div className="container">
+        <div className="sidebar">
+          <Sidebar headerText="Job Tips" isLoggedIn={true} />
         </div>
-      </main>
-    );
-  }
 
-  if (!session && pageLoading) {
-    return <></>;
-  }
-
-  return <SignedOut />;
+        <div className="rightContainer fadeIn">
+          <p className={`${styles.header} greenGradient`}>{header}</p>
+          {response && interviewTips ? (
+            <div className={`${styles.tipsContainer}`}>
+              {interviewTips.map((tip, i) => {
+                return (
+                  <p key={i} className={styles.tip}>
+                    {tip}
+                  </p>
+                );
+              })}
+            </div>
+          ) : loading ? (
+            <div className={`${styles.noDataContainer} flexCenter`}>
+              <ThinkingRobot />
+            </div>
+          ) : showError ? (
+            <div className={`${styles.noDataContainer} flexCenter`}>
+              <SpeechBubblePrompt text={errorMessage} />
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
+      </div>
+    </main>
+  );
 };
 
 export default InterviewTips;

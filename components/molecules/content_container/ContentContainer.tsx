@@ -6,7 +6,6 @@ import { ThinkingRobot } from "../thinking_robot/ThinkingRobot";
 import { SpeechBubblePrompt } from "../speech_bubble_prompt/SpeechBubblePrompt";
 import { appStrings } from "@/constants/appStrings";
 import styles from "./ContentContainer.module.css";
-import { ChatCompletionRequestMessage } from "openai";
 
 interface ContentContainerProps {
   readonly mode: InterviewMode;
@@ -62,12 +61,12 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   const softwareSystemPrompt = {
     role: "system",
     content: `Pretend you are interviewing me for a software engineer position. Ask me a ${softwareSubject} question, labeled "Q:", then give me a brief example answer, labeled "A:".`,
-  } as ChatCompletionRequestMessage;
+  }
 
   const jobModeSystemPrompt = {
     role: "system",
     content: `Pretend you are interviewing me for a ${jobTitle} position. Ask me one question, labeled "Q:", then give me a brief example answer, labeled "A:"."`,
-  } as ChatCompletionRequestMessage;
+  }
 
   const [askedQuestionsArr, setAskedQuestionsArr] = React.useState<string[]>(
     []
@@ -75,11 +74,9 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   const previouslyAsked = {
     role: "user",
     content: `${askNewQuestionsPrompt} ${askedQuestionsArr.toString()}`,
-  } as ChatCompletionRequestMessage;
+  }
 
-  const [aiConvoMessages, setAiConvoMessages] = React.useState<
-    ChatCompletionRequestMessage[]
-  >([softwareSystemPrompt]);
+  const [aiConvoMessages, setAiConvoMessages] = React.useState([softwareSystemPrompt]);
 
   React.useEffect(() => {
     setAiConvoMessages(

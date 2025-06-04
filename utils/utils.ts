@@ -1,11 +1,7 @@
-export const sortArrByKey = (items: any[], key: string): any[][] => {
-  const sortedByKey = items.reduce(
-    (next, item) => ({
-      ...next,
-      [item[key]]: [...(next[item[key]] || []), item],
-    }),
-    []
-  );
-
-  return Object.entries(sortedByKey);
+export const sortArrByKey = <T extends Record<string, any>>(items: T[], key: string): T[] => {
+  return [...items].sort((a, b) => {
+    const aValue = a[key] || '';
+    const bValue = b[key] || '';
+    return aValue.localeCompare(bValue);
+  });
 };

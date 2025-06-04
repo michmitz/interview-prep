@@ -6,6 +6,7 @@ import styles from "./QuestionNotesSection.module.css";
 import { RaisedButton } from "@/components/atoms/button/RaisedButton";
 import { appStrings } from "@/constants/appStrings";
 import { DoubleLeftOutlined } from "@ant-design/icons";
+import { localStorageService } from "@/lib/localStorage";
 
 export interface QuestionNotesSectionProps {
   readonly aiResponse: string;
@@ -40,35 +41,34 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
 
   const handleSubmitNote = async () => {
     setNoteSaving(true);
-    const data = {
+    const newNote = {
       question: aiResponse.split("A:")[0].split("Q:")[1],
       advice: aiResponse.split("A:")[1],
       note: answerInput,
       subject: noteSubject,
     };
 
-    const response = await fetch("/api/note/create_note", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (response.status === 200) {
+    try {
+      const result = localStorageService.saveNote(newNote);
+      if (result) {
+        setNoteSaving(false);
+        setNoteResponse("Note successfully saved!");
+        setShowAnswerField(false);
+      } else {
+        setNoteResponse("Failed to save note");
+        setNoteSaving(false);
+      }
+    } catch (error) {
+      setNoteResponse("Failed to save note");
       setNoteSaving(false);
-      setNoteResponse("Note successfully created!");
-      setShowAnswerField(false);
-    } else {
-      setNoteResponse("Note failed");
     }
   };
 
   const handleClearSubject = () => {
-    setToggleSubjectField(true)
-    setTechQuestionSubject('')
-    setJobTitle('')
-  }
+    setToggleSubjectField(true);
+    setTechQuestionSubject("");
+    setJobTitle("");
+  };
 
   return (
     <div className="flexCenter">
@@ -97,7 +97,7 @@ export const QuestionNotesSection: React.FC<QuestionNotesSectionProps> = ({
           />
         </div>
       )}
-     {showAnswerField && (
+      {showAnswerField && (
         <AnswerField
           onChange={(e) => setAnswerInput(e)}
           onSubmit={handleSubmitNote}

@@ -1,80 +1,50 @@
 import { appStrings } from "@/constants/appStrings";
 import React from "react";
 import styles from "./SidebarStyles.module.css";
-import {
-  ArrowLeftOutlined,
-  BulbOutlined,
-  DownCircleOutlined,
-  FormOutlined,
-  InfoCircleFilled,
-  LoadingOutlined,
-  UpCircleOutlined,
-  CommentOutlined,
-} from "@ant-design/icons";
 import { useRouter } from "next/router";
-import { signOut } from "next-auth/react";
 import { RaisedButton } from "../button/RaisedButton";
 import { Dropdown } from "../dropdown/Dropdown";
 
 export type InterviewMode = "job-title" | "software";
 
-export interface SidebarProps {
+interface SidebarProps {
   readonly headerText: string;
   readonly mode?: InterviewMode;
   readonly onModeClick?: (mode: InterviewMode) => void;
-  readonly user?: any;
-  readonly isLoggedIn?: boolean;
+  readonly isLoggedIn: boolean;
   readonly softwareQuestionType?: string;
   readonly setSoftwareQuestionType?: (v: string) => void;
 }
 
-const { notesLink, about, interviewTips, tellMePage, signedInAs, returnHome } =
-  appStrings.sidebar;
+const { notesLink, about, interviewTips, tellMePage } = appStrings.sidebar;
 
 export const Sidebar: React.FC<SidebarProps> = ({
   headerText,
   mode,
   onModeClick,
-  user,
   isLoggedIn,
   softwareQuestionType,
   setSoftwareQuestionType,
 }) => {
-  const [expandedView, setExpandedView] = React.useState<boolean>(false);
-  const [notesLoading, setNotesLoading] = React.useState<boolean>(false);
-  const [tellMePageLoading, setTellMePageLoading] =
-    React.useState<boolean>(false);
-  const [windowSize, setWindowSize] = React.useState([
-    window.innerWidth,
-    window.innerHeight,
-  ]);
   const router = useRouter();
+  const [notesLoading, setNotesLoading] = React.useState<boolean>(false);
+  const [tellMePageLoading, setTellMePageLoading] = React.useState<boolean>(false);
 
-  const handleNotesClick = () => {
-    setNotesLoading(true);
-    router.push("/notes");
-    if (router.pathname === "/notes" && router.isReady) {
-      setNotesLoading(false);
-    }
-  };
-
-  const handleAboutClick = () => {
-    router.push("/about");
-  };
-
-  const handleReturnHome = () => {
-    router.push("/");
-  };
-
-  const handleJobTipsClick = () => {
-    router.push("/interview-tips");
-  };
-
-  const handleTellMeClick = () => {
-    setTellMePageLoading(true);
-    router.push("/tell-me-about-yourself");
-    if (router.pathname === "/tell-me-about-yourself" && router.isReady) {
-      setTellMePageLoading(false);
+  const handleNavigate = (path: string) => {
+    if (path === "/notes") {
+      setNotesLoading(true);
+      router.push(path);
+      if (router.pathname === "/notes" && router.isReady) {
+        setNotesLoading(false);
+      }
+    } else if (path === "/tell-me-about-yourself") {
+      setTellMePageLoading(true);
+      router.push(path);
+      if (router.pathname === "/tell-me-about-yourself" && router.isReady) {
+        setTellMePageLoading(false);
+      }
+    } else {
+      router.push(path);
     }
   };
 
@@ -86,45 +56,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
     "soft skills",
   ] as ReadonlyArray<string>;
 
-  React.useEffect(() => {
-    const handleWindowResize = () => {
-      setWindowSize([window.innerWidth, window.innerHeight]);
-    };
-
-    window.addEventListener("resize", handleWindowResize);
-
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  }, [windowSize]);
-
-  const mobileView = windowSize[0] < 850;
-  const mobileContainerStyles = `${styles.container} ${styles.mobileContainer}`;
-  const expandedContainerStyles = `${styles.container} ${styles.expandedContainer}`;
-
   return (
-    <div
-      className={`${
-        mobileView && !expandedView
-          ? mobileContainerStyles
-          : mobileView && expandedView
-          ? expandedContainerStyles
-          : styles.container
-      } layeredGlassEffect`}
-    >
-      <div>
+    <div className={styles.container}>
+      <div className={styles.header}>
         <p className={styles.headerText}>{headerText}</p>
-
-        {mode && onModeClick ? (
-          <div>
+        {mode && onModeClick && (
+          <div className={styles.modeContainer}>
             <Dropdown
               defaultValue={mode}
               dropdownValues={modeValues}
               onChange={onModeClick}
               variant="mode"
             />
-
-            {mode === "software" && (
+            {mode === "software" && softwareQuestionType && setSoftwareQuestionType && (
               <div className={styles.softwareQuestionType}>
                 <Dropdown
                   defaultValue={softwareQuestionType}
@@ -134,126 +78,46 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 />
               </div>
             )}
-
-            {expandedView || windowSize[0] > 850 ? (
-              <>
-                <span
-                  className={
-                    expandedView
-                      ? `${styles.labelContainer} quickFadeIn`
-                      : styles.labelContainer
-                  }
-                  onClick={() => handleNotesClick()}
-                >
-                  {notesLoading ? (
-                    <LoadingOutlined className={styles.icon} />
-                  ) : (
-                    <FormOutlined className={styles.icon} />
-                  )}
-                  <p
-                    className={
-                      notesLoading
-                        ? `${styles.loadingLabel} ${styles.label}`
-                        : styles.label
-                    }
-                  >
-                    {notesLink}
-                  </p>
-                </span>
-
-                <span
-                  className={
-                    expandedView
-                      ? `${styles.labelContainer} quickFadeIn`
-                      : styles.labelContainer
-                  }
-                  onClick={() => handleAboutClick()}
-                >
-                  <InfoCircleFilled className={styles.icon} />
-                  <p className={styles.label}>{about}</p>
-                </span>
-
-                <span
-                  className={
-                    expandedView
-                      ? `${styles.labelContainer} quickFadeIn`
-                      : styles.labelContainer
-                  }
-                  onClick={() => handleJobTipsClick()}
-                >
-                  <BulbOutlined className={styles.icon} />
-                  <p className={styles.label}>{interviewTips}</p>
-                </span>
-
-                <span
-                  className={
-                    expandedView
-                      ? `${styles.labelContainer} quickFadeIn`
-                      : styles.labelContainer
-                  }
-                  onClick={() => handleTellMeClick()}
-                >
-                  {tellMePageLoading ? (
-                    <LoadingOutlined className={styles.icon} />
-                  ) : (
-                    <CommentOutlined className={styles.icon} />
-                  )}
-                  <p
-                    className={
-                      tellMePageLoading
-                        ? `${styles.loadingLabel} ${styles.label}`
-                        : styles.label
-                    }
-                  >
-                    {tellMePage}
-                  </p>
-                </span>
-              </>
-            ) : (
-              <></>
-            )}
           </div>
-        ) : (
-          <span
-            className={styles.labelContainer}
-            onClick={() => handleReturnHome()}
-          >
-            <ArrowLeftOutlined />
-            <p className={styles.returnLabel}>{returnHome}</p>
-          </span>
         )}
       </div>
 
-      {isLoggedIn && !expandedView && mobileView ? (
-        <></>
-      ) : (
-        <div className={expandedView ? "quickFadeIn" : ""}>
-          <p className={styles.signedInLabel}>
-            {" "}
-            {signedInAs} {user}
-          </p>
+      <div className={styles.navContainer}>
+        <div className={styles.navItem}>
           <RaisedButton
-            onClick={() => signOut()}
-            text="Sign Out"
-            height="25px"
-            width="110px"
-            customBackground="mutedPurpleGradient"
+            onClick={() => handleNavigate("/")}
+            text="Home"
+            height="35px"
+            width="200px"
           />
         </div>
-      )}
-
-      {mobileView && (
-        <div
-          onClick={() => setExpandedView(expandedView === false ? true : false)}
-          className={styles.expandCollapseIconContainer}
-        >
-          {!expandedView ? (
-            <DownCircleOutlined className={styles.expandCollapseIcon} />
-          ) : (
-            <UpCircleOutlined className={styles.expandCollapseIcon} />
-          )}
+        <div className={styles.navItem}>
+          <RaisedButton
+            onClick={() => handleNavigate("/notes")}
+            text={notesLoading ? "Loading..." : "Notes"}
+            height="35px"
+            width="200px"
+            disabled={notesLoading}
+          />
         </div>
-      )}
+        <div className={styles.navItem}>
+          <RaisedButton
+            onClick={() => handleNavigate("/tell-me-about-yourself")}
+            text={tellMePageLoading ? "Loading..." : "Tell Me About Yourself"}
+            height="35px"
+            width="200px"
+            disabled={tellMePageLoading}
+          />
+        </div>
+        <div className={styles.navItem}>
+          <RaisedButton
+            onClick={() => handleNavigate("/about")}
+            text="About"
+            height="35px"
+            width="200px"
+          />
+        </div>
+      </div>
     </div>
   );
 };

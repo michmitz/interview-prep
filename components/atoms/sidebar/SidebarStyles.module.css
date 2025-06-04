@@ -1,21 +1,74 @@
 .container {
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  border-radius: 20px 20px 0px 20px;
-  padding: 1.3em;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  padding: 2em;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.header {
+  margin-bottom: 2em;
+}
+
+.headerText {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--teal);
+  margin-bottom: 1em;
+}
+
+.userContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.user {
   color: var(--muted-purple-text);
+  font-size: 0.9em;
+}
+
+.signOutButton {
+  background: none;
+  border: 1px solid var(--muted-purple-text);
+  color: var(--muted-purple-text);
+  padding: 0.5em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.signOutButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modeContainer {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.softwareQuestionType {
+  margin-top: 0.5em;
+}
+
+.navContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.navItem {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .mobileContainer {
   transition: height ease-in 0.5s;
-}
-
-.headerText {
-  font-weight: 600;
-  margin-bottom: 10px;
 }
 
 .labelContainer {
@@ -25,10 +78,6 @@
   cursor: pointer;
   margin-top: 15px;
   width: fit-content;
-}
-
-.softwareQuestionType {
-  margin-top: 12px;
 }
 
 .icon {
@@ -52,10 +101,6 @@
   margin-bottom: 12px;
   font-style: italic;
   color: var(--gray-text);
-}
-
-.signOutButton {
-  margin-top: 10px;
 }
 
 @keyframes bounce {

@@ -24,7 +24,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ response }) => {
   return (
     <div className={styles.outerContainer}>
       <Image
-        src={"/robot-neutral.png"}
+        src="/robot-neutral.png"
         width={45}
         height={45}
         alt="robot"

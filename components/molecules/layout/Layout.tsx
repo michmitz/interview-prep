@@ -13,11 +13,10 @@ export const Layout = ({ children }: LayoutProps) => {
       className={`centerContent fadeIn`}
     >
       <Image
-        src={`/background-5.jpg`}
+        src="/background-1.jpg"
         width={0}
         height={0}
         // fill
-        sizes="100%"
         priority={true}
         quality={100}
         style={{
